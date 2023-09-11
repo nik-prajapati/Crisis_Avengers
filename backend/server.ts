@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgran from 'morgan';
 import cors from 'cors';
-import router from './routes/index';
+import router from './src/routes/index';
 
 dotenv.config();
 const app = express();
