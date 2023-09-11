@@ -4,8 +4,8 @@ import loginRouter from './login';
 
 const router = Router();
 
-router.post('/signup', signupRouter);
-router.post('/login', loginRouter);
+router.use('/signup', signupRouter);
+router.use('/login', loginRouter);
 
 // error route
 router.all('*', (req, res) => {
