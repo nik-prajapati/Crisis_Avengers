@@ -11,46 +11,46 @@ const fallbackEncryptionSecret =
 const signingSecret = process.env.JWT_SIGNING_SECRET || fallbackSigningSecret;
 const encryptionSecret =
   process.env.JWT_ENCRYPTION_SECRET || fallbackEncryptionSecret;
-const signingKey = Buffer.from(signingSecret);
-const encryptionKey = Buffer.from(encryptionSecret);
-const jwsAlg = 'HS512';
+const signingKey = Buffer.from(signingSecret, 'hex');
+const encryptionKey = Buffer.from(encryptionSecret, 'hex');
+const jwsAlg = 'HS256';
 const jweAlg = 'A256KW';
-const jweEnc = 'A256GCMKW';
+const jweEnc = 'A256GCM';
 const tokenLifetime = '1d';
 
-export default async function LoginController(req: Request, res: Response) {
+export default async function SignupController(req: Request, res: Response) {
   const {
     email,
     password,
-    roleString,
-  }: { email: string; password: string; roleString: string } = req.body;
-  const role = Number(roleString);
+  }: // more data will be required while signing up
+  // no role here, as role = 1 (only rescue agencies will be allowed to sign up)
+  { email: string; password: string } = req.body;
   // change this line when schema changes
   const user = await User.findOne({ email: email }).exec();
-  if (user === null) {
-    res.json({ error: true, message: "User doesn't exist" });
+  if (user !== null) {
+    res.json({ error: true, message: 'Agency already registered' });
   } else {
-    const verified = await argon2.verify(user.hash, password);
-    if (verified) {
-      if (user.role === role) {
-        // sign and encrpyt a JWT and send it to the client
-        const payload = {
-          id: user._id,
-          email: user.email,
-          role: user.role,
-        };
-        const token = await new SignJWT(payload)
-          .setProtectedHeader({ alg: jwsAlg })
-          .setExpirationTime(tokenLifetime)
-          .sign(signingKey);
-        const encryptedToken = await new EncryptJWT({ token })
-          .setProtectedHeader({ alg: jweAlg, enc: jweEnc })
-          .setExpirationTime(tokenLifetime)
-          .encrypt(encryptionKey);
-        res.json({ error: false, message: 'Logged in', encryptedToken });
-      }
-    } else {
-      res.json({ error: true, message: "Account doesn't exist" });
-    }
+    const hash = await argon2.hash(password);
+    const user = await (await User.create({ email, hash, role: 1 })).save();
+    const payload = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    };
+    const token = await new SignJWT(payload)
+      .setProtectedHeader({ alg: jwsAlg })
+      .setExpirationTime(tokenLifetime)
+      .sign(signingKey);
+    const encryptedToken = await new EncryptJWT({ token })
+      .setProtectedHeader({ alg: jweAlg, enc: jweEnc })
+      .setExpirationTime(tokenLifetime)
+      .encrypt(encryptionKey);
+    res.cookie('token', encryptedToken, {
+      httpOnly: true,
+      secure: true,
+      signed: true,
+      maxAge: 24 * 60 * 60,
+    });
+    res.json({ error: false, message: 'Signed up and logged in successfully' });
   }
 }
