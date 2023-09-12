@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { GovtAgency } from '../types/Schema'
+import { GovtAgency } from '../types/schema';
 
 const GovtAgencySchema = new Schema<GovtAgency>({
   name: {
