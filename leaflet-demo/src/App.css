@@ -1,3 +1,6 @@
 #map {
-  min-height: 100vh;
+  min-height: 75vh;
+  width: 50vw;
+  margin: auto;
+  border: 2px solid black;
 }

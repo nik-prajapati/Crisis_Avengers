@@ -1,20 +1,5 @@
-import { Schema, model, Types } from 'mongoose';
-
-type RequestItem = {
-  type: string;
-  name: string;
-  qty: number;
-  unit: string;
-};
-
-type Request = {
-  govt_requester_id?: Types.ObjectId;
-  rescue_requester_id?: Types.ObjectId;
-  requested_items: RequestItem[];
-  status: string;
-  created_at: Date;
-  updated_at: Date;
-};
+import { Schema, model } from 'mongoose';
+import { Request } from '../types/schema';
 
 const RequestSchema = new Schema<Request>(
   {
