@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import signupRouter from './signup';
 import loginRouter from './login';
-// 
+import checkAuth from './checkauth';
+import logout from './logout';
+//
 // import isAuthenticated from '../utils/isAuthenticated';
 // import isRescueAgency from '../utils/isRescueAgency';
 
@@ -9,6 +11,8 @@ const router = Router();
 
 router.use('/signup', signupRouter);
 router.use('/login', loginRouter);
+router.use('/checkauth', checkAuth);
+router.use('/logout', logout);
 
 // error route
 router.all('*', (req, res) => {

@@ -19,7 +19,7 @@ export default async function isAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction
-) {
+) {  
   if (!req.signedCookies || !req.signedCookies.token) {
     res.status(401).json({ error: true, message: 'Not authenticated' });
   } else {

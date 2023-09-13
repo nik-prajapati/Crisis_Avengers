@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
-import axios from {axios};
+import axios from 'axios';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
+    const [error, setError] = useState('');
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -21,7 +22,8 @@ const SignUp = () => {
         event.preventDefault(); 
         console.log('Form Data:', formData);
         try {
-            const response = await axios.post('/api/signup', formData);
+            const response = await axios.post('http://localhost:3000/signup', formData);
+            console.log(response.data);
             if (response.data.error === false) {
               console.log('Signup successful');
             } else {

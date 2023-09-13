@@ -48,7 +48,7 @@ export default async function LoginController(req: Request, res: Response) {
           .setExpirationTime(tokenLifetime)
           .encrypt(encryptionKey);
         res.cookie('token', encryptedToken, {
-          // httpOnly: true,
+          httpOnly: true,
           // secure: true,
           signed: true,
           maxAge: 24 * 60 * 60,

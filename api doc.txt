@@ -24,5 +24,14 @@ when error == true, messages:
 3. Agency already registered 
 when error == false, message = Signed up and logged in successfully
 
+GET /logout:
+logs out user successfully
+response: {error: false, message: 'Logged out successfully'}
+
+GET /checkauth:
+response:
+{ error: true, message: 'Not authenticated' }
+{ error: false, message: 'is authenticated' }
+
 
 
