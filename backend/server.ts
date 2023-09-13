@@ -4,27 +4,15 @@ import morgran from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 import router from './src/routes/index';
 
 dotenv.config();
 const app = express();
 
-// connect to database
-async function connect() {
-  if (process.env.MONGODB_CONNECTION_STRING) {
-    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
-    console.log('Successfully connected to database');
-  } else {
-    console.error(
-      'Connection string not specified. Please specify connection string in an environment variable MONGODB_CONNECTION_STRING in .env file in root folder'
-    );
-  }
-}
-connect();
-
 const fallbackCookieSigningSecret =
   '4f5b8f67d973a914c695b47800fb22b887eda1a290829110e3aebc6383d65c6b';
-
 // middlewares
 app.use(
   cors({
@@ -42,7 +30,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgran('dev'));
@@ -51,5 +38,30 @@ app.use(
 );
 app.use(router);
 
+
+
+// connect to database
+async function connect() {
+  if (process.env.MONGODB_CONNECTION_STRING) {
+    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
+    console.log('Successfully connected to database');
+  } else {
+    console.error(
+      'Connection string not specified. Please specify connection string in an environment variable MONGODB_CONNECTION_STRING in .env file in root folder'
+    );
+  }
+}
+connect();
+
+// creating socket server 
+const server = createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(port, () => console.log(`Listening on port ${port}`));

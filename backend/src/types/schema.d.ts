@@ -27,6 +27,11 @@ export type RescueAgency = {
   updated_at: Date;
 };
 
+export type Inventory = {
+  id: Types.ObjectId;
+
+};
+
 export type RequestItem = {
   type: string;
   name: string;

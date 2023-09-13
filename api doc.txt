@@ -33,5 +33,13 @@ response:
 { error: true, message: 'Not authenticated' }
 { error: false, message: 'is authenticated' }
 
+GET /getagencies:
+Get all agencies within a specified radius in kms
+request params: 
+url?latitute=val&longitude=val&radius=val
+If not specified, radius = 50 kms
+Response:
+{error: false, agencies: <An array of agency objects>}
+
 
 
