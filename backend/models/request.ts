@@ -1,4 +1,5 @@
 import { Schema, model, Types } from 'mongoose';
+import { Coordinate } from '../utils/coordinates';
 
 type RequestItem = {
   type: string;
@@ -10,6 +11,7 @@ type RequestItem = {
 type Request = {
   govt_requester_id?: Types.ObjectId;
   rescue_requester_id?: Types.ObjectId;
+  location: Coordinate;
   requested_items: RequestItem[];
   status: string;
   created_at: Date;
@@ -46,7 +48,16 @@ const RequestSchema = new Schema<Request>(
         },
       },
     ],
-
+    location: {
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
+    },
     status: {
       type: String,
       required: true,
@@ -57,6 +68,6 @@ const RequestSchema = new Schema<Request>(
   }
 );
 
-const Request = model<Request>('Resource', RequestSchema);
+const Request = model<Request>('Request', RequestSchema);
 
 export default Request;
