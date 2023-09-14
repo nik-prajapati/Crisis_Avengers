@@ -28,6 +28,6 @@ const GovtAgencySchema = new Schema<GovtAgency>({
   },
 });
 
-const GovtAgency = model<GovtAgency>('GovernmentAgency', GovtAgencySchema);
+const GovtAgency = model<GovtAgency>('GovernmentAgency', GovtAgencySchema, 'government-agencies');
 
 export default GovtAgency;

@@ -42,6 +42,6 @@ const RequestSchema = new Schema<Request>(
   }
 );
 
-const Request = model<Request>('Resource', RequestSchema);
+const Request = model<Request>('Resource', RequestSchema, 'requests');
 
 export default Request;

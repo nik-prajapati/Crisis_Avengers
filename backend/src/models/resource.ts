@@ -32,6 +32,6 @@ const ResourceSchema = new Schema<Resource>(
   }
 );
 
-const Resource = model<Resource>('Resource', ResourceSchema);
+const Resource = model<Resource>('Resource', ResourceSchema, 'resources');
 
 export default Resource;

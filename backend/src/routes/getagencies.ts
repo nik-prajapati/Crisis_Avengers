@@ -63,7 +63,7 @@ router.get('/', isAuthenticated, async (req, res) => {
         console.error(e);
       }
     }
-    const resources: any[] = [];
+    const resources: unknown[] = [];
     for (let i = 0; i < agencies.length; i++) {
       const x = await Resource.find({ agency_id: agencies[i]._id }).exec();
       resources.push(x);
@@ -72,7 +72,11 @@ router.get('/', isAuthenticated, async (req, res) => {
       error: false,
       agencies: agencies
         .map((agency, idx) => {
-          return { ...agency, distance: dist[idx], resources: resources[idx] };
+          return {
+            ...JSON.parse(JSON.stringify(agency)),
+            distance: dist[idx],
+            resources: resources[idx],
+          };
         })
         .sort((a, b) => a.distance - b.distance),
     });

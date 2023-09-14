@@ -32,6 +32,6 @@ const RescueAgencySchema = new Schema<RescueAgency>(
   }
 );
 
-const RescueAgency = model<RescueAgency>('RescueAgency', RescueAgencySchema);
+const RescueAgency = model<RescueAgency>('RescueAgency', RescueAgencySchema,'rescue-agencies');
 
 export default RescueAgency;
