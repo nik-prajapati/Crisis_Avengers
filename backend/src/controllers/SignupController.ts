@@ -80,6 +80,10 @@ export default async function SignupController(req: Request, res: Response) {
         ...(description ? { description: description } : {}),
       })
     ).save();
-    res.json({ error: false, message: 'Signed up and logged in successfully' });
+    return res.json({
+      error: false,
+      message: 'Signed up and logged in successfully',
+      user,
+    });
   }
 }

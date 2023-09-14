@@ -8,6 +8,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import router from './src/routes/index';
 import { instrument } from '@socket.io/admin-ui';
+import { addRequest } from './src/controllers/RequestController';
 
 dotenv.config();
 const app = express();
@@ -69,8 +70,9 @@ io.on('connection', (socket) => {
     socket.join(room);
   });
 
-  socket.on('send-request', (room, req_data) => {
-    socket.to(room).emit('receive-request', req_data);
+  socket.on('send-request', async (room, req_data) => {
+    const request_data = await addRequest(req_data);
+    socket.to(room).emit('receive-request', request_data);
   });
 
   socket.on('send-message', (room, message) => {

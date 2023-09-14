@@ -41,6 +41,7 @@ export type RequestItem = {
 export type Request = {
   govt_requester_id?: Types.ObjectId;
   rescue_requester_id?: Types.ObjectId;
+  requestee_id: Types.ObjectId;
   requested_items: RequestItem[];
   location: Coordinate;
   status: string;
@@ -56,4 +57,10 @@ export type Resource = {
   unit: string;
   created_at: Date;
   updated_at: Date;
+};
+
+export type Message = {
+  content: string;
+  sender: Types.ObjectId;
+  request: Types.ObjectId;
 };

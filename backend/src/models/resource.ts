@@ -1,12 +1,11 @@
 import { Schema, model } from 'mongoose';
 import { Resource } from '../types/schema';
 
-
 const ResourceSchema = new Schema<Resource>(
   {
     agency_id: {
       type: Schema.Types.ObjectId,
-      ref: 'RescueAgency',
+      ref: 'Rescue-Agency',
       required: true,
     },
     type: {
@@ -28,7 +27,6 @@ const ResourceSchema = new Schema<Resource>(
   },
   {
     timestamps: true,
-
   }
 );
 

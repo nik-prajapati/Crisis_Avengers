@@ -37,9 +37,22 @@ const Dashboard = ({ user }) => {
             <button
               onClick={() => {
                 const dummyReq = {
-                  type: "Medical",
-                  name: "Bandages",
-                  qty: "50",
+                  // govt_requester_id: "6501f2d76d5b47ed6214311d",
+                  rescue_requester_id: "6502e4e07334dcc0d7599107",
+                  requestee_id: "6502e69f7334dcc0d7599115",
+                  requested_items: [
+                    {
+                      type: "Medical",
+                      name: "Bandages",
+                      qty: 50,
+                      unit: "pieces",
+                    },
+                    { type: "Basic", name: "Water", qty: 20, unit: "L" },
+                  ],
+                  location: {
+                    latitude: 18.914042,
+                    longitude: 72.821693,
+                  },
                 };
 
                 socket.emit(
@@ -48,9 +61,9 @@ const Dashboard = ({ user }) => {
                   dummyReq
                 );
 
-                socket.emit("send-message", "6502e69f7334dcc0d7599115", {
-                  message: "test message",
-                });
+                // socket.emit("send-message", "6502e69f7334dcc0d7599115", {
+                //   message: "test message",
+                // });
               }}
             >
               Test socket
