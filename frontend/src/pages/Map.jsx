@@ -5,7 +5,8 @@ import { Icon } from "leaflet";
 import icon from '../image/location-pin.png'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import gpsIcon from '../image/gps.png'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from 'axios'
 
 const user = {
   user: "Ram Shirke",
@@ -29,7 +30,7 @@ const markers = [
   },
   {
     name: "Fire Station",
-    geocode: [19.0257731, 73.05918477985664],
+    geocode: [19.04, 72.875],
     popup: "medical",
     type: "NGO"
   }
@@ -55,6 +56,20 @@ const options = {
 }
 
 function Map() {
+
+  const [agency,setAgency]=useState([]);
+  useEffect( ()=>{
+    // const fetchData=async ()=>{
+    //   const resp= await axios.get(`http://localhost:3000/getagencies?latitude=19&longitude=72&radius=300`)
+    //   const d=resp.data.agencies[0]._doc
+    //   console.log(d)
+    //   setAgency(d)
+      
+    // }
+    
+    // fetchData()
+  },[])
+
 
   const [type, setType] = useState(null)
   const [resourceType, setResource] = useState(null)

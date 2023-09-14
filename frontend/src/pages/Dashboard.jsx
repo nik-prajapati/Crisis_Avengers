@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Dashboards.css'
+import Map from './Map';
 
 const Dashboard = () => {
   return (
@@ -153,6 +154,7 @@ const Dashboard = () => {
           </table>
         </div>
       </div>
+     
     </div>
   );
 }
