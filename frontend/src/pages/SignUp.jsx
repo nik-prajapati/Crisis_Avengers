@@ -4,12 +4,13 @@ import { useEffect } from 'react';
 import axios  from 'axios';
 
 const SignUp = () => {
+    const [loginError, setLoginError] = useState(null);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         name: '',
         description: '',
-        phoneNumbers: [],
+        phonesNumbers: [],
         address: '',
         type: 'NDRF'
     });
@@ -50,50 +51,47 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Form Data:', formData);
-        try {
-            const response = await axios.post('http://localhost:3000/signup', formData);
-            console.log(response);
-            if (response.data.error === false) {
-              console.log('Signup successful');
-              alert('Signp successful');
-            } else {
-              setError(response.data.message);
-            }
-          } catch (error) {
-            console.error('Error during signup:', error);
-            setError('An error occurred during signup.');
-          }
+        // try {
+        //     const response = await axios.post('http://localhost:3000/signup', formData);
+        //     if (response.data.error === false) {
+        //        alert('SignUp successful');
+        //       console.log('Signup successful');
+        //     } else {
+        //       setError(response.data.message);
+        //     }
+        //   } catch (error) {
+            //    window.alert('Login Error: ' + error.message);
+            //   window.location.reload(true);
+            //     console.error('Error during signup:', error);
+        //   }
     };
 
     const handleAddPhone = () => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-            phoneNumbers: [...prevFormData.phoneNumbers, ''], // Add an empty string for a new phone number
+            phonesNumbers: [...prevFormData.phonesNumbers, ''], // Add an empty string for a new phone number
         }));
     };
 
     const handleRemovePhone = (indexToRemove) => {
-        const updatedPhones = formData.phoneNumbers.filter((_, index) => index !== indexToRemove);
+        const updatedPhones = formData.phonesNumbers.filter((_, index) => index !== indexToRemove);
         setFormData({
             ...formData,
-            phoneNumbers: updatedPhones,
+            phonesNumbers: updatedPhones,
         });
     };
 
     const handlePhoneChange = (e, index) => {
-        const updatedPhones = [...formData.phoneNumbers];
+        const updatedPhones = [...formData.phonesNumbers];
         updatedPhones[index] = e.target.value;
         setFormData({
             ...formData,
-            phoneNumbers: updatedPhones,
+            phonesNumbers: updatedPhones,
         });
     };
     return (
-        <div class="wrapper animated bounceInLeft">
+        <div class="wrapper">
             <div class="company-info">
-                <h3></h3>
-                <ul>
-                </ul>
             </div>
             <div className="contact">
                 <h1 className='head'>Register and Connect with Our Community</h1>
@@ -133,16 +131,16 @@ const SignUp = () => {
 
                     <p>
                         <label>Select your Category:</label>
-                        <select name="type" className='drop'>
+                        <select name="type" className='drop' value={formData.type} onChange={handleInputChange}>
                             <option value="">Select an option</option>
-                            <option value={formData.type}>Canada</option>
-                            <option value={formData.type}>United Kingdom</option>
-                            <option value={formData.type}>Australia</option>
+                            <option value="NDRF">NDRF</option>
+                            <option value="SDRF">SDRF</option>
+                            <option value="NGO">NGO</option>
                         </select>
                     </p>
                     <p>
                         <label>Enter phone number:</label>
-                        {formData.phoneNumbers.map((phone, index) => (
+                        {formData.phonesNumbers.map((phone, index) => (
                             <div key={index}>
                                 <input
                                     type="text"

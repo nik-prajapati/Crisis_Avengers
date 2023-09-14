@@ -15,7 +15,6 @@
     padding: 1em;
     border:1px solid black;
   }
-  /* f36e3e */
   ul {
     list-style: none;
     padding: 0;
@@ -26,6 +25,9 @@
     
   }
   .wrapper {
+    margin: auto;
+    height: 700px;
+    width: 80%;
     box-shadow: 0 0 20px 0 rgba(72, 94, 116, 0.7);
   }
   .wrapper > * {
