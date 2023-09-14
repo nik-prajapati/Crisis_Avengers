@@ -9,10 +9,6 @@ const RescueAgencySchema = new Schema<RescueAgency>(
       required: true,
     },
     description: String,
-    email: {
-      type: String,
-      required: true,
-    },
     phone: [{ type: String }],
     location: {
       latitude: {

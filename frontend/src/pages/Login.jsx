@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import '../styles/Login.css';
-import axios from 'axios'; 
+import React, { useState } from "react";
+import "../styles/Login.css";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
+    role: '1',
   });
 
   const handleInputChange = (event) => {
@@ -20,17 +21,21 @@ const Login = () => {
     event.preventDefault();
     console.log(formData);
     try {
-      const response = await axios.post('http://localhost:3000/login', formData,{
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
+      const response = await axios.post(
+        "http://localhost:3000/login",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
       if (response.data.error === true) {
-        console.log('Login error', response.data.message);
+        console.log("Login error", response.data.message);
       } else {
-        console.error('Logged in succesfully');
+        console.log("Logged in succesfully");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -38,14 +43,14 @@ const Login = () => {
   };
 
   return (
-    <div className="outermain">
-      <div className="main">
-        <div className="left-container"></div>
-        <div className="right-container">
-          <div className="right-container__box">
-            <div className="right-container-box">
-              <h2 className="right-container__h2">LOGIN</h2>
-              <p className="right-container__p">
+    <div className='outermain'>
+      <div className='main'>
+        <div className='left-container'></div>
+        <div className='right-container'>
+          <div className='right-container__box'>
+            <div className='right-container-box'>
+              <h2 className='right-container__h2'>LOGIN</h2>
+              <p className='right-container__p'>
                 Enter your email and password to sign in
               </p>
             </div>
