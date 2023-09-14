@@ -35,18 +35,7 @@ const Login = ({setUser}) => {
         }
       );
       console.log(response.data);
-      // setTimeout(async () => {
-      //   const res2 = await axios.get(
-      //     "http://localhost:3000/logout",
-      //     {
-      //       withCredentials: true,
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //     }
-      //   );
-      //   console.log(res2.data);
-      // }, 5000);
+      
       if (response.data.error === false) {
         // no need of this, we are using a httpOnly cookie
         // setCookie("token", response.data.token, { path: "/" });

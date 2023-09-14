@@ -53,7 +53,7 @@ export default async function LoginController(req: Request, res: Response) {
           signed: true,
           maxAge: 24 * 60 * 60,
         });
-        res.json({ error: false, message: 'Logged in successfully' });
+        res.json({ error: false, message: 'Logged in successfully',user });
       } else {
         res.status(403).json({ error: false, message: 'Not authorized' });
       }

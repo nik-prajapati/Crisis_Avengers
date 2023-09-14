@@ -8,11 +8,11 @@ import {
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-// import Map from "./pages/Map";
-import Landing from "./pages/Landing";
+import Landingpage from "./pages/LandingPage";
+import Map from "./pages/Map";
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   return (
     <BrowserRouter>
@@ -21,7 +21,8 @@ function App() {
           <Route path="/signup" element={<SignUp setUser={setUser}/>} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/dashboard" element={<Dashboard user={user} />} />
-          <Route path="/home" element={<Landing user={user} />} />
+          <Route path="/home" element={<Landingpage user={user} />} />      
+          <Route path="/request" element={<Map user={user} />} />      
           
         </Routes>
       </div>
