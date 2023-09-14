@@ -2,10 +2,6 @@ import { Schema, model } from 'mongoose';
 import { GovtAgency } from '../types/schema';
 
 const GovtAgencySchema = new Schema<GovtAgency>({
-  user_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
   name: {
     type: String,
     required: true,

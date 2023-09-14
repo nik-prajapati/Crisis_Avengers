@@ -7,7 +7,6 @@ export type Coordinate = {
 };
 
 export type GovtAgency = {
-  user_id: Types.ObjectId;
   name: string;
   description?: string;
   email: string;
@@ -17,7 +16,6 @@ export type GovtAgency = {
 };
 
 export type RescueAgency = {
-  _id: Types.ObjectId;
   name: string;
   description?: string;
   email: string;
