@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import "../styles/Login.css";
-import { useCookies } from "react-cookie";
-import axios from "axios"; // Import axios
+import React, { useState } from 'react';
+import '../styles/Login.css';
+import axios from 'axios'; 
 
 const Login = () => {
-  const [_, setCookie] = useCookies(["token"]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,32 +21,17 @@ const Login = () => {
     event.preventDefault();
     console.log(formData);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/login",
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(response.data);
-      setTimeout(async () => {
-        const res2 = await axios.get(
-          "http://localhost:3000/logout",
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(res2.data);
-      }, 5000);
-      if (response.data.error === false) {
-        // no need of this, we are using a httpOnly cookie
-        // setCookie("token", response.data.token, { path: "/" });
-        // console.log("Token stored in cookie:", response.data.token);
+      const response = await axios.post('/api/login', formData,{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.data.error === true) {
+        console.log('Login error', response.data.message);
       } else {
-        console.error("Login error:", response.data.message);
+        console.error('Logged in succesfully');
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -56,14 +39,14 @@ const Login = () => {
   };
 
   return (
-    <div className='outermain'>
-      <div className='main'>
-        <div className='left-container'></div>
-        <div className='right-container'>
-          <div className='right-container__box'>
-            <div className='right-container-box'>
-              <h2 className='right-container__h2'>Welcome to our community</h2>
-              <p className='right-container__p'>
+    <div className="outermain">
+      <div className="main">
+        <div className="left-container"></div>
+        <div className="right-container">
+          <div className="right-container__box">
+            <div className="right-container-box">
+              <h2 className="right-container__h2">LOGIN</h2>
+              <p className="right-container__p">
                 Enter your email and password to sign in
               </p>
             </div>
