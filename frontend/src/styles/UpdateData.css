@@ -4,9 +4,11 @@
 
 .rwd-table {
   margin: auto;
-  min-width: 300px;
-  max-width: 100%;
+  width: 700px;
+  height: 500px;
   border-collapse: collapse;
+  font-size: 1.2rem;
+  
 }
 
 .rwd-table tr:first-child {
@@ -108,6 +110,7 @@ h1 {
   color: #f2f2f2;
 }
 .table-container {
+  /* width: px; */
   display: block;
   text-align: center;
 }
@@ -157,6 +160,7 @@ h3:after {
 }
 
 .modal{
+   margin-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
