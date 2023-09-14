@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "../styles/Login.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setUser }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: '1',
+    role: "1",
   });
 
   const handleInputChange = (event) => {
@@ -35,7 +38,9 @@ const Login = () => {
       if (response.data.error === true) {
         console.log("Login error", response.data.message);
       } else {
+        setUser(response.data.user);
         console.log("Logged in succesfully");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -43,48 +48,48 @@ const Login = () => {
   };
 
   return (
-    <div className='outermain'>
-      <div className='main'>
-        <div className='left-container'></div>
-        <div className='right-container'>
-          <div className='right-container__box'>
-            <div className='right-container-box'>
-              <h2 className='right-container__h2'>LOGIN</h2>
-              <p className='right-container__p'>
+    <div className="outermain">
+      <div className="main">
+        <div className="left-container"></div>
+        <div className="right-container">
+          <div className="right-container__box">
+            <div className="right-container-box">
+              <h2 className="right-container__h2">LOGIN</h2>
+              <p className="right-container__p">
                 Enter your email and password to sign in
               </p>
             </div>
-            <div className='input-container'>
-              <label htmlFor='email' className='right-container__label'>
+            <div className="input-container">
+              <label htmlFor="email" className="right-container__label">
                 Email
               </label>
               <input
-                type='text'
-                className='right-container__input'
-                name='email'
-                placeholder='Your email address'
+                type="text"
+                className="right-container__input"
+                name="email"
+                placeholder="Your email address"
                 value={formData.email}
                 onChange={handleInputChange}
               />
-              <label htmlFor='password' className='right-container__label'>
+              <label htmlFor="password" className="right-container__label">
                 Password
               </label>
               <input
-                type='password'
-                className='right-container__input'
-                name='password'
-                placeholder='Your password'
+                type="password"
+                className="right-container__input"
+                name="password"
+                placeholder="Your password"
                 value={formData.password}
                 onChange={handleInputChange}
               />
             </div>
             <br />
             <br />
-            <button className='btn' onClick={handleSubmit}>
+            <button className="btn" onClick={handleSubmit}>
               LOGIN
             </button>
-            <p className='right-container__bottom-text'>
-              Don't have an account? <a href='/signup'>Sign Up</a>
+            <p className="right-container__bottom-text">
+              Don't have an account? <a href="/signup">Sign Up</a>
             </p>
           </div>
         </div>

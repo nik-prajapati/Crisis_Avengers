@@ -1,40 +1,86 @@
-import React from 'react';
-import '../styles/Dashboards.css'
+import React, { useEffect } from "react";
+import "../styles/Dashboards.css";
+import socket from "../helpers/socket";
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
+  useEffect(() => {
+    if (user) socket.emit("join-room", user._id);
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      socket.on("receive-request", (req_data) => {
+        console.log(req_data);
+      });
+
+      socket.on("receive-message", (newMessage) => {
+        console.log(newMessage);
+      });
+
+      return () => {
+        socket.off("receive-request");
+        socket.off("receive-message");
+      };
+    }
+  });
   return (
     <div className="container">
       <div className="left_sidebar">
         <div className="close_hamburger_btn">
-          <i className='bx bx-x-circle'></i>
+          <i className="bx bx-x-circle"></i>
         </div>
         <div className="logo">
           <h2>Disaster Management</h2>
+
+          {
+            //REMOVE LATER
+            <button
+              onClick={() => {
+                const dummyReq = {
+                  type: "Medical",
+                  name: "Bandages",
+                  qty: "50",
+                };
+
+                socket.emit(
+                  "send-request",
+                  "6502e69f7334dcc0d7599115",
+                  dummyReq
+                );
+
+                socket.emit("send-message", "6502e69f7334dcc0d7599115", {
+                  message: "test message",
+                });
+              }}
+            >
+              Test socket
+            </button>
+          }
         </div>
         <div className="menu_items">
           <div className="menu_item">
-            <i className='bx bxs-dashboard'></i>
+            <i className="bx bxs-dashboard"></i>
             <p>Dashboard</p>
           </div>
           <div className="menu_item">
-            <i className='bx bx-message-rounded-dots'></i>
+            <i className="bx bx-message-rounded-dots"></i>
             <p>Government </p>
             <i className="fa-regular fa-circle-2"></i>
           </div>
           <div className="menu_item ">
-            <i className='bx bx-calendar'></i>
+            <i className="bx bx-calendar"></i>
             <p>Rescue</p>
           </div>
           <div className="menu_item ">
-            <i className='bx bx-file-blank'></i>
+            <i className="bx bx-file-blank"></i>
             <p>Database</p>
           </div>
           <div className="menu_item ">
-            <i className='bx bx-signal-4'></i>
+            <i className="bx bx-signal-4"></i>
             <p>Find Agencies</p>
           </div>
           <div className="menu_item ">
-            <i className='bx bx-cog'></i>
+            <i className="bx bx-cog"></i>
             <p>Settings</p>
           </div>
         </div>
@@ -42,11 +88,14 @@ const Dashboard = () => {
       <div className="main_content">
         <div className="left_right_sidebar_opener">
           <div className="hamburger">
-            <i className='bx bx-menu'></i>
+            <i className="bx bx-menu"></i>
           </div>
           <div className="student">
             <div className="profile_img">
-              <img src="https://i.postimg.cc/Sxb6gssQ/img-1.jpg" alt="profile img" />
+              <img
+                src="https://i.postimg.cc/Sxb6gssQ/img-1.jpg"
+                alt="profile img"
+              />
             </div>
             <div className="profile_name">
               <p>Kery Roy</p>
@@ -55,7 +104,8 @@ const Dashboard = () => {
         </div>
         <div className="main_navbar">
           <div className="search_box">
-            <i className='bx bx-search-alt-2'></i> <input type="text " placeholder="Search" />
+            <i className="bx bx-search-alt-2"></i>{" "}
+            <input type="text " placeholder="Search" />
           </div>
           {/* <div className="dark_mode_icon">
             <i className='bx bx-moon'></i>
@@ -69,11 +119,11 @@ const Dashboard = () => {
           <div className="filter_and_sort">
             <div className="sort sort_and_filter">
               <p>Sort</p>
-              <i className='bx bx-sort-down'></i>
+              <i className="bx bx-sort-down"></i>
             </div>
             <div className="filter sort_and_filter">
               <p>Filter</p>
-              <i className='bx bx-filter'></i>
+              <i className="bx bx-filter"></i>
             </div>
           </div>
         </div>
@@ -84,7 +134,7 @@ const Dashboard = () => {
             <p>Admin</p>
           </div>
           <div className="three_dots">
-            <i className='bx bx-dots-vertical-rounded'></i>
+            <i className="bx bx-dots-vertical-rounded"></i>
           </div>
         </div>
         <div className="table">
@@ -98,15 +148,26 @@ const Dashboard = () => {
               <th>Email</th>
             </tr>
             <tr>
-              <td className="profile_name"><img src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg" alt="img" /> Sanket
+              <td className="profile_name">
+                <img
+                  src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg"
+                  alt="img"
+                />{" "}
+                Sanket
               </td>
               <td>012</td>
               <td>NGO</td>
               <td>Flood</td>
               <td>Get lost</td>
               <td>ngo@gmail.com</td>
-            </tr> <tr>
-              <td className="profile_name"><img src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg" alt="img" /> Sanket
+            </tr>{" "}
+            <tr>
+              <td className="profile_name">
+                <img
+                  src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg"
+                  alt="img"
+                />{" "}
+                Sanket
               </td>
               <td>012</td>
               <td>NGO</td>
@@ -115,7 +176,12 @@ const Dashboard = () => {
               <td>ngo@gmail.com</td>
             </tr>
             <tr>
-              <td className="profile_name"><img src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg" alt="img" /> Sanket
+              <td className="profile_name">
+                <img
+                  src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg"
+                  alt="img"
+                />{" "}
+                Sanket
               </td>
               <td>012</td>
               <td>NGO</td>
@@ -124,7 +190,12 @@ const Dashboard = () => {
               <td>ngo@gmail.com</td>
             </tr>
             <tr>
-              <td className="profile_name"><img src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg" alt="img" /> Sanket
+              <td className="profile_name">
+                <img
+                  src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg"
+                  alt="img"
+                />{" "}
+                Sanket
               </td>
               <td>012</td>
               <td>NGO</td>
@@ -133,7 +204,12 @@ const Dashboard = () => {
               <td>ngo@gmail.com</td>
             </tr>
             <tr>
-              <td className="profile_name"><img src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg" alt="img" /> Sanket
+              <td className="profile_name">
+                <img
+                  src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg"
+                  alt="img"
+                />{" "}
+                Sanket
               </td>
               <td>012</td>
               <td>NGO</td>
@@ -142,7 +218,12 @@ const Dashboard = () => {
               <td>ngo@gmail.com</td>
             </tr>
             <tr>
-              <td className="profile_name"><img src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg" alt="img" /> Sanket
+              <td className="profile_name">
+                <img
+                  src="https://i.postimg.cc/c1bW8qWT/1656339664529.jpg"
+                  alt="img"
+                />{" "}
+                Sanket
               </td>
               <td>012</td>
               <td>NGO</td>
@@ -155,6 +236,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
