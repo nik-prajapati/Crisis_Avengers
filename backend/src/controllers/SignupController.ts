@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import User from '../models/User';
+import User from '../models/user';
 import * as argon2 from 'argon2';
 import { SignJWT, EncryptJWT } from 'jose';
+import RescueAgency from '../models/rescue_agency';
 
 // JWT config
 const fallbackSigningSecret =
@@ -22,9 +23,24 @@ export default async function SignupController(req: Request, res: Response) {
   const {
     email,
     password,
+    name,
+    description,
+    location,
+    address,
+    type,
+    phoneNumbers,
   }: // more data will be required while signing up
   // no role here, as role = 1 (only rescue agencies will be allowed to sign up)
-  { email: string; password: string } = req.body;
+  {
+    email: string;
+    password: string;
+    name: string;
+    description?: string;
+    location: string;
+    address: string;
+    type: string;
+    phoneNumbers: string[];
+  } = req.body;
   // change this line when schema changes
   const user = await User.findOne({ email: email }).exec();
   if (user !== null) {
@@ -51,6 +67,18 @@ export default async function SignupController(req: Request, res: Response) {
       signed: true,
       maxAge: 24 * 60 * 60,
     });
+    const [lat, long] = location.split(',');
+    await (
+      await RescueAgency.create({
+        _id: user._id,
+        name: name,
+        location: { latitude: lat, longitude: long },
+        type: type,
+        address: address,
+        phone: phoneNumbers,
+        ...(description ? { description: description } : {}),
+      })
+    ).save();
     res.json({ error: false, message: 'Signed up and logged in successfully' });
   }
 }

@@ -34,7 +34,7 @@ response:
 { error: false, message: 'is authenticated' }
 
 GET /getagencies:
-Get all agencies within a specified radius in kms
+Get all agencies within a specified radius in kms، sorted in asceding order of their distance from the client
 request params: 
 url?latitute=val&longitude=val&radius=val
 If not specified, radius = 50 kms

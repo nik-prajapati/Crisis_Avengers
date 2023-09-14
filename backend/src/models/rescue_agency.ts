@@ -1,8 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 import { RescueAgency } from '../types/schema';
 
 const RescueAgencySchema = new Schema<RescueAgency>(
   {
+    _id: Types.ObjectId,
     name: {
       type: String,
       required: true,
@@ -31,6 +32,7 @@ const RescueAgencySchema = new Schema<RescueAgency>(
   },
   {
     timestamps: true,
+    // _id: false
   }
 );
 

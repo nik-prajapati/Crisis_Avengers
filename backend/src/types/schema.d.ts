@@ -16,6 +16,7 @@ export type GovtAgency = {
 };
 
 export type RescueAgency = {
+  _id: Types.ObjectId;
   name: string;
   description?: string;
   email: string;
