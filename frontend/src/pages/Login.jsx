@@ -21,7 +21,7 @@ const Login = () => {
     event.preventDefault();
     console.log(formData);
     try {
-      const response = await axios.post('/api/login', formData,{
+      const response = await axios.post('http://localhost:3000/login', formData,{
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
