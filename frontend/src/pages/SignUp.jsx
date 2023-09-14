@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/SignUp.css';
 import { useEffect } from 'react';
+import axios  from 'axios';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -49,17 +50,17 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Form Data:', formData);
-        // try {
-        //     const response = await axios.post('/api/signup', formData);
-        //     if (response.data.error === false) {
-        //       console.log('Signup successful');
-        //     } else {
-        //       setError(response.data.message);
-        //     }
-        //   } catch (error) {
-        //     console.error('Error during signup:', error);
-        //     setError('An error occurred during signup.');
-        //   }
+        try {
+            const response = await axios.post('/api/signup', formData);
+            if (response.data.error === false) {
+              console.log('Signup successful');
+            } else {
+              setError(response.data.message);
+            }
+          } catch (error) {
+            console.error('Error during signup:', error);
+            setError('An error occurred during signup.');
+          }
     };
 
     const handleAddPhone = () => {
