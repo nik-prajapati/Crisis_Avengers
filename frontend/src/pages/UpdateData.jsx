@@ -32,6 +32,7 @@ const UpdateData = () => {
             setResources(updatedResources);
         }
         const updatedResourceData = {
+             _id: selectedResource._id,
             type: selectedResource.type,
             name: selectedResource.name,
             quantity: selectedResource.quantity,
