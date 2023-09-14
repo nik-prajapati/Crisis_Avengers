@@ -24,7 +24,7 @@ router.get('/', isAuthenticated, async (req, res) => {
     const lat = Number(latitude);
     const long = Number(longitude);
     const rad = radius ? Number(radius) : 50;
-    let agencies = await RescueAgency.find().exec();
+    let agencies = await RescueAgency.find();
     agencies = agencies.filter((agency) => {
       agency.location.latitude;
       return (

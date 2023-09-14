@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "../styles/Login.css";
-import { useCookies } from "react-cookie";
-import axios from "axios"; // Import axios
+import axios from "axios";
 
 const Login = () => {
-  const [_, setCookie] = useCookies(["token"]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "",
+    role: '1',
   });
 
   const handleInputChange = (event) => {
@@ -28,27 +26,16 @@ const Login = () => {
         formData,
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-      console.log(response.data);
-      setTimeout(async () => {
-        const res2 = await axios.get(
-          "http://localhost:3000/logout",
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(res2.data);
-      }, 5000);
-      if (response.data.error === false) {
-        // no need of this, we are using a httpOnly cookie
-        // setCookie("token", response.data.token, { path: "/" });
-        // console.log("Token stored in cookie:", response.data.token);
+      console.log(response);
+      if (response.data.error === true) {
+        console.log("Login error", response.data.message);
       } else {
-        console.error("Login error:", response.data.message);
+        console.log("Logged in succesfully");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -62,7 +49,7 @@ const Login = () => {
         <div className='right-container'>
           <div className='right-container__box'>
             <div className='right-container-box'>
-              <h2 className='right-container__h2'>Welcome to our community</h2>
+              <h2 className='right-container__h2'>LOGIN</h2>
               <p className='right-container__p'>
                 Enter your email and password to sign in
               </p>
@@ -88,17 +75,6 @@ const Login = () => {
                 name='password'
                 placeholder='Your password'
                 value={formData.password}
-                onChange={handleInputChange}
-              />
-              <label htmlFor='role' className='right-container__label'>
-                Role
-              </label>
-              <input
-                type='text'
-                className='right-container__input'
-                name='role'
-                placeholder='Role'
-                value={formData.role}
                 onChange={handleInputChange}
               />
             </div>
