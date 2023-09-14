@@ -30,7 +30,7 @@ router.post(
       res.json({
         error: true,
         message:
-          'Invalid role. Please json 0 to login as government body, or 1 to login as a rescue agency',
+          'Invalid role. Please send 0 to login as government body, or 1 to login as a rescue agency',
       });
     } else {
       const err = validationResult(req);
