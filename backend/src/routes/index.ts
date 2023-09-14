@@ -3,8 +3,7 @@ import signupRouter from './signup';
 import loginRouter from './login';
 import checkAuth from './checkauth';
 import logout from './logout';
-import getagencies from './getagencies';
-//
+import getagencies from './getagencies';//
 // import isAuthenticated from '../utils/isAuthenticated';
 // import isRescueAgency from '../utils/isRescueAgency';
 

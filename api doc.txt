@@ -39,7 +39,8 @@ request params:
 url?latitute=val&longitude=val&radius=val
 If not specified, radius = 50 kms
 Response:
-{error: false, agencies: <An array of agency objects>}
+{error: false, agencies: <An array of agency objects with resouces>}
+
 
 
 
