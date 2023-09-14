@@ -3,6 +3,7 @@ import isAuthenticated from '../utils/isAuthenticated';
 import RescueAgency from '../models/rescue_agency';
 import haversineDistance from '../utils/haversine';
 import axios from 'axios';
+import Resource from '../models/resource';
 
 const router = Router();
 
@@ -62,11 +63,16 @@ router.get('/', isAuthenticated, async (req, res) => {
         console.error(e);
       }
     }
+    const resources: any[] = [];
+    for (let i = 0; i < agencies.length; i++) {
+      const x = await Resource.find({ agency_id: agencies[i]._id }).exec();
+      resources.push(x);
+    }
     res.json({
       error: false,
       agencies: agencies
         .map((agency, idx) => {
-          return { ...agency, distance: dist[idx] };
+          return { ...agency, distance: dist[idx], resources: resources[idx] };
         })
         .sort((a, b) => a.distance - b.distance),
     });
