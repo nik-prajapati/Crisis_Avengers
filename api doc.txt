@@ -1,0 +1,45 @@
+POST /login
+payload: email, password (min 8 chars, min 1 uppercase, lowercase, special and numeric char), role (0 or 1)
+response: {error: boolean, message: string }
+
+when error == true:
+messages:
+1. Invalid email // server side validation
+2. Invalid password // server side validation
+3. No role field sent // server side validation
+4. Invalid role. Please json 0 to login as government body, or 1 to login as a rescue agen
+5. User doesn't exist // when email not registered
+6. Not authorized // when user exists but role in payload doesn't match database role
+
+when error == false, message = Logged in successfully (encrypted jwt stored as httponly cookie)
+
+
+POST /signup:
+payload: email, password
+// role not included as we're only allowing agencies to sign up currently
+response: {error: boolean, message: string }
+when error == true, messages:
+1. Invalid email address // server side validation
+2. Password not strong enough: must be atleast 8 characters long and must contain atleast one lowercase, uppercase and special character// server side validation
+3. Agency already registered 
+when error == false, message = Signed up and logged in successfully
+
+GET /logout:
+logs out user successfully
+response: {error: false, message: 'Logged out successfully'}
+
+GET /checkauth:
+response:
+{ error: true, message: 'Not authenticated' }
+{ error: false, message: 'is authenticated' }
+
+GET /getagencies:
+Get all agencies within a specified radius in kms، sorted in asceding order of their distance from the client
+request params: 
+url?latitute=val&longitude=val&radius=val
+If not specified, radius = 50 kms
+Response:
+{error: false, agencies: <An array of agency objects>}
+
+
+

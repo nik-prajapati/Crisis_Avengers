@@ -1,17 +1,5 @@
-import { Schema, model } from 'mongoose';
-import { Coordinate } from '../utils/coordinates';
-
-type RescueAgency = {
-  name: string;
-  description?: string;
-  email: string;
-  phone: string[];
-  location: Coordinate;
-  address: string;
-  type: string;
-  created_at: Date;
-  updated_at: Date;
-};
+import { Schema, model, Types } from 'mongoose';
+import { RescueAgency } from '../types/schema';
 
 const RescueAgencySchema = new Schema<RescueAgency>(
   {
@@ -43,6 +31,7 @@ const RescueAgencySchema = new Schema<RescueAgency>(
   },
   {
     timestamps: true,
+    // _id: false
   }
 );
 

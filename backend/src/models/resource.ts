@@ -1,20 +1,12 @@
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { Resource } from '../types/schema';
 
-type Resource = {
-  agency_id: Types.ObjectId;
-  type: string;
-  name: string;
-  quantity: number;
-  unit: string;
-  created_at: Date;
-  updated_at: Date;
-};
 
 const ResourceSchema = new Schema<Resource>(
   {
     agency_id: {
       type: Schema.Types.ObjectId,
-      ref: 'GovernmentAgency',
+      ref: 'RescueAgency',
       required: true,
     },
     type: {
@@ -36,6 +28,7 @@ const ResourceSchema = new Schema<Resource>(
   },
   {
     timestamps: true,
+
   }
 );
 
