@@ -4,9 +4,8 @@ import axios from 'axios';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    role: "",
+    email: '',
+    password: '',
   });
 
   const handleInputChange = (event) => {
@@ -71,17 +70,6 @@ const Login = () => {
                 name='password'
                 placeholder='Your password'
                 value={formData.password}
-                onChange={handleInputChange}
-              />
-              <label htmlFor='role' className='right-container__label'>
-                Role
-              </label>
-              <input
-                type='text'
-                className='right-container__input'
-                name='role'
-                placeholder='Role'
-                value={formData.role}
                 onChange={handleInputChange}
               />
             </div>
