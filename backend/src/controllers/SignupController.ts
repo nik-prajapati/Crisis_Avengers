@@ -75,6 +75,7 @@ export default async function SignupController(req: Request, res: Response) {
         location: { latitude: lat, longitude: long },
         type: type,
         address: address,
+        email:email,
         phone: phoneNumbers,
         ...(description ? { description: description } : {}),
       })

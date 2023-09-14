@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import "../styles/Login.css";
 import { useCookies } from "react-cookie";
 import axios from "axios"; // Import axios
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+
+const Login = ({setUser}) => {
+  
+  const navigate=useNavigate()
   const [_, setCookie] = useCookies(["token"]);
   const [formData, setFormData] = useState({
     email: "",
@@ -31,24 +35,28 @@ const Login = () => {
         }
       );
       console.log(response.data);
-      setTimeout(async () => {
-        const res2 = await axios.get(
-          "http://localhost:3000/logout",
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(res2.data);
-      }, 5000);
+      // setTimeout(async () => {
+      //   const res2 = await axios.get(
+      //     "http://localhost:3000/logout",
+      //     {
+      //       withCredentials: true,
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //     }
+      //   );
+      //   console.log(res2.data);
+      // }, 5000);
       if (response.data.error === false) {
         // no need of this, we are using a httpOnly cookie
         // setCookie("token", response.data.token, { path: "/" });
         // console.log("Token stored in cookie:", response.data.token);
+        setUser(response.data.user)
+        navigate("/home")
+
       } else {
         console.error("Login error:", response.data.message);
+
       }
     } catch (error) {
       console.error("Error during login:", error);

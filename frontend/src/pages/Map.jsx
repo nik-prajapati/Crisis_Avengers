@@ -1,3 +1,29 @@
+// <div className="type-resource">
+//         <select onChange={(e) => setType(options[e.target.value])}>
+//           <option value="">---select The type of agency----</option>
+//           {
+//             keys.map((value, idx) => (
+//               <option value={value} key={idx}>{value}</option>
+//             ))
+//           }
+//         </select>
+
+//         {
+//           type &&
+//           <select onChange={(e) => { if (e.target.value !== '') setResource(e.target.value) }}>
+//             <option value="">---select The type of Request----</option>
+//             {
+//               type.map((value, idx) => (
+//                 <option value={value} key={idx}>{value}</option>
+//               ))
+//             }
+
+//           </select>
+//         }
+
+//       </div>
+
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import '../styles/mapstyle.css'
@@ -7,9 +33,10 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import gpsIcon from '../image/gps.png'
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import Request from "./Request";
 
-const user = {
-  user: "Ram Shirke",
+const duser = {
+  duser: "Ram Shirke",
   geocode: [19.10295695, 72.83745021706365],
   address: "vile parle west mumbai 400056",
   popup: "Current locations"
@@ -42,7 +69,7 @@ const customIcon = new Icon({
   iconSize: [38, 38]
 })
 
-const userCustomIcon = new Icon({
+const duserCustomIcon = new Icon({
   iconUrl: gpsIcon,
   iconSize: [30, 30]
 })
@@ -55,24 +82,21 @@ const options = {
 
 }
 
-function Map() {
-
-  const [agency,setAgency]=useState([]);
+function Map({user}) {
+  // console.log(user)
+  const [agencies,setAgencies]=useState([]);
   useEffect( ()=>{
-    // const fetchData=async ()=>{
-    //   const resp= await axios.get(`http://localhost:3000/getagencies?latitude=19&longitude=72&radius=300`)
-    //   const d=resp.data.agencies[0]._doc
-    //   console.log(d)
-    //   setAgency(d)
+    const fetchData=async ()=>{
+      const resp= await axios.get(`http://localhost:3000/getagencies?latitude=19&longitude=72&radius=300`)
+      const d=resp.data.agencies
+      setAgencies(d)
       
-    // }
+    }
     
-    // fetchData()
+    fetchData()
   },[])
 
-
   const [type, setType] = useState(null)
-  const [resourceType, setResource] = useState(null)
   const [marker, setMarker] = useState({})
   const [requestBody,setRequestBody]=useState(null);
   const keys = Object.keys(options)
@@ -83,78 +107,58 @@ function Map() {
       setType(options[e.target.value])
   }
 
-  const handleMarker = (marker) => {
-    setMarker(marker)
+
+  const handleMarker = (agency) => {
+
+    const markerData={
+      id:agency._doc._id,
+      name:agency._doc.name,
+      address:agency._doc.address,
+      description:agency._doc.description
+    }
+
+    // console.log(markerData)
+    setMarker(markerData)
   }
+
 
   const handleRequest = () => {
 
-    if(marker && resourceType && user)
+    if(user && marker)
     {  const requestBody = {
         reqAgency: marker,
-        resource: resourceType,
-        reqUser: user
+        reqduser: user
       }
       setRequestBody(requestBody)
-    // console.log(requestBody)
     }
   }
 
 
   return (
     <div>
-    
-      <div className="type-resource">
-        <select onChange={(e) => setType(options[e.target.value])}>
-          <option value="">---select The type of agency----</option>
-          {
-            keys.map((value, idx) => (
-              <option value={value} key={idx}>{value}</option>
-            ))
-          }
-        </select>
 
-        {
-          type &&
-          <select onChange={(e) => { if (e.target.value !== '') setResource(e.target.value) }}>
-            <option value="">---select The type of Request----</option>
-            {
-              type.map((value, idx) => (
-                <option value={value} key={idx}>{value}</option>
-              ))
-            }
-
-          </select>
-        }
-
-      </div>
-
-      <MapContainer center={user.geocode} zoom={12}>
+      <MapContainer center={duser.geocode} zoom={12}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         <MarkerClusterGroup>
-          <Marker position={user.geocode} icon={userCustomIcon}>
-
-            <Popup>
-              {user.popup}
-            </Popup></Marker>
           {
+            agencies.map((agency, idx) => (
 
-            markers.map((marker, idx) => (
-              <Marker position={marker.geocode} key={idx} icon={customIcon}>
+              <Marker position={[Number(agency._doc.location.latitude),Number(agency._doc.location.longitude)]} key={idx} icon={customIcon}>
                 <Popup>
                   <div>
-                    <h3>{marker.name}</h3>
-                    <h4>{marker.type}</h4>
-                    <button onClick={() => handleMarker(marker)}>Add to request</button>
+                    <h3>{agency._doc.name}</h3>
+                    <h4>{agency._doc.address}</h4>
+                    <h4>{agency._doc.description}</h4>
+                    <h4>{agency._doc.type}</h4>
+                    <button onClick={() => handleMarker(agency)}>Select</button>
                   </div>
                 </Popup>
               </Marker>
             ))
-
           }
 
         </MarkerClusterGroup>
@@ -162,7 +166,13 @@ function Map() {
       </MapContainer>
 
       <button onClick={() => handleRequest()} className="body-submit-btn">Send Request</button>
-      
+      {
+        if(requestBody) 
+      {
+        return <Request user={user} payload={requestBody}/>
+      }
+    
+      }
     </div>
   )
 

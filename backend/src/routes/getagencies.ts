@@ -11,7 +11,7 @@ const API_KEY =
   process.env.MAPQUEST_API_KEY || 'nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm';
 
 // get all agencies within a particular radius (in kilometers)
-router.get('/', isAuthenticated, async (req, res) => {
+router.get('/', async (req, res) => {
   const { latitude, longitude, radius } = req.query;
   console.log(req.query);
   if (
@@ -24,7 +24,8 @@ router.get('/', isAuthenticated, async (req, res) => {
     const lat = Number(latitude);
     const long = Number(longitude);
     const rad = radius ? Number(radius) : 50;
-    let agencies = await RescueAgency.find().exec();
+    let agencies = await RescueAgency.find({});
+    console.log(agencies);
     agencies = agencies.filter((agency) => {
       agency.location.latitude;
       return (

@@ -1,24 +1,31 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard'
-import Map from './pages/Map'
-import Landing from './pages/Landing';
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  BrowserRouter,
+} from "react-router-dom";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+// import Map from "./pages/Map";
+import Landing from "./pages/Landing";
 
 function App() {
+  const [user, setUser] = useState();
+
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/signup" element={<SignUp/>} />
-          <Route path="/login" element={<Login/>} />
-         <Route path="/dashboard" element={<Dashboard/>} />
-         <Route path="/home" element={<Landing/>} />
+          <Route path="/signup" element={<SignUp setUser={setUser}/>} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/dashboard" element={<Dashboard user={user} />} />
+          <Route path="/home" element={<Landing user={user} />} />
+          
         </Routes>
-        
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import router from './src/routes/index';
+import { instrument } from '@socket.io/admin-ui';
 
 dotenv.config();
 const app = express();
@@ -38,8 +39,6 @@ app.use(
 );
 app.use(router);
 
-
-
 // connect to database
 async function connect() {
   if (process.env.MONGODB_CONNECTION_STRING) {
@@ -53,14 +52,39 @@ async function connect() {
 }
 connect();
 
-// creating socket server 
+// creating socket server
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ['http://localhost:3001', 'https://admin.socket.io'],
+    credentials: true,
+  },
+});
+
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on('join-room', (room) => {
+    console.log(console.log('joined room' + room));
+    socket.join(room);
+  });
+
+  socket.on('send-request', (room, req_data) => {
+    socket.to(room).emit('receive-request', req_data);
+  });
+
+  socket.on('send-message', (room, message) => {
+    socket.to(room).emit('receive-message', message);
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+});
+
+instrument(io, {
+  auth: false,
+  mode: 'development',
 });
 
 const port = process.env.PORT || 3000;
