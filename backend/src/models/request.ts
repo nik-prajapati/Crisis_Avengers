@@ -11,6 +11,10 @@ const RequestSchema = new Schema<Request>(
       type: Schema.Types.ObjectId,
       ref: 'RescueAgency',
     },
+    requestee_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'RescueAgency',
+    },
     requested_items: [
       {
         type: {

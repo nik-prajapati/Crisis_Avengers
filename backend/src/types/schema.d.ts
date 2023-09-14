@@ -43,6 +43,7 @@ export type RequestItem = {
 export type Request = {
   govt_requester_id?: Types.ObjectId;
   rescue_requester_id?: Types.ObjectId;
+  requestee_id: Types.ObjectId;
   requested_items: RequestItem[];
   status: string;
   created_at: Date;
