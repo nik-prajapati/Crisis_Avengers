@@ -1,0 +1,35 @@
+.leaflet-container{
+    height: 600px;
+    width: 600px;
+}
+
+.type-resource{
+    height: 30px;
+    padding:10px;
+    margin-bottom: 20px;
+
+}
+
+select{
+    font-size: 16px;
+    height: 30px;
+    outline: none;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.body-submit-btn{
+margin-top: 10px;
+padding: 10px;
+font-size: 20px;
+background-color: rgb(23, 122, 28);
+border-radius: 5px;
+outline: none;
+border: none;
+color: aliceblue;
+}
+
+.body-submit-btn:hover{
+    background-color: rgb(35, 166, 39);
+    cursor: pointer;
+}
