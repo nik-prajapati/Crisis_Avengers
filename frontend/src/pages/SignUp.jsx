@@ -9,8 +9,8 @@ const SignUp = () => {
         name: '',
         description: '',
         phones: [],
-        loaction: '',
         address: '',
+        type: ''
     });
 
     const handleInputChange = (event) => {
@@ -26,7 +26,7 @@ const SignUp = () => {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
-                    const location = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                    const location = `${latitude},${longitude}`;
                     setFormData({
                         ...formData,
                         location: location,
@@ -48,126 +48,122 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Form Data:', formData);
-        try {
-            const response = await axios.post('/api/signup', formData);
-            if (response.data.error === false) {
-              console.log('Signup successful');
-            } else {
-              setError(response.data.message);
-            }
-          } catch (error) {
-            console.error('Error during signup:', error);
-            setError('An error occurred during signup.');
-          }
+        // try {
+        //     const response = await axios.post('/api/signup', formData);
+        //     if (response.data.error === false) {
+        //       console.log('Signup successful');
+        //     } else {
+        //       setError(response.data.message);
+        //     }
+        //   } catch (error) {
+        //     console.error('Error during signup:', error);
+        //     setError('An error occurred during signup.');
+        //   }
     };
 
-    const handlePhoneInputChange = (event, index) => {
-        const newPhones = [...formData.phones];
-        newPhones[index] = event.target.value;
+    const handleAddPhone = () => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            phones: [...prevFormData.phones, ''], // Add an empty string for a new phone number
+        }));
+    };
 
+    const handleRemovePhone = (indexToRemove) => {
+        const updatedPhones = formData.phones.filter((_, index) => index !== indexToRemove);
         setFormData({
             ...formData,
-            phones: newPhones,
+            phones: updatedPhones,
         });
     };
 
-    const removePhoneInput = (index) => {
-        const newPhones = [...formData.phones];
-        newPhones.splice(index, 1);
-
+    const handlePhoneChange = (e, index) => {
+        const updatedPhones = [...formData.phones];
+        updatedPhones[index] = e.target.value;
         setFormData({
             ...formData,
-            phones: newPhones,
-        });
-    };
-    const addPhoneInput = () => {
-        setFormData({
-            ...formData,
-            phones: [...formData.phones, ''],
+            phones: updatedPhones,
         });
     };
     return (
-        <div className="outermain">
-            <div className="main">
-                <div className="left-container">
-                </div>
-                <div className="right-container">
-                    <div className="right-container__box">
-                        <div className="right-container-box">
-                            <h2 className="right-container__h2">Welcome to our Community</h2>
-                            <p className="right-container__p">Enter your email and password to Sign Up</p>
-                        </div>
-                        <div className="input-container">
-                            <label htmlFor="name" className="right-container__label">Name :</label>
-                            <input
-                                type="text"
-                                className="right-container__input"
-                                name="name"
-                                placeholder="Name of your organisation"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                            />
+        <div class="wrapper animated bounceInLeft">
+            <div class="company-info">
+                <h3></h3>
+                <ul>
+                </ul>
+            </div>
+            <div className="contact">
+                <h1 className='head'>Register and Connect with Our Community</h1>
+                <br />
+                <form>
+                    <p>
+                        <label>Name </label>
+                        <input type="text" name="name"
+                            placeholder='Name of your organisation'
+                            value={formData.name}
+                            onChange={handleInputChange} />
+                    </p>
+                    <p>
+                        <label>Email</label>
+                        <input type="email" name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder='Enter your email id'
+                        />
+                    </p>
+                    <p>
+                        <label>Password :</label>
+                        <input type="text" name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            placeholder='Set a strong password' />
+                    </p>
 
-                            <label htmlFor="email" className="right-container__label">Email id:</label>
-                            <input
-                                type="email"
-                                className="right-container__input"
-                                name="email"
-                                placeholder="Email id"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                            />
-                            <label htmlFor="password" className="right-container__label">Password</label>
-                            <input
-                                type="password"
-                                className="right-container__input"
-                                name="password"
-                                placeholder="Your password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                            />
-                            <div className="input-container">
-                            <label className="right-container__label">Phone Numbers:</label>
-                            {formData.phones.map((phone, index) => (
-                                <div key={index} className="phone-input">
-                                    <input
-                                        type="text"
-                                        className="right-container__input"
-                                        name={`phone-${index}`}
-                                        placeholder="Phone Number"
-                                        value={phone}
-                                        onChange={(e) => handlePhoneInputChange(e, index)}
-                                    />
-                                    <button type="button" onClick={() => removePhoneInput(index)}>Remove</button>
-                                </div>
-                            ))}
-                            <button type="button" onClick={addPhoneInput}>Add Phone Number</button>
-                        </div>
-                            <label htmlFor="address" className="right-container__label">Address:</label>
-                            <input
-                                type="text"
-                                className="right-container__input box"
-                                name="address"
-                                placeholder="Describe your organisation"
-                                value={formData.address}
-                                onChange={handleInputChange}
-                            />
-                            <label htmlFor="decription" className="right-container__label">Description:</label>
-                            <input
-                                type="text"
-                                className="right-container__input box"
-                                name="description"
-                                placeholder="Describe your organisation"
-                                value={formData.description}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <br />
-                        <br />
-                        <button className="btn" onClick={handleSubmit}>SIGN UP</button>
-                        <p className="right-container__bottom-text">Already have an account? <a href='/login'>Login</a></p>
-                    </div>
-                </div>
+                    <p>
+                        <label>Address :</label>
+                        <input type="text" name="address"
+                            value={formData.address}
+                            onChange={handleInputChange}
+                            placeholder='Enter your postal address'
+                        />
+                    </p>
+
+                    <p>
+                        <label>Select your Category:</label>
+                        <select name="type" className='drop'>
+                            <option value="">Select an option</option>
+                            <option value={formData.type}>Canada</option>
+                            <option value={formData.type}>United Kingdom</option>
+                            <option value={formData.type}>Australia</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label>Enter phone number:</label>
+                        {formData.phones.map((phone, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    name={`phone${index}`}
+                                    value={phone}
+                                    onChange={(e) => handlePhoneChange(e, index)}
+                                    placeholder="Enter a phone number"
+                                />
+                                <button onClick={() => handleRemovePhone(index)}>Remove</button>
+                            </div>
+                        ))}
+                        <button type="button" onClick={handleAddPhone}>Add Phone</button>
+                    </p>
+
+                    <p class="full">
+                        <label>Description</label>
+                        <textarea name="description" rows="5"
+                            placeholder='Decscribe your organisation in less than 50 words'
+                            value={formData.description}
+                            onChange={handleInputChange}></textarea>
+                    </p>
+                    <p class="full">
+                        <button onClick={handleSubmit}>Submit</button>
+                    </p>
+                </form>
             </div>
         </div>
     );
