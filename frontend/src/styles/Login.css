@@ -4,9 +4,10 @@
     box-sizing: border-box;
 }
 .outermain{
-    border:2px solid;
-    height: 100vh;
-    background: linear-gradient(to bottom, #000000, #000);
+
+    /* border:2px solid; */
+    height: 100%;
+    /* background: linear-gradient(to bottom, #000000, #000); */
 }
 .main {
     border: 0.5px solid white;

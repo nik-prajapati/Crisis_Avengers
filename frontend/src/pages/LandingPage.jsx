@@ -27,12 +27,12 @@ export default function Landingpage() {
         </div>
         
         <div className="buttons">
-        <Link to="/login">
+        <Link to="/govtlogin">
         <button className="gov-button" href="#">Government Agency</button>
         </Link> 
           
-          <Link to="/login">
-          <button className="rescue-button" href="#">
+          <Link to="/rescue">
+          <button className="rescue-button" >
             Rescue Agency
           </button>
           </Link>

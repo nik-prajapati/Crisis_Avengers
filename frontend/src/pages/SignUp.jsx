@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import '../styles/SignUp.css';
 import { useEffect } from 'react';
-import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
-const SignUp = ({setUser}) => {
-
+const SignUp = () => {
+    const navigate=useNavigate()
+    const [loginError, setLoginError] = useState(null);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         name: '',
         description: '',
-        phoneNumbers: [],
+        phonesNumbers: [],
         address: '',
-        type: 'SDRF'
+        type: ''
     });
 
     const handleInputChange = (event) => {
@@ -49,51 +50,49 @@ const SignUp = ({setUser}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // console.log('Form Data:', formData);
+        console.log('Form Data:', formData);
         try {
             const response = await axios.post('http://localhost:3000/signup', formData);
             if (response.data.error === false) {
-                setUser(response.data.user)
+               alert('SignUp successful');
               console.log('Signup successful');
+              navigate('/')
             } else {
-            //   setError(response.data.message);
-            console.log(response)
+              setError(response.data.message);
             }
           } catch (error) {
-            console.error('Error during signup:', error);
-            // setError('An error occurred during signup.');
+               window.alert('Login Error: ' + error.message);
+              window.location.reload(true);
+                console.error('Error during signup:', error);
           }
     };
 
     const handleAddPhone = () => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-            phoneNumbers: [...prevFormData.phoneNumbers, ''], // Add an empty string for a new phone number
+            phonesNumbers: [...prevFormData.phonesNumbers, ''], // Add an empty string for a new phone number
         }));
     };
 
     const handleRemovePhone = (indexToRemove) => {
-        const updatedPhones = formData.phoneNumbers.filter((_, index) => index !== indexToRemove);
+        const updatedPhones = formData.phonesNumbers.filter((_, index) => index !== indexToRemove);
         setFormData({
             ...formData,
-            phoneNumbers: updatedPhones,
+            phonesNumbers: updatedPhones,
         });
     };
 
     const handlePhoneChange = (e, index) => {
-        const updatedPhones = [...formData.phoneNumbers];
+        const updatedPhones = [...formData.phonesNumbers];
         updatedPhones[index] = e.target.value;
         setFormData({
             ...formData,
-            phoneNumbers: updatedPhones,
+            phonesNumbers: updatedPhones,
         });
     };
     return (
-        <div className="wrapper animated bounceInLeft">
-            <div className="company-info">
-                <h3></h3>
-                <ul>
-                </ul>
+        <div class="wrapper">
+            <div class="company-info">
             </div>
             <div className="contact">
                 <h1 className='head'>Register and Connect with Our Community</h1>
@@ -133,16 +132,16 @@ const SignUp = ({setUser}) => {
 
                     <p>
                         <label>Select your Category:</label>
-                        <select name="type" className='drop'>
+                        <select name="type" className='drop' value={formData.type} onChange={handleInputChange}>
                             <option value="">Select an option</option>
-                            <option value={formData.type}>Canada</option>
-                            <option value={formData.type}>United Kingdom</option>
-                            <option value={formData.type}>Australia</option>
+                            <option value="NDRF">NDRF</option>
+                            <option value="SDRF">SDRF</option>
+                            <option value="NGO">NGO</option>
                         </select>
                     </p>
                     <p>
                         <label>Enter phone number:</label>
-                        {formData.phoneNumbers.map((phone, index) => (
+                        {formData.phonesNumbers.map((phone, index) => (
                             <div key={index}>
                                 <input
                                     type="text"
@@ -157,14 +156,14 @@ const SignUp = ({setUser}) => {
                         <button type="button" onClick={handleAddPhone}>Add Phone</button>
                     </p>
 
-                    <p className="full">
+                    <p class="full">
                         <label>Description</label>
                         <textarea name="description" rows="5"
                             placeholder='Decscribe your organisation in less than 50 words'
                             value={formData.description}
                             onChange={handleInputChange}></textarea>
                     </p>
-                    <p className="full">
+                    <p class="full">
                         <button onClick={handleSubmit}>Submit</button>
                     </p>
                 </form>

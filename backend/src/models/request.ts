@@ -5,11 +5,11 @@ const RequestSchema = new Schema<Request>(
   {
     govt_requester_id: {
       type: Schema.Types.ObjectId,
-      ref: 'GovernmentAgency',
+      ref: 'Government-Agency',
     },
     rescue_requester_id: {
       type: Schema.Types.ObjectId,
-      ref: 'RescueAgency',
+      ref: 'rescue-agency',
     },
     requested_items: [
       {
@@ -42,6 +42,6 @@ const RequestSchema = new Schema<Request>(
   }
 );
 
-const Request = model<Request>('Resource', RequestSchema);
+const Request = model<Request>('Request', RequestSchema);
 
 export default Request;

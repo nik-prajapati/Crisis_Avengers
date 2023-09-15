@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Request from "./Request";
 import socket from "../helpers/socket";
+// import Request from "./Request";
+import ReqBlock from "./ReqBlock";
+
 
 const duser = {
   duser: "Ram Shirke",
@@ -29,9 +32,9 @@ const duserCustomIcon = new Icon({
 
 function Map({ user }) {
 
+  const [recieveRequest,setRecieveRequest]=useState([])
+  // console.log(user)
 
-
-  //used the socket for communication
   useEffect(() => {
     if (user) socket.emit("join-room", user._id);
   }, []);
@@ -39,8 +42,8 @@ function Map({ user }) {
   useEffect(() => {
     if (user) {
       socket.on("receive-request", (req_data) => {
-        setBlock(req_data)
-        console.log(req_data);
+        
+        setRecieveRequest([...recieveRequest, req_data])
       });
 
       socket.on("receive-message", (newMessage) => {
@@ -53,22 +56,24 @@ function Map({ user }) {
       };
     }
   });
-
-
-
+  
+  // console.log("request recieved ", recieveRequest);
   useEffect(() => {
     const fetchData = async () => {
-      // if (user) {
+      if (user) {
       const resp = await axios.get(
         `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=300`
       );
       const d = resp.data.agencies;
+      // console.log(d)
       setAgencies(d);
-      // }
+      }
     };
-
+    // console.log("called")
     fetchData();
   }, []);
+
+
 
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
@@ -96,6 +101,7 @@ function Map({ user }) {
     }
   };
 
+  console.log(recieveRequest)
   return (
     <div>
         <MapContainer center={duser.geocode} zoom={12}>
@@ -135,6 +141,24 @@ function Map({ user }) {
       {requestBody && (
         <Request user={user} payload={requestBody} socket={socket} block={RequestBlock} />
       )}
+
+      <div className="cardStyle"> 
+      {   
+        recieveRequest && 
+        recieveRequest.map((body)=>{
+          return <div >
+            <div className="card" style={{width: "18rem"}}>
+            <div className="card-body">
+            <h5 className="card-title">From : {body.rescue_requester_id.name}</h5>
+            <p className="card-text">Address : {body.rescue_requester_id.address}</p>
+            <h6 className="card-subtitle mb-2 text-muted">From : </h6>
+            </div>
+            </div>
+            </div>
+        })
+      }
+      </div>
+      
     </div>
   );
 }

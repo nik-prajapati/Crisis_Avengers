@@ -75,3 +75,9 @@ outline: none;
     outline: none;
     cursor: pointer;
 }
+
+.cardStyle{
+    display: flex;
+    flex-wrap: wrap;
+    color: black;
+}

@@ -25,7 +25,8 @@ router.get('/', async (req, res) => {
     const long = Number(longitude);
     const rad = radius ? Number(radius) : 50;
     let agencies = await RescueAgency.find({});
-    console.log(agencies);
+    // console.log(agencies)
+    // console.log(agencies);
     agencies = agencies.filter((agency) => {
       agency.location.latitude;
       return (
@@ -38,32 +39,34 @@ router.get('/', async (req, res) => {
         ) <= rad
       );
     });
-    const dist: number[] = [];
-    for (let i = 0; i < agencies.length; i += 49) {
-      try {
-        const response = await axios.post(
-          `https://www.mapquestapi.com/directions/v2/routematrix?key=${API_KEY}`,
-          {
-            locations: [
-              `${latitude},${longitude}`,
-              ...agencies
-                .slice(i, i + 49 < agencies.length ? i + 49 : undefined)
-                .map(
-                  (agency) =>
-                    `${agency.location.latitute},${agency.location.longitude}`
-                ),
-            ],
-            options: {
-              manyToOne: true,
-            },
-          }
-        );
-        dist.push(...response.data.distance.slice(1));
-        // console.log(response.data);
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    console.log(agencies);
+    // const dist: number[] = [];
+    // for (let i = 0; i < agencies.length; i += 49) {
+    //   try {
+    //     const response = await axios.post(
+    //       `https://www.mapquestapi.com/directions/v2/routematrix?key=${API_KEY}`,
+    //       {
+    //         locations: [
+    //           `${latitude},${longitude}`,
+    //           ...(agencies
+    //             .slice(i, i + 49 < agencies.length ? i + 49 : undefined)
+    //             .map(
+    //               (agency) =>
+    //                 `${agency.location.latitute},${agency.location.longitude}`
+    //             )),
+    //         ],
+    //         options: {
+    //           manyToOne: true,
+    //         },
+    //       }
+    //     );
+    //     console.log(response.data);
+    //     dist.push(...response.data.distance.slice(1));
+    //     // console.log(response.data);
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // }
     const resources: any[] = [];
     for (let i = 0; i < agencies.length; i++) {
       const x = await Resource.find({ agency_id: agencies[i]._id }).exec();
@@ -73,9 +76,9 @@ router.get('/', async (req, res) => {
       error: false,
       agencies: agencies
         .map((agency, idx) => {
-          return { ...agency, distance: dist[idx], resources: resources[idx] };
+          return { ...agency, resources: resources[idx] };
         })
-        .sort((a, b) => a.distance - b.distance),
+        // .sort((a, b) => a.distance - b.distance),
     });
   }
 });
