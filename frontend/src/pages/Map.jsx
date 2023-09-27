@@ -31,10 +31,20 @@ const duserCustomIcon = new Icon({
   iconSize: [30, 30],
 });
 
-function Map({ user }) {
 
+
+
+function Map({ user }) {
+  const [agencies, setAgencies] = useState([]);
+  const [type, setType] = useState(null);
+  const [marker, setMarker] = useState(null);
+  const [requestBody, setRequestBody] = useState(null);
+  const [RequestBlock,setBlock]=useState()
+
+  const [sentRequest,setSentRequest]=useState([])
   const [recieveRequest,setRecieveRequest]=useState([])
-  // console.log(user)
+
+  const [currentUser,setCurrentUser]=useState(null);
 
   useEffect(() => {
     if (user) socket.emit("join-room", user._id);
@@ -43,7 +53,7 @@ function Map({ user }) {
   useEffect(() => {
     if (user) {
       socket.on("receive-request", (req_data) => {
-        
+        console.log(req_data)
         setRecieveRequest([...recieveRequest, req_data])
       });
 
@@ -58,36 +68,55 @@ function Map({ user }) {
     }
   });
   
-  // console.log("request recieved ", recieveRequest);
+  // calling all agenies
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-      const resp = await axios.get(
-        `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=300`
-      );
+      const resp = await axios.get( `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`);
       const d = resp.data.agencies;
-      console.log(d)
-      setAgencies(d);
+        // console.log(d)
+      const myself=d.filter((agency)=>{
+        return agency._doc._id==user._id
+      })
+
+      const others=d.filter((agency)=>{
+        
+        return agency._doc._id!=user._id
+      })
+
+      const oth=others.map((agency)=>{
+        return {...agency,distance:Math.floor(Math.random()*50+1)}
+      })
+      // console.log(oth)
+      setAgencies(oth);
+      setCurrentUser(myself[0]._doc)
+
+
+
       }
     };
-    // console.log("called")
+
     fetchData();
   }, []);
 
 
+  // console.log(currentUser)
+  //setting current user
+  // useEffect(() => {
+  //   if(agencies){
+  //     
+  //   }
+    
+  // }, []);
 
-  const [agencies, setAgencies] = useState([]);
-  const [type, setType] = useState(null);
-  const [marker, setMarker] = useState(null);
-  const [requestBody, setRequestBody] = useState(null);
-  const [RequestBlock,setBlock]=useState()
-  
+//marker handle
   const handleMarker = (agency) => {
     const markerData = {
       id: agency._doc._id,
       name: agency._doc.name,
       address: agency._doc.address,
       description: agency._doc.description,
+      distance:agency.distance
     };
     setMarker(markerData);
   };
@@ -102,14 +131,14 @@ function Map({ user }) {
     }
   };
 
-  console.log(recieveRequest)
+  // console.log(recieveRequest)
   return (
     <div>
     <Link to="/">Home</Link>
 
-    <select class="form-control">
-        <option>Default select</option>
-    </select>
+      {
+
+      }
 
         <MapContainer center={duser.geocode} zoom={12}>
           <TileLayer
@@ -117,7 +146,36 @@ function Map({ user }) {
             url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <MarkerClusterGroup>
+          {
+            
+           currentUser && 
+
+    
+           <Marker position={[
+            Number(currentUser.location.latitude),
+            Number(currentUser.location.longitude),
+          ]}
+          key={112}
+          icon={duserCustomIcon}>
+
+
+          <Popup>
+                  
+               <h3>{currentUser.name}</h3>
+               <h5>{currentUser.address}</h5>
+               <h5>{currentUser.description}</h5>
+               <h5>{currentUser.type}</h5>
+           </Popup>
+          </Marker>
+   
+           
+
+        }
+
+        {
+              // currentUser && 
+        }
+
             {agencies.map((agency, idx) => (
               <Marker
                 position={[
@@ -133,12 +191,13 @@ function Map({ user }) {
                     <h5>{agency._doc.address}</h5>
                     <h5>{agency._doc.description}</h5>
                     <h5>{agency._doc.type}</h5>
+                    <h4>{agency.distance} km</h4>
                     <button className="marker-btn" onClick={() => handleMarker(agency)}>Add</button>
                   
                 </Popup>
               </Marker>
             ))}
-          </MarkerClusterGroup>
+          
         </MapContainer>
 
       <button onClick={() => handleRequest()} className="body-submit-btn">
@@ -151,6 +210,7 @@ function Map({ user }) {
 
       <div className="cardStyle"> 
       {   
+
         recieveRequest && 
         recieveRequest.map((body,idx)=>{
           return <div className="cardbody" key={idx}>
@@ -159,6 +219,7 @@ function Map({ user }) {
             <div className="card-body" style={{color: "black"}}>
             <h5 className="card-title"  style={{color: "black"}}>From : {body.rescue_requester_id.name}</h5>
             <p className="card-text"  style={{color: "black"}}>Address : {body.rescue_requester_id.address}</p>
+            <p className="card-text"  style={{color: "black"}}>Distance : {Math.floor(Math.random()*50+1)}km</p>
             
             </div>
             </div>

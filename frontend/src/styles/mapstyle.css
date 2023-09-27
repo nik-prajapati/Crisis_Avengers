@@ -86,3 +86,7 @@ outline: none;
     color: black;
     margin: 20px;
 }
+
+.leaflet-control-zoom{
+    color: black;
+}

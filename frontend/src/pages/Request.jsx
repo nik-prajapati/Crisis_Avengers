@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 // import socket from "../helpers/socket";
 
 const Request = ({ user, payload, socket}) => {
-
+console.log(payload)
   const [requestSend,setRequestSend]=useState();
 
   return (
@@ -12,16 +12,11 @@ const Request = ({ user, payload, socket}) => {
         <button
           className="request-submit-btn"
           onClick={() => {
-            // const dummyReq = {
-            //   reqAgency: payload.reqAgency,
-            //   item: { type: "Medical", name: "Bandages", qty: "50" },
-            //   user:user
-            // };
-
             const dummyReq = {
-              // govt_requester_id: "6501f2d76d5b47ed6214311d",
+
               rescue_requester_id: user._id,
               requestee_id: payload.reqAgency._id,
+              distance:payload.reqAgency.distance,
               requested_items: [
                 {
                   type: "Medical",
@@ -34,7 +29,9 @@ const Request = ({ user, payload, socket}) => {
               location: {
                 latitude: 18.914042,
                 longitude: 72.821693,
+                
               },
+
             };
 
 

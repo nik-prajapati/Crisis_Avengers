@@ -5,7 +5,9 @@ import Footer from "./Footer";
 import {Link} from "react-router-dom"
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-export default function Landingpage() {
+export default function Landingpage({user}) {
+
+  console.log(user)
   return (
     <>
       <div className="navbar">
@@ -24,9 +26,13 @@ export default function Landingpage() {
             <p className="navopt "><Link to="/" style={{ textDecoration: 'none' }}>Contact Us</Link></p>
             <p className="navopt"><Link to="/" style={{ textDecoration: 'none' }}>Services</Link></p>
             <p className="navopt"><Link to="/request" style={{ textDecoration: 'none' }}>Request</Link></p>
+           
         </div>
         
         <div className="buttons">
+        {
+          user &&  <h2 className="navopt">{user.email.split('@')[0].toUpperCase()}</h2>
+         }
         <Link to="/govtlogin">
         <button className="gov-button" href="#">Government Agency</button>
         </Link> 
