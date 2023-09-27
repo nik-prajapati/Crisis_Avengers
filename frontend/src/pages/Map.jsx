@@ -11,6 +11,7 @@ import Request from "./Request";
 import socket from "../helpers/socket";
 // import Request from "./Request";
 import ReqBlock from "./ReqBlock";
+import {Link} from 'react-router-dom'
 
 
 const duser = {
@@ -65,7 +66,7 @@ function Map({ user }) {
         `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=300`
       );
       const d = resp.data.agencies;
-      // console.log(d)
+      console.log(d)
       setAgencies(d);
       }
     };
@@ -104,6 +105,12 @@ function Map({ user }) {
   console.log(recieveRequest)
   return (
     <div>
+    <Link to="/">Home</Link>
+
+    <select class="form-control">
+        <option>Default select</option>
+    </select>
+
         <MapContainer center={duser.geocode} zoom={12}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -145,13 +152,14 @@ function Map({ user }) {
       <div className="cardStyle"> 
       {   
         recieveRequest && 
-        recieveRequest.map((body)=>{
-          return <div >
+        recieveRequest.map((body,idx)=>{
+          return <div className="cardbody" key={idx}>
+
             <div className="card" style={{width: "18rem"}}>
-            <div className="card-body">
-            <h5 className="card-title">From : {body.rescue_requester_id.name}</h5>
-            <p className="card-text">Address : {body.rescue_requester_id.address}</p>
-            <h6 className="card-subtitle mb-2 text-muted">From : </h6>
+            <div className="card-body" style={{color: "black"}}>
+            <h5 className="card-title"  style={{color: "black"}}>From : {body.rescue_requester_id.name}</h5>
+            <p className="card-text"  style={{color: "black"}}>Address : {body.rescue_requester_id.address}</p>
+            
             </div>
             </div>
             </div>

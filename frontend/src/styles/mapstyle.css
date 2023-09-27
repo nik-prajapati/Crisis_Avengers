@@ -81,3 +81,8 @@ outline: none;
     flex-wrap: wrap;
     color: black;
 }
+
+.cardbody{
+    color: black;
+    margin: 20px;
+}

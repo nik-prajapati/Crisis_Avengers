@@ -2,6 +2,8 @@
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+  
+  /* color: white; */
 }
 body {
   background: #ffffff;
@@ -73,6 +75,8 @@ ul {
   width: 100%;
   padding: 1em;
   border: 1px solid #c9e6ff;
+  color: black;
+  
 }
 .contact form button {
  background: rgb(115, 180, 180);
@@ -103,7 +107,7 @@ label{
 
 input,textarea{
   border-radius: 15px;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
 }
 
 .drop{

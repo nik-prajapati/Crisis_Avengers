@@ -21,8 +21,8 @@ export default function Landingpage() {
         </div>
         
         <div className="midnav">
-            <p className="navopt "><a href="#cont1" style={{ textDecoration: 'none' }}>Contact Us</a></p>
-            <p className="navopt"><a href="#cont2" style={{ textDecoration: 'none' }}>Services</a></p>
+            <p className="navopt "><Link to="/" style={{ textDecoration: 'none' }}>Contact Us</Link></p>
+            <p className="navopt"><Link to="/" style={{ textDecoration: 'none' }}>Services</Link></p>
             <p className="navopt"><Link to="/request" style={{ textDecoration: 'none' }}>Request</Link></p>
         </div>
         
