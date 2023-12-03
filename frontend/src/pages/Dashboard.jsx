@@ -1,7 +1,9 @@
 import React from 'react';
 import '../styles/Dashboards.css'
+import Map from './Map';
 
-const Dashboard = () => {
+const Dashboard = ({user}) => {
+  
   return (
     <div className="container">
       <div className="left_sidebar">
@@ -153,6 +155,7 @@ const Dashboard = () => {
           </table>
         </div>
       </div>
+     
     </div>
   );
 }

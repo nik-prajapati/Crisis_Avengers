@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../styles/SignUp.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [loginError, setLoginError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
@@ -12,7 +14,7 @@ const SignUp = () => {
     description: "",
     phonesNumbers: [],
     address: "",
-    type: "NDRF",
+    type: "",
   });
   const [error, setError] = useState("");
 
@@ -58,6 +60,7 @@ const SignUp = () => {
       if (response.data.error === false) {
         alert("SignUp successful");
         console.log("Signup successful");
+        navigate("/");
       } else {
         setError(response.data.message);
       }

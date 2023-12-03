@@ -1,42 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
-  Routes,
   Route,
-  Outlet,
+  Routes,
+  BrowserRouter,
 } from "react-router-dom";
-import Landingpg from "./pages/landingpg/Landingpg.js";
-// import GovtLogin from "./pages/govtLogin/GovtLogin.js";
-// import "./App.css";
-// import GovtSignUp from "./pages/govtSignup/GovtSignup.js";
-import GovtLanding from "./pages/govtLanding/GovtLanding.js";
-
-import SignUp from './pages/SignUp';
-import RescueLogin from './pages/RescueLogin';
-import GovtLogin from './pages/GovtLogin';
-import Dashboard from './pages/Dashboard.jsx'
+import SignUp from "./pages/SignUp";
+import GovtLogin from "./pages/GovtLogin";
+import Dashboard from "./pages/Dashboard";
+import Landingpage from "./pages/LandingPage";
+import Map from "./pages/Map";
+import RescueLogin from "./pages/RescueLogin";
 
 function App() {
+  const [user, setUser] = useState(null);
+  console.log(user)
+
   return (
-    <>
-       <Router>
+    <BrowserRouter>
+      <div className="App">
         <Routes>
-          <Route path="/" element={<Outlet/>}/>
-          <Route index element={<Landingpg />}/>
-          <Route path="/govtLogin" element={<GovtLogin/>}/>
-          <Route path="/rescueLogin" element={<RescueLogin/>}/>
-          <Route path="/signUp" element={<SignUp/>}/>
-          <Route path="/govtlanding" element={<GovtLanding/>}/>
-          <Route path="/abc" element={<Dashboard/>}/>
-
-
+          <Route path="/signup" element={<SignUp setUser={setUser}/>} />
+          <Route path="/govt" element={<GovtLogin setUser={setUser} />} />
+          <Route path="/rescue" element={<RescueLogin setUser={setUser} />} />
+          <Route path="/dashboard" element={<Dashboard user={user} />} />
+          <Route path="/" element={<Landingpage user={user} />} />      
+          <Route path="/home" element={<Landingpage user={user} />} />      
+          <Route path="/request" element={<Map user={user} />} />      
+          
         </Routes>
-      </Router>
-    
-
-      
-      
-    </>
+      </div>
+    </BrowserRouter>
   );
 }
 
