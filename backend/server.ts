@@ -32,7 +32,7 @@ const fallbackCookieSigningSecret =
 // middlewares
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: ['http://localhost:3001', 'http://localhost:5173'],
     credentials: true,
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   })
@@ -54,12 +54,15 @@ app.use(
 );
 app.use(router);
 
-
 // creating socket server
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:3001', 'http://localhost:5173', 'https://admin.socket.io'],
+    origin: [
+      'http://localhost:3001',
+      'http://localhost:5173',
+      'https://admin.socket.io',
+    ],
     credentials: true,
   },
 });
