@@ -1,21 +1,26 @@
+import React from "react";
 import Typewriter from "typewriter-effect";
 import "../styles/Landingpage.css";
 import Footer from "./Footer";
 import {Link} from "react-router-dom"
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-import logo from "../image/apadalogo.png";
+// import images
+import disasterManagementImage from '../image/Disaster-Management.jpg';
+import indiaMapImage from "../image/indiamap.png";
+import rescueImage from "../image/rescue.png";
+import apadaLogo from "../image/apadalogo.png";
 
 
 export default function Landingpage({user}) {
 
-  console.log(user);
+  console.log(user)
   return (
     <>
       <div className="navbar">
         <div className="logo">
           <div className="logoLeft">
-          <img src={logo} alt="APADA Logo" />
+          <img src={apadaLogo} alt="APADA Logo" />
           </div>
         
           <div className="logoRight">
@@ -52,7 +57,7 @@ export default function Landingpage({user}) {
         <div
           className="hero"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(${require("../image/Disaster-Management.jpg")})`,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(${disasterManagementImage})`,
             backgroundColor: "131418",
           }}
         >
@@ -103,7 +108,7 @@ export default function Landingpage({user}) {
               
             </div>
             <div className="rightSide">
-             <img src={require("../image/indiamap.png")}></img>
+             <img src={indiaMapImage}></img>
             </div>
          </div>
       </div>
@@ -112,7 +117,7 @@ export default function Landingpage({user}) {
       <div  className="govtcontainer ">
              
             <div className="rightSide">
-             <img className="rescueimg" src={require("../image/rescue.png")}></img>
+             <img className="rescueimg" src={rescueImage}></img>
             </div>
 
             <div className="leftSide">

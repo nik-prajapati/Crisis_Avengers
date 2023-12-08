@@ -11,6 +11,20 @@ import { instrument } from '@socket.io/admin-ui';
 import { addRequest } from './src/controllers/RequestController';
 
 dotenv.config();
+
+// connect to database
+async function connect() {
+  if (process.env.MONGODB_CONNECTION_STRING) {
+    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
+    console.log('Successfully connected to database');
+  } else {
+    console.error(
+      'Connection string not specified. Please specify connection string in an environment variable MONGODB_CONNECTION_STRING in .env file in root folder'
+    );
+  }
+}
+connect();
+
 const app = express();
 
 const fallbackCookieSigningSecret =
@@ -40,24 +54,12 @@ app.use(
 );
 app.use(router);
 
-// connect to database
-async function connect() {
-  if (process.env.MONGODB_CONNECTION_STRING) {
-    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
-    console.log('Successfully connected to database');
-  } else {
-    console.error(
-      'Connection string not specified. Please specify connection string in an environment variable MONGODB_CONNECTION_STRING in .env file in root folder'
-    );
-  }
-}
-connect();
 
 // creating socket server
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:3001', 'https://admin.socket.io'],
+    origin: ['http://localhost:3001', 'http://localhost:5173', 'https://admin.socket.io'],
     credentials: true,
   },
 });

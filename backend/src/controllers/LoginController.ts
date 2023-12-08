@@ -24,6 +24,7 @@ export default async function LoginController(req: Request, res: Response) {
     password,
   }: { email: string; password: string; roleString: string } = req.body;
   const role = Number(req.body.role);
+  console.log(role);
   // change this line when schema changes
   const user = await User.findOne({ email: email }).exec();
   if (user === null) {
@@ -32,6 +33,7 @@ export default async function LoginController(req: Request, res: Response) {
     const verified = await argon2.verify(user.hash, password);
 
     if (verified) {
+      console.log(user);
       if (user.role === role) {
         // sign and encrpyt a JWT and send it to the client
         const payload = {

@@ -13,6 +13,9 @@ import updateresources from './updateresources';
 // import isAuthenticated from '../utils/isAuthenticated';
 // import isRescueAgency from '../utils/isRescueAgency';
 
+// importing all models
+
+
 const router = Router();
 
 router.use('/signup', signupRouter);

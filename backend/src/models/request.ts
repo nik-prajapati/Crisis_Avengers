@@ -5,11 +5,11 @@ const RequestSchema = new Schema<Request>(
   {
     govt_requester_id: {
       type: Schema.Types.ObjectId,
-      ref: 'Government-Agency',
+      ref: 'GovernmentAgency',
     },
     rescue_requester_id: {
       type: Schema.Types.ObjectId,
-      ref: 'rescue-agency',
+      ref: 'RescueAgency',
     },
     requestee_id: {
       type: Schema.Types.ObjectId,

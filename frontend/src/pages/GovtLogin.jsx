@@ -152,7 +152,6 @@ const GovtLogin = ({ setUser }) => {
           },
         }
       );
-
       if (response.data.error === true) {
         setLoginError(response.data.message);
         alert(response.data.message);
@@ -164,9 +163,13 @@ const GovtLogin = ({ setUser }) => {
         console.log("Logged in succesfully");
       }
     } catch (error) {
-      window.alert("Login Error: " + error.message);
-      window.location.reload(true);
-      console.error("Error during login:", error);
+      if (error.response.status === 403) {
+        alert("Wrong password");
+        // window.location.reload(true);
+      } else {
+        alert('Login error: check console');
+        console.error("Error during login:", error);
+      }
     }
   };
 

@@ -2,21 +2,20 @@ import React, { useEffect, useState } from "react";
 // import "../styles/Dashboards.css";
 // import socket from "../helpers/socket";
 
-const Request = ({ user, payload, socket}) => {
-console.log(payload)
-  const [requestSend,setRequestSend]=useState();
+const Request = ({ user, payload, socket }) => {
+  console.log(payload);
+  const [requestSend, setRequestSend] = useState();
 
   return (
     <div>
-      <div className="contain" >
+      <div className='contain'>
         <button
-          className="request-submit-btn"
+          className='request-submit-btn'
           onClick={() => {
             const dummyReq = {
-
               rescue_requester_id: user._id,
               requestee_id: payload.reqAgency._id,
-              distance:payload.reqAgency.distance,
+              distance: payload.reqAgency.distance,
               requested_items: [
                 {
                   type: "Medical",
@@ -29,21 +28,18 @@ console.log(payload)
               location: {
                 latitude: 18.914042,
                 longitude: 72.821693,
-                
               },
-
             };
 
-
             socket.emit("send-request", payload.reqAgency.id, dummyReq);
-            console.log("Request Sent")
+            console.log("Request Sent");
           }}
         >
           Send Request
         </button>
 
         <button
-          className=" request-submit-btn message-btn"
+          className=' request-submit-btn message-btn'
           onClick={() => {
             const dummyReq = {
               type: "Medical",

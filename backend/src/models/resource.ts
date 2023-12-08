@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { Resource } from '../types/schema';
 
-
 const ResourceSchema = new Schema<Resource>(
   {
     agency_id: {
@@ -28,7 +27,6 @@ const ResourceSchema = new Schema<Resource>(
   },
   {
     timestamps: true,
-
   }
 );
 
