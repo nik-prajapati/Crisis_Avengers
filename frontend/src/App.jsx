@@ -5,18 +5,20 @@ import {
   Routes,
   BrowserRouter,
 } from "react-router-dom";
-import SignUp from "./pages/SignUp";
-import GovtLogin from "./pages/GovtLogin";
-import Dashboard from "./pages/Dashboard";
-import Landingpage from "./pages/LandingPage";
-import Map from "./pages/Map";
-import RescueLogin from "./pages/RescueLogin";
+import SignUp from "./pages/rescue_signup/SignUp";
+import GovtLogin from "./pages/govtLogin/GovtLogin";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Landingpage from "./pages/home/LandingPage";
+import Map from "./pages/request/Map";
+import RescueLogin from "./pages/rescueLogin/RescueLogin";
+
 
 function App() {
   const [user, setUser] = useState(null);
   console.log(user)
 
   return (
+    
     <BrowserRouter>
       <div className="App">
         <Routes>

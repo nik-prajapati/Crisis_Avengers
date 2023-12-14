@@ -1,16 +1,17 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "../styles/mapstyle.css";
+import "./mapstyle.css";
 import { Icon } from "leaflet";
-import icon from "../image/location-pin.png";
+
+import icon from '../../image/location-pin.png/'
 import MarkerClusterGroup from "react-leaflet-cluster";
-import gpsIcon from "../image/gps.png";
+import gpsIcon from "../../image/gps.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Request from "./Request";
-import socket from "../helpers/socket";
+import Request from "../../components/Request/Request";
+import socket from "../../helpers/socket";
 // import Request from "./Request";
-import ReqBlock from "./ReqBlock";
+import ReqBlock from "../ReqBlock";
 import { Link } from "react-router-dom";
 
 const duser = {

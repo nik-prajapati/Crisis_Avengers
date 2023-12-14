@@ -1,15 +1,15 @@
 import React from "react";
 import Typewriter from "typewriter-effect";
-import "../styles/Landingpage.css";
-import Footer from "./Footer";
+import "./Landingpage.css";
+import Footer from "../../components/footer/Footer";
 import {Link} from "react-router-dom"
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 // import images
-import disasterManagementImage from '../image/Disaster-Management.jpg';
-import indiaMapImage from "../image/indiamap.png";
-import rescueImage from "../image/rescue.png";
-import apadaLogo from "../image/apadalogo.png";
+import disasterManagementImage from '../../image/Disaster-Management.jpg';
+import indiaMapImage from "../../image/indiamap.png";
+import rescueImage from "../../image/rescue.png";
+import apadaLogo from "../../image/apadalogo.png";
 
 
 export default function Landingpage({user}) {

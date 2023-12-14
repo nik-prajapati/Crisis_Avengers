@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import "../styles/Dashboards.css";
-// import socket from "../helpers/socket";
 
 const Request = ({ user, payload, socket }) => {
   console.log(payload);

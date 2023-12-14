@@ -1,6 +1,6 @@
 import React from 'react';
-import '../styles/Dashboards.css'
-import Map from './Map';
+import './Dashboards.css'
+import Map from '../request/Map';
 
 const Dashboard = ({user}) => {
   
