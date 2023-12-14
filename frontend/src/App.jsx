@@ -11,7 +11,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Landingpage from "./pages/home/LandingPage";
 import Map from "./pages/request/Map";
 import RescueLogin from "./pages/rescueLogin/RescueLogin";
-
+import MapPage from "./pages/request/MapPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,7 +28,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard user={user} />} />
           <Route path="/" element={<Landingpage user={user} />} />
           <Route path="/home" element={<Landingpage user={user} />} />
-          <Route path="/request" element={<Map user={user} />} />
+          <Route path="/request" element={<MapPage user={user} />} />
 
         </Routes>
       </div>

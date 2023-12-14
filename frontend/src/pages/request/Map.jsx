@@ -67,7 +67,6 @@ function Map({ user }) {
     console.log(user);
   });
 
-  // calling all agenies
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -129,10 +128,7 @@ function Map({ user }) {
 
   // console.log(recieveRequest)
   return (
-    <div>
-      <Link to='/'>Home</Link>
-
-      {}
+    <div className="Map-container">
 
       <MapContainer center={duser.geocode} zoom={12}>
         <TileLayer
