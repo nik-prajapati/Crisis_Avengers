@@ -31,9 +31,7 @@ export default async function LoginController(req: Request, res: Response) {
     res.json({ error: true, message: "User doesn't exist" });
   } else {
     const verified = await argon2.verify(user.hash, password);
-
     if (verified) {
-      console.log(user);
       if (user.role === role) {
         // sign and encrpyt a JWT and send it to the client
         const payload = {
