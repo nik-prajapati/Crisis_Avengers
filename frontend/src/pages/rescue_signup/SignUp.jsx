@@ -4,6 +4,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import rescueimg from "../../image/Rsignup.png";
+
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState(null);
@@ -97,101 +100,133 @@ const SignUp = () => {
     });
   };
   return (
-    <div class='wrapper'>
-      <div class='company-info'></div>
-      <div className='contact'>
-        <h1 className='head'>Register and Connect with Our Community</h1>
-        <br />
-        <form>
-          <p>
-            <label>Name </label>
-            <input
-              type='text'
-              name='name'
-              placeholder='Name of your organisation'
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-          </p>
-          <p>
-            <label>Email</label>
-            <input
-              type='email'
-              name='email'
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder='Enter your email id'
-            />
-          </p>
-          <p>
-            <label>Password :</label>
-            <input
-              type='text'
-              name='password'
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder='Set a strong password'
-            />
-          </p>
+    <div className="main-box">
+      <div className="left">
+      <div className="left-head">
+          <div className="glass-container">
+            <div className="left-glass">
+              <img
+                src={apadalogo}
+                style={{ width: "50px", height: "40px" }}
+              ></img>
+            </div>
+            <p>
+              <strong>apadaRelief</strong>
+            </p>
+          </div>
 
-          <p>
-            <label>Address :</label>
-            <input
-              type='text'
-              name='address'
-              value={formData.address}
-              onChange={handleInputChange}
-              placeholder='Enter your postal address'
-            />
-          </p>
+          <div className="tagline">ONE NETWORK,COUNTLESS HEROES</div>
 
-          <p>
-            <label>Select your Category:</label>
-            <select
-              name='type'
-              className='drop'
-              value={formData.type}
-              onChange={handleInputChange}
-            >
-              <option value=''>Select an option</option>
-              <option value='NDRF'>NDRF</option>
-              <option value='SDRF'>SDRF</option>
-              <option value='NGO'>NGO</option>
-            </select>
-          </p>
-          <p>
-            <label>Enter phone number:</label>
-            {formData.phonesNumbers.map((phone, index) => (
-              <div key={index}>
+          <div className="glass-container2">
+            <div className="left-glass"></div>
+            <p>
+              <strong>
+                Reegister and Connect with our community
+              </strong>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="right">
+        <div className="contact">
+          <form>
+            <div className="right-box">
+              <p>
+                <label>Name </label>
                 <input
-                  type='text'
-                  name={`phone${index}`}
-                  value={phone}
-                  onChange={(e) => handlePhoneChange(e, index)}
-                  placeholder='Enter a phone number'
+                  type="text"
+                  name="name"
+                  placeholder="Name of your organisation"
+                  value={formData.name}
+                  onChange={handleInputChange}
                 />
-                <button onClick={() => handleRemovePhone(index)}>Remove</button>
-              </div>
-            ))}
-            <button type='button' onClick={handleAddPhone}>
-              Add Phone
-            </button>
-          </p>
+              </p>
+              <p>
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Enter your email id"
+                />
+              </p>
+              <p>
+                <label>Password </label>
+                <input
+                  type="text"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="Set a strong password"
+                />
+              </p>
 
-          <p class='full'>
-            <label>Description</label>
-            <textarea
-              name='description'
-              rows='5'
-              placeholder='Decscribe your organisation in less than 50 words'
-              value={formData.description}
-              onChange={handleInputChange}
-            ></textarea>
-          </p>
-          <p class='full'>
-            <button onClick={handleSubmit}>Submit</button>
-          </p>
-        </form>
+              <p>
+                <label>Address </label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  placeholder="Enter your postal address"
+                />
+              </p>
+            </div>
+
+            <div className="mid">
+              <p>
+                <label>Select your Category:</label>
+                <select
+                  name="type"
+                  className="drop"
+                  value={formData.type}
+                  onChange={handleInputChange}
+                >
+                  <option value="NDRF">NDRF</option>
+                  <option value="SDRF">SDRF</option>
+                  <option value="NGO">NGO</option>
+                </select>
+              </p>
+              <p>
+                <label>Enter phone number:</label>
+                {formData.phonesNumbers.map((phone, index) => (
+                  <div key={index}>
+                    <input
+                      type="text"
+                      name={`phone${index}`}
+                      value={phone}
+                      onChange={(e) => handlePhoneChange(e, index)}
+                      placeholder="Enter a phone number"
+                    />
+                    <button className="removebtn" onClick={() => handleRemovePhone(index)}>
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button className="addbtn" type="button" onClick={handleAddPhone}>
+                  Add Contact No.
+                </button>
+              </p>
+            </div>
+
+            <p class="full">
+              <label>Description</label>
+              <textarea
+                name="description"
+                rows="3"
+                placeholder="Decscribe your organisation in less than 50 words"
+                value={formData.description}
+                onChange={handleInputChange}
+              ></textarea>
+            </p>
+            <p>
+              <button className="registerbtn" onClick={handleSubmit}>REGISTER</button>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
