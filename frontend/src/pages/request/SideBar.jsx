@@ -4,6 +4,7 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Groups2Icon from '@mui/icons-material/Groups2';
+
 const SideBar = () => {
   return (
     <div className='sidebar-container'>

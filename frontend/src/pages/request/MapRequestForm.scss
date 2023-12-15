@@ -1,0 +1,42 @@
+.MapRequestForm-container{
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    min-width: 350px;
+    // background-color: gray;
+    margin-right:1rem;
+    
+    .input-section{
+        color: white;
+        
+        margin: 10px;
+        font-size: 1.5rem;
+        .input-Title{
+        margin-bottom: 5px;
+        padding: 0;
+    
+        }
+        input{
+            margin: 20px;
+            // background-color: red;
+            // box-shadow: 2px 2px 5px rgb(231, 31, 31);
+            padding:5px;
+            font-size: 1.2rem;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+            margin: 0;
+            width: 100%;
+        }
+
+        #request-submit{
+        margin-top: 20px;
+        background-color: #F04D1A;   
+        color: white;
+
+        &:hover{
+            background-color: #cb3f14;
+            cursor: pointer;
+        }
+        }
+    }
+}

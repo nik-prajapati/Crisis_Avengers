@@ -13,6 +13,7 @@ import socket from "../../helpers/socket";
 // import Request from "./Request";
 import ReqBlock from "../ReqBlock";
 import { Link } from "react-router-dom";
+import MapRequestForm from './MapRequestForm.jsx'
 
 const duser = {
   duser: "Ram Shirke",
@@ -128,8 +129,10 @@ function Map({ user }) {
 
   // console.log(recieveRequest)
   return (
+    <div className="Map-section-columns">
+    <MapRequestForm/>
+    
     <div className="Map-container">
-
       <MapContainer center={duser.geocode} zoom={12}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -219,6 +222,7 @@ function Map({ user }) {
             );
           })}
       </div>
+    </div>
     </div>
   );
 }

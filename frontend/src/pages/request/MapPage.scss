@@ -1,11 +1,12 @@
 $background_color: #121029;
 
 .map-page-container{
-    // width: auto;
+    color: white;
+    margin: 0;
     background-color: $background_color;
-
     .header-section{
         margin:10px 0; 
+        margin-top: 0;
         display: flex;
         justify-content:space-between;
         font-size: 2rem;
