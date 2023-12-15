@@ -5,7 +5,7 @@ import './MapPage.scss'
 import icon from '../../image/aapdalogo.jpg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const MapPage = () => {
+const MapPage = ({user}) => {
   return (
     <div className='map-page-container'>
     <div className='header-section'>
@@ -23,7 +23,7 @@ const MapPage = () => {
     </div>
     <div className='column-container'>
     <SideBar/>
-    <Map/>
+    <Map user={user}/>
     </div>
     </div>
     )

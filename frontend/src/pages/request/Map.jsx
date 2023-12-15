@@ -14,6 +14,7 @@ import socket from "../../helpers/socket";
 import ReqBlock from "../ReqBlock";
 import { Link } from "react-router-dom";
 import MapRequestForm from './MapRequestForm.jsx'
+import ListSection from "./ListSection.jsx";
 
 const duser = {
   duser: "Ram Shirke",
@@ -43,6 +44,10 @@ function Map({ user }) {
   const [recieveRequest, setRecieveRequest] = useState([]);
 
   const [currentUser, setCurrentUser] = useState(null);
+  const [mapClass,setMapClass]=useState(true);
+
+  const [mapSection,setMapSection]=useState(true);
+  
 
   useEffect(() => {
     console.log(user);
@@ -71,11 +76,12 @@ function Map({ user }) {
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
+        console.log("called fetchData")
         const resp = await axios.get(
           `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
         );
         const d = resp.data.agencies;
-        // console.log(d)
+        console.log(d)
         const myself = d.filter((agency) => {
           return agency._doc._id == user._id;
         });
@@ -96,14 +102,7 @@ function Map({ user }) {
     fetchData();
   }, []);
 
-  // console.log(currentUser)
-  //setting current user
-  // useEffect(() => {
-  //   if(agencies){
-  //
-  //   }
-
-  // }, []);
+  
 
   //marker handle
   const handleMarker = (agency) => {
@@ -127,13 +126,28 @@ function Map({ user }) {
     }
   };
 
-  // console.log(recieveRequest)
   return (
     <div className="Map-section-columns">
     <MapRequestForm/>
     
     <div className="Map-container">
-      <MapContainer center={duser.geocode} zoom={12}>
+    <div className="option-btn">
+    <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
+      ()=>{
+      setMapClass(true)
+     
+      }
+    }>MAP</button>
+    <button className={mapClass ? 'section-option-btn disable':'section-option-btn active'} 
+    onClick={(e)=>{
+      setMapClass(false)
+      
+    }}> LIST</button>
+    </div>
+
+      <ListSection agencies={agencies} mapClass={mapClass}/>
+      <div className={mapClass ? "active-section":"disable-section"}>
+      <MapContainer center={duser.geocode} zoom={12} >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -186,7 +200,7 @@ function Map({ user }) {
           </Marker>
         ))}
       </MapContainer>
-
+      </div>
       <button onClick={() => handleRequest()} className='body-submit-btn'>
         Add To Request Body
       </button>

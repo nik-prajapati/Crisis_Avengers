@@ -6,8 +6,9 @@
     margin-right:1rem;
     
     .input-section{
+        position: relative;
         color: white;
-        min-width: 450px;
+        min-width: 400px;
         margin: 10px;
         font-size: 1.5rem;
         .input-Title{
@@ -31,16 +32,24 @@
         }
 
         .disType-options{
+            background-color: #121029;
             display: none;
-            background-color: rgba(255, 255, 255, 0.052);
+            // background-color: rgb(3, 0, 0);
+            z-index: 2;
+            position: absolute;
             border-radius: 10px;
             overflow-y: scroll;
             scrollbar-width: thin;
             scrollbar-color: #c11515 transparent;
             cursor: pointer;
+            
+        }
+        
+        .disType-options li{
+            min-width: 450px;
+            background-color: #121029;
 
         }
-
         input:focus+.disType-options{
             display: block;
             max-height: 200px;
