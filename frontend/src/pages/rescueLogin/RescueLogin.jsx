@@ -22,6 +22,7 @@ const RescueLogin = ({ setUser }) => {
   });
 
   const handleInputChange = (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
     setFormData({
       ...formData,

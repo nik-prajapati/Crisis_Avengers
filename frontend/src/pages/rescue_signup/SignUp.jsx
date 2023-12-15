@@ -19,7 +19,7 @@ const SignUp = () => {
     address: "",
     type: "",
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -60,12 +60,17 @@ const SignUp = () => {
         "http://localhost:3000/signup",
         formData
       );
+      console.log(response)
       if (response.data.error === false) {
         alert("SignUp successful");
         console.log("Signup successful");
         navigate("/");
       } else {
         setError(response.data.message);
+
+        setTimeout(()=>{
+          setError(null)
+        },3000)
       }
     } catch (error) {
       window.alert("Login Error: " + error.message);
@@ -228,6 +233,9 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      {
+        error && <div>{error}</div>
+      }
     </div>
   );
 };
