@@ -21,9 +21,7 @@ type req = {
 
 const addRequest = async (req_data: req) => {
   const res = await Request.create({ ...req_data, status: 'Pending' });
-  const request = await res.populate(
-    'rescue_requester_id'
-  );
+  const request = await res.populate('rescue_requester_id');
   return request;
 };
 

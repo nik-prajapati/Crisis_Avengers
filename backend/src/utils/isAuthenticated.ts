@@ -55,7 +55,6 @@ export default async function isAuthenticated(
         // @ts-ignore
         role: payload.role,
       };
-      // console.log(req.user);
       next();
     } catch (err) {
       res.status(401).json({ error: true, message: 'Not authenticated' });

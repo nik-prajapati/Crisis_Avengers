@@ -62,11 +62,16 @@ export default async function SignupController(req: Request, res: Response) {
       .setExpirationTime(tokenLifetime)
       .encrypt(encryptionKey);
     res.cookie('token', encryptedToken, {
+      domain: 'http://localhost:3000',
       httpOnly: true,
-      secure: true,
       signed: true,
       maxAge: 24 * 60 * 60,
-      sameSite: 'none'
+      sameSite: 'strict',
+      // httpOnly: true,
+      // secure: true,
+      // signed: true,
+      // maxAge: 24 * 60 * 60,
+      // sameSite: 'none'
     });
     const [lat, long] = location.split(',');
     await (
@@ -76,11 +81,15 @@ export default async function SignupController(req: Request, res: Response) {
         location: { latitude: lat, longitude: long },
         type: type,
         address: address,
-        email:email,
+        email: email,
         phone: phoneNumbers,
         ...(description ? { description: description } : {}),
       })
     ).save();
-    return res.json({ error: false, message: 'Signed up and logged in successfully',user});
+    return res.json({
+      error: false,
+      message: 'Signed up and logged in successfully',
+      user,
+    });
   }
 }

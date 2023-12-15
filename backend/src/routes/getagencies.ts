@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Router } from 'express';
 import isAuthenticated from '../utils/isAuthenticated';
 import RescueAgency from '../models/rescue_agency';
@@ -39,7 +40,7 @@ router.get('/', async (req, res) => {
         ) <= rad
       );
     });
-    console.log(agencies);
+    // console.log(agencies);
     // const dist: number[] = [];
     // for (let i = 0; i < agencies.length; i += 49) {
     //   try {
