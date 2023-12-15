@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import './MapRequestForm.scss'
 
 
-
-
-
 const MapRequestForm = () => {
     
     const disasterTypes = ["Earthquakes","Hurricanes, Typhoons, and Cyclones","Floods","Tornadoes","Wildfires","Industrial Accidents","Technological Hazards","Transportation Accidents","Environmental Pollution","Volcanic Eruptions","Landslides","Pandemics","Epidemics","Extreme Weather Events","Conflicts and Wars","Refugee Crises","Asteroid Impact","Financial Crises","Social Unrest"

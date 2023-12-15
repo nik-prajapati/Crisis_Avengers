@@ -128,7 +128,7 @@ function Map({ user }) {
 
   return (
     <div className="Map-section-columns">
-    <MapRequestForm/>
+    <MapRequestForm />
     
     <div className="Map-container">
     <div className="option-btn">

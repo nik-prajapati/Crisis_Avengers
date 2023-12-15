@@ -18,7 +18,7 @@ const MapPage = ({user}) => {
     </div> 
     <div className='Profile-container'>
     <AccountCircleIcon />
-    <span>SDMA</span>
+    <span>{user && user.email.split('@')[0].toUpperCase()}</span>
     </div>
     </div>
     <div className='column-container'>
