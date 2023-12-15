@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Request, Response, NextFunction } from 'express';
 import { jwtDecrypt, jwtVerify } from 'jose';
+import { AuthenticatedReq } from '../types/schema';
 
 const fallbackSigningSecret =
   'd7b5dae336250ab03418ca0fdcd0019d695110b500de83df6e1272b1bf9de3b6';
@@ -19,7 +20,7 @@ export default async function isAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction
-) {  
+) {
   console.log(req.signedCookies);
   console.log(req.cookies);
   if (!req.signedCookies || !req.signedCookies.token) {
@@ -46,7 +47,7 @@ export default async function isAuthenticated(
           algorithms: [jwsAlg],
         }
       );
-      req['user'] = {
+      req.user = {
         // @ts-ignore
         id: payload.id,
         // @ts-ignore
