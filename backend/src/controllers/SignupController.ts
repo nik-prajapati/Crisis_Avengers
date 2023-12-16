@@ -62,16 +62,10 @@ export default async function SignupController(req: Request, res: Response) {
       .setExpirationTime(tokenLifetime)
       .encrypt(encryptionKey);
     res.cookie('token', encryptedToken, {
-      domain: 'http://localhost:3000',
       httpOnly: true,
       signed: true,
       maxAge: 24 * 60 * 60,
-      sameSite: 'strict',
-      // httpOnly: true,
-      // secure: true,
-      // signed: true,
-      // maxAge: 24 * 60 * 60,
-      // sameSite: 'none'
+      sameSite: 'none',
     });
     const [lat, long] = location.split(',');
     await (
