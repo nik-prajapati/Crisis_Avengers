@@ -247,3 +247,19 @@ textarea {
 }
 
 
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 768px) {
+  .main-box {
+    flex-direction: column; /* Stack columns for smaller screens */
+  }
+
+  .right {
+    display: block; /* Show the right column for smaller screens */
+  }
+
+  .glass-container2 {
+    width: 80%; /* Update the width for mobile devices */
+    margin: 0 auto; /* Center the container horizontally */
+  }
+}
