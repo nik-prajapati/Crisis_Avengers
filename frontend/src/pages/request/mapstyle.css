@@ -13,6 +13,50 @@ flex-direction: row-reverse;
     flex:1;
 }
 
+.option-btn{
+    width: 4rem;
+    display: flex;
+    flex-direction: row;
+}
+.section-option-btn{
+    /* width: 2rem; */
+    font-size: 1rem;
+    padding: 10px;
+    letter-spacing: 5px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    border-right: 1px solid black;
+    transition: all ease;
+    
+}
+
+.active{
+
+background:white; 
+border-left: 1px solid white;
+border-top: 1px solid white;
+outline: none;
+    border: none;
+}
+
+.disable{
+    outline: none;
+    border: none;
+    background:#121029;
+color: white;
+
+
+}
+
+.disable-section{
+    display: none;
+}
+
+.active-section{
+    display: block;
+}
+
 .leaflet-container{
     /* color: white; */
     height: 600px;

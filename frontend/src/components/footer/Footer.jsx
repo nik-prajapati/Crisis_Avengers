@@ -7,15 +7,15 @@ import {AiFillFacebook, AiFillInstagram, AiFillTwitterCircle} from "react-icons/
 export default function Footer() {
   return (
     <>
-      <footer class="section bg-footer">
+      <footer className="section bg-footer">
         
           <div className="mainBox">
-            <div class="col-lg-3">
-              <div class="">
-                <h6 class="headingCol">
+            <div className="col-lg-3">
+              <div className="">
+                <h6 className="headingCol">
                   Information
                 </h6>
-                <ul class="column">
+                <ul className="column">
                   <li>
                     <a href="">Pages</a>
                   </li>
@@ -29,12 +29,12 @@ export default function Footer() {
               </div>
             </div>
 
-            <div class="col-lg-3">
-              <div class="">
-                <h6 class="headingCol">
+            <div className="col-lg-3">
+              <div className="">
+                <h6 className="headingCol">
                   Ressources
                 </h6>
-                <ul class="column">
+                <ul className="column">
                   <li>
                     <a href="">Monitoring Grader </a>
                   </li>
@@ -49,10 +49,10 @@ export default function Footer() {
               </div>
             </div>
 
-            <div class="col-lg-2">
-              <div class="">
-                <h6 class="headingCol">Help</h6>
-                <ul class="column">
+            <div className="col-lg-2">
+              <div className="">
+                <h6 className="headingCol">Help</h6>
+                <ul className="column">
                   <li>
                     <a href="">Sign Up </a>
                   </li>
@@ -69,18 +69,18 @@ export default function Footer() {
               </div>
             </div>
 
-            <div class="lastCol">
-              <div class="">
-                <h6 class="headingCol">
+            <div className="lastCol">
+              <div className="">
+                <h6 className="headingCol">
                   Contact Us
                 </h6>
-                <p class="contact-info mt-5">
+                <p className="contact-info mt-5">
                   Contact us if need help with anything
                 </p>
-                <p class="contact-info ">+91-11-26701700 (Mon-Fri - 9:30AM-6:00PM)</p>
-                <p class="contact-info">Control Room: +91-11-26701728 (Mon-Fri 24X7)</p>
-                <div class="mt-5">
-                  <ul class="contactIcon">
+                <p className="contact-info ">+91-11-26701700 (Mon-Fri - 9:30AM-6:00PM)</p>
+                <p className="contact-info">Control Room: +91-11-26701728 (Mon-Fri 24X7)</p>
+                <div className="mt-5">
+                  <ul className="contactIcon">
                   <li>
                   <AiFillTwitterCircle/>
                   </li>
@@ -98,7 +98,7 @@ export default function Footer() {
         
 
         <div className="bottomFooter">
-          <p class="textfoot">2023 © Crisis Avengers, All Rights Reserved</p>
+          <p className="textfoot">2023 © Crisis Avengers, All Rights Reserved</p>
         </div>
       </footer>
     </>
