@@ -2,7 +2,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./mapstyle.css";
 import { Icon } from "leaflet";
-
 import icon from '../../image/location-pin.png/'
 import MarkerClusterGroup from "react-leaflet-cluster";
 import gpsIcon from "../../image/gps.png";
@@ -33,24 +32,21 @@ const duserCustomIcon = new Icon({
   iconSize: [30, 30],
 });
 
+
 function Map({ user }) {
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
   const [requestBody, setRequestBody] = useState(null);
-  const [RequestBlock, setBlock] = useState();
-
   const [sentRequest, setSentRequest] = useState([]);
   const [recieveRequest, setRecieveRequest] = useState([]);
-
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass,setMapClass]=useState(true);
 
-  const [mapSection,setMapSection]=useState(true);
   
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     if (user) socket.emit("join-room", user._id);
   }, []);
 
@@ -70,18 +66,18 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-    console.log(user);
+    // console.log(user);
   });
 
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        console.log("called fetchData")
+        // console.log("called fetchData")
         const resp = await axios.get(
           `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
         );
         const d = resp.data.agencies;
-        console.log(d)
+        // console.log(d)
         const myself = d.filter((agency) => {
           return agency._doc._id == user._id;
         });
@@ -113,18 +109,26 @@ function Map({ user }) {
       description: agency._doc.description,
       distance: agency.distance,
     };
+    
+    const requestBody = {
+      reqAgency: markerData,
+      reqduser: user,
+    };
+
     setMarker(markerData);
+    setRequestBody(requestBody);
+
   };
 
   const handleRequest = () => {
-    if (user && marker) {
-      const requestBody = {
-        reqAgency: marker,
-        reqduser: user,
-      };
-      setRequestBody(requestBody);
+    // if (user && marker) {
+    //   const requestBody = {
+    //     reqAgency: marker,
+    //     reqduser: user,
+    //   };
+    //   setRequestBody(requestBody);
     }
-  };
+  
 
   return (
     <div className="Map-section-columns">
@@ -194,23 +198,28 @@ function Map({ user }) {
                 className='marker-btn'
                 onClick={() => handleMarker(agency)}
               >
-                Add
+                Collaborate
               </button>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
       </div>
-      <button onClick={() => handleRequest()} className='body-submit-btn'>
-        Add To Request Body
-      </button>
+      {
+
+        // <button onClick={() => handleRequest()} className='body-submit-btn'>
+        //   Add To Request Body
+        // </button>
+
+      }
 
       {requestBody && (
         <Request
           user={user}
           payload={requestBody}
           socket={socket}
-          block={RequestBlock}
+          setPayLoad={setRequestBody}
+          
         />
       )}
 
