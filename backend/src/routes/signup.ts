@@ -53,15 +53,16 @@ router.post(
           .join(', '),
       });
     } else {
-      const { phoneNumbers } = req.body;
-      if (!Array.isArray(phoneNumbers)) {
+      const { phonesNumbers } = req.body;
+      // console.log(req)
+      if (!Array.isArray(phonesNumbers)) {
         res.json({ error: true, message: 'No phone number provided' });
       } else {
         let error = false;
-        for (let i = 0; i < phoneNumbers.length; i++) {
+        for (let i = 0; i < phonesNumbers.length; i++) {
           if (
-            typeof phoneNumbers[i] !== 'string' ||
-            phoneNumbers[i].length !== 10
+            typeof phonesNumbers[i] !== 'string' ||
+            phonesNumbers[i].length !== 10
           ) {
             error = true;
             res.json({ error: true, message: 'Invalid phone number' });

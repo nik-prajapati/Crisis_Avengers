@@ -12,6 +12,7 @@ import Landingpage from "./pages/home/LandingPage";
 import Map from "./pages/request/Map";
 import RescueLogin from "./pages/rescueLogin/RescueLogin";
 import MapPage from "./pages/request/MapPage";
+import ReviewRequest from './pages/review request/ReviewRequest'
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,6 +30,7 @@ function App() {
           <Route path="/" element={<Landingpage user={user} />} />
           <Route path="/home" element={<Landingpage user={user} />} />
           <Route path="/request" element={<MapPage user={user} />} />
+          <Route path="/review" element={<ReviewRequest user={user} />} />
 
         </Routes>
       </div>

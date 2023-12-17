@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Coordinate } from './Coordinates';
 import { Types } from 'mongoose';
 
@@ -30,7 +31,6 @@ export type RescueAgency = {
 
 export type Inventory = {
   id: Types.ObjectId;
-
 };
 
 export type RequestItem = {
@@ -40,7 +40,7 @@ export type RequestItem = {
   unit: string;
 };
 
-export type Request = {
+export type DRequest = {
   govt_requester_id?: Types.ObjectId;
   rescue_requester_id?: Types.ObjectId;
   requestee_id: Types.ObjectId;
@@ -58,4 +58,27 @@ export type Resource = {
   unit: string;
   created_at: Date;
   updated_at: Date;
+};
+
+export interface AuthenticatedReq extends Request {
+  user?: {
+    id: string;
+    email: string;
+    hash: number;
+  };
+}
+
+type Message = {
+  content: string;
+  sender: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type Chat = {
+  members: Types.ObjectId[];
+  messages: Message[];
+  lastMsg?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
 };

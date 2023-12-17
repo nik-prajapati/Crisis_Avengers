@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { Request } from '../types/schema';
+import { DRequest } from '../types/schema';
 
-const RequestSchema = new Schema<Request>(
+const RequestSchema = new Schema<DRequest>(
   {
     govt_requester_id: {
       type: Schema.Types.ObjectId,
@@ -46,6 +46,6 @@ const RequestSchema = new Schema<Request>(
   }
 );
 
-const Request = model<Request>('Request', RequestSchema, 'requests');
+const DRequest = model<DRequest>('Request', RequestSchema, 'requests');
 
-export default Request;
+export default DRequest;

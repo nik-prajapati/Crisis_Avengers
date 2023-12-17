@@ -1,32 +1,9 @@
 $background_color: #121029;
 
 .map-page-container{
-    // width: auto;
+    color: white;
+    margin: 0;
     background-color: $background_color;
-
-    .header-section{
-        margin:10px 0; 
-        display: flex;
-        justify-content:space-between;
-        font-size: 2rem;
-        .header-logo{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            img{
-                width:100px;
-            }
-            .header-logo-text{
-                margin: 0 10px;
-                font-size: 1.5rem;
-
-                .header-logo-motto{
-                    font-size: 15px;
-                }
-                
-            }
-        }
-    }
     .column-container{
         display: flex;
         flex-direction: row;

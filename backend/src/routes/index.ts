@@ -9,12 +9,12 @@ import getsentrequests from './getsentrequests';
 import getreceivedrequests from './getreceivedrequests';
 import getresources from './getresources';
 import updateresources from './updateresources';
+import chatRouter from './chat';
 
 // import isAuthenticated from '../utils/isAuthenticated';
 // import isRescueAgency from '../utils/isRescueAgency';
 
 // importing all models
-
 
 const router = Router();
 
@@ -28,6 +28,7 @@ router.use('/getsentrequests', getsentrequests); // all requests issued by a use
 router.use('/getreceivedrequests', getreceivedrequests); // all requests issued by an agency
 router.use('/getresources', getresources); // to display inventory to a rescue agency
 router.use('/updateresources', updateresources); // to let rescue agencies update their inventory details
+router.use('/chat', chatRouter);
 
 // error route
 router.all('*', (req, res) => {
