@@ -12,7 +12,6 @@ import { addRequest } from './src/controllers/RequestController';
 
 dotenv.config();
 
-// connect to database
 async function connect() {
   if (process.env.MONGODB_CONNECTION_STRING) {
     await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
@@ -54,7 +53,6 @@ app.use(
 );
 app.use(router);
 
-// creating socket server
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
