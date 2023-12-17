@@ -64,7 +64,7 @@ export default async function SignupController(req: Request, res: Response) {
     res.cookie('token', encryptedToken, {
       httpOnly: true,
       signed: true,
-      maxAge: 24 * 60 * 60,
+      maxAge: 5 * 24 * 60 * 60 * 1000,
       sameSite: 'none',
     });
     const [lat, long] = location.split(',');

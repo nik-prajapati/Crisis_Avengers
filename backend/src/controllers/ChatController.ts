@@ -3,6 +3,7 @@ import RescueAgency from '../models/rescue_agency';
 import Chat from '../models/chat';
 // import { Types } from 'mongoose';
 import Message from '../models/message';
+import { Types } from 'mongoose';
 
 const chatList = async (req: Request, res: Response) => {
   try {
@@ -13,13 +14,12 @@ const chatList = async (req: Request, res: Response) => {
     //   email: 'ndrf@gov.in',
     //   role: 1,
     // };
-    console.log('hello1');
 
     if (user) {
-      console.log('hello');
       const chats = await Chat.aggregate([
         {
-          $match: { members: user.id },
+          //@ts-ignore
+          $match: { members: new Types.ObjectId(user.id) },
         },
         {
           $lookup: {
