@@ -50,8 +50,9 @@ export default async function LoginController(req: Request, res: Response) {
         res.cookie('token', encryptedToken, {
           httpOnly: true,
           signed: true,
-          maxAge: 5 * 24 * 60 * 60 * 1000,
+          maxAge: 24 * 60 * 60 * 1000,
           sameSite: 'none',
+          secure: true
         });
         res.json({ error: false, message: 'Logged in successfully', user });
       } else {
