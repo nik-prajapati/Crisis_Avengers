@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Map from "../../components/Map/Map";
 import Footer from "../../components/footer/Footer";
 
-import Dashboard from "../../components/Dashboard/Dashboard";
 
 export default function GovtLanding() {
   return (

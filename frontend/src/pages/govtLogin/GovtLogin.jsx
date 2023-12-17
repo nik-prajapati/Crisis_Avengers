@@ -1,17 +1,16 @@
-import React from "react";
-import "../styles/RescueLogin.css";
-import { useState } from "react";
+import React, { useState } from "react";
+import "./GovtLogin.css";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-const RescueLogin = ({ setUser }) => {
+const GovtLogin = ({ setUser }) => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "1",
+    role: "0",
   });
 
   const handleInputChange = (event) => {
@@ -24,8 +23,7 @@ const RescueLogin = ({ setUser }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoginError(null);
-    console.log(formData);
+    // console.log(formData);
     try {
       const response = await axios.post(
         "http://localhost:3000/login",
@@ -37,24 +35,27 @@ const RescueLogin = ({ setUser }) => {
           },
         }
       );
-
       if (response.data.error === true) {
         setLoginError(response.data.message);
-
         alert(response.data.message);
         window.location.reload(true);
+        console.log("Login error", response.data.message);
       } else {
-        setUser(response.data.user);
-        navigate("/");
-        // alert('Logged in succesfully');
-        // console.log('Logged in succesfully');
+        navigate("/home");
+        alert("Logged in Successfully");
+        console.log("Logged in succesfully");
       }
     } catch (error) {
-      window.alert("Login Error: " + error.message);
-      window.location.reload(true);
-      console.error("Error during login:", error);
+      if (error.response.status === 403) {
+        alert("Wrong password");
+        // window.location.reload(true);
+      } else {
+        alert('Login error: check console');
+        console.error("Error during login:", error);
+      }
     }
   };
+
   return (
     <div className='outermainc'>
       <div className='main'>
@@ -105,5 +106,4 @@ const RescueLogin = ({ setUser }) => {
   );
 };
 
-export default RescueLogin;
-
+export default GovtLogin;

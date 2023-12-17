@@ -1,17 +1,19 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "../styles/mapstyle.css";
+import "./mapstyle.css";
 import { Icon } from "leaflet";
-import icon from "../image/location-pin.png";
+import icon from '../../image/location-pin.png/'
 import MarkerClusterGroup from "react-leaflet-cluster";
-import gpsIcon from "../image/gps.png";
+import gpsIcon from "../../image/gps.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Request from "./Request";
-import socket from "../helpers/socket";
+import Request from "../../components/Request/Request";
+import socket from "../../helpers/socket";
 // import Request from "./Request";
-import ReqBlock from "./ReqBlock";
+import ReqBlock from "../ReqBlock";
 import { Link } from "react-router-dom";
+import MapRequestForm from './MapRequestForm.jsx'
+import ListSection from "./ListSection.jsx";
 
 const duser = {
   duser: "Ram Shirke",
@@ -30,20 +32,21 @@ const duserCustomIcon = new Icon({
   iconSize: [30, 30],
 });
 
+
 function Map({ user }) {
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
   const [requestBody, setRequestBody] = useState(null);
-  const [RequestBlock, setBlock] = useState();
-
   const [sentRequest, setSentRequest] = useState([]);
   const [recieveRequest, setRecieveRequest] = useState([]);
-
   const [currentUser, setCurrentUser] = useState(null);
+  const [mapClass,setMapClass]=useState(true);
+
+  
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     if (user) socket.emit("join-room", user._id);
   }, []);
 
@@ -63,13 +66,13 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-    console.log(user);
+    // console.log(user);
   });
 
-  // calling all agenies
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
+        // console.log("called fetchData")
         const resp = await axios.get(
           `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
         );
@@ -95,14 +98,7 @@ function Map({ user }) {
     fetchData();
   }, []);
 
-  // console.log(currentUser)
-  //setting current user
-  // useEffect(() => {
-  //   if(agencies){
-  //
-  //   }
-
-  // }, []);
+  
 
   //marker handle
   const handleMarker = (agency) => {
@@ -113,27 +109,49 @@ function Map({ user }) {
       description: agency._doc.description,
       distance: agency.distance,
     };
+    
+    const requestBody = {
+      reqAgency: markerData,
+      reqduser: user,
+    };
+
     setMarker(markerData);
+    setRequestBody(requestBody);
+
   };
 
   const handleRequest = () => {
-    if (user && marker) {
-      const requestBody = {
-        reqAgency: marker,
-        reqduser: user,
-      };
-      setRequestBody(requestBody);
+    // if (user && marker) {
+    //   const requestBody = {
+    //     reqAgency: marker,
+    //     reqduser: user,
+    //   };
+    //   setRequestBody(requestBody);
     }
-  };
+  
 
-  // console.log(recieveRequest)
   return (
-    <div>
-      <Link to='/'>Home</Link>
+    <div className="Map-section-columns">
+    <MapRequestForm />
+    
+    <div className="Map-container">
+    <div className="option-btn">
+    <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
+      ()=>{
+      setMapClass(true)
+     
+      }
+    }>MAP</button>
+    <button className={mapClass ? 'section-option-btn disable':'section-option-btn active'} 
+    onClick={(e)=>{
+      setMapClass(false)
+      
+    }}> LIST</button>
+    </div>
 
-      {}
-
-      <MapContainer center={duser.geocode} zoom={12}>
+      <ListSection agencies={agencies} mapClass={mapClass}/>
+      <div className={mapClass ? "active-section":"disable-section"}>
+      <MapContainer center={duser.geocode} zoom={12} >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -180,23 +198,28 @@ function Map({ user }) {
                 className='marker-btn'
                 onClick={() => handleMarker(agency)}
               >
-                Add
+                Collaborate
               </button>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
+      </div>
+      {
 
-      <button onClick={() => handleRequest()} className='body-submit-btn'>
-        Add To Request Body
-      </button>
+        // <button onClick={() => handleRequest()} className='body-submit-btn'>
+        //   Add To Request Body
+        // </button>
+
+      }
 
       {requestBody && (
         <Request
           user={user}
           payload={requestBody}
           socket={socket}
-          block={RequestBlock}
+          setPayLoad={setRequestBody}
+          
         />
       )}
 
@@ -222,6 +245,7 @@ function Map({ user }) {
             );
           })}
       </div>
+    </div>
     </div>
   );
 }

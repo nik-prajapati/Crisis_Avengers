@@ -5,18 +5,21 @@ import {
   Routes,
   BrowserRouter,
 } from "react-router-dom";
-import SignUp from "./pages/SignUp";
-import GovtLogin from "./pages/GovtLogin";
-import Dashboard from "./pages/Dashboard";
-import Landingpage from "./pages/LandingPage";
-import Map from "./pages/Map";
-import RescueLogin from "./pages/RescueLogin";
+import SignUp from "./pages/rescue_signup/SignUp";
+import GovtLogin from "./pages/govtLogin/GovtLogin";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Landingpage from "./pages/home/LandingPage";
+import Map from "./pages/request/Map";
+import RescueLogin from "./pages/rescueLogin/RescueLogin";
+import MapPage from "./pages/request/MapPage";
+import ReviewRequest from './pages/review request/ReviewRequest'
 
 function App() {
   const [user, setUser] = useState(null);
   console.log(user)
 
   return (
+    
     <BrowserRouter>
       <div className="App">
         <Routes>
@@ -26,7 +29,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard user={user} />} />
           <Route path="/" element={<Landingpage user={user} />} />
           <Route path="/home" element={<Landingpage user={user} />} />
-          <Route path="/request" element={<Map user={user} />} />
+          <Route path="/request" element={<MapPage user={user} />} />
+          <Route path="/review" element={<ReviewRequest user={user} />} />
 
         </Routes>
       </div>

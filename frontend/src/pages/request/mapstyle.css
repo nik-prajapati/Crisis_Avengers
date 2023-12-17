@@ -1,11 +1,66 @@
-*{
-    color:black;
+
+.Map-section-columns{
+display: flex;
+flex: 2;
+flex-direction: row;
+flex-direction: row-reverse;
+}
+
+.Map-container{
+    padding: 0 20px;
+    margin: 0 20px;
+    width: auto;
+    flex:1;
+}
+
+.option-btn{
+    width: 4rem;
+    display: flex;
+    flex-direction: row;
+}
+.section-option-btn{
+    /* width: 2rem; */
+    font-size: 1rem;
+    padding: 10px;
+    letter-spacing: 5px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    border-right: 1px solid black;
+    transition: all ease;
+    
+}
+
+.active{
+
+background:white; 
+border-left: 1px solid white;
+border-top: 1px solid white;
+outline: none;
+    border: none;
+}
+
+.disable{
+    outline: none;
+    border: none;
+    background:#121029;
+color: white;
+
 
 }
 
+.disable-section{
+    display: none;
+}
+
+.active-section{
+    display: block;
+}
+
 .leaflet-container{
+    /* color: white; */
     height: 600px;
-    width: 100%;
+    /* width: 100%; */
     flex: 2;
 }
 
@@ -66,7 +121,6 @@ outline: none;
 
 .request-submit-btn{
     background-color: rgb(7, 106, 228);
-    /* width: 100px; */
     margin: 20px;
     padding: 10px;
     font-size: 16px;
