@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import MapRequestForm from './MapRequestForm.jsx'
 import ListSection from "./ListSection.jsx";
 
+
 const duser = {
   duser: "Ram Shirke",
   geocode: [19.10295695, 72.83745021706365],
@@ -43,8 +44,11 @@ function Map({ user }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass,setMapClass]=useState(true);
 
-  
 
+  
+  // console.log(reviewData)
+
+  
   useEffect(() => {
     // console.log(user);
     if (user) socket.emit("join-room", user._id);
