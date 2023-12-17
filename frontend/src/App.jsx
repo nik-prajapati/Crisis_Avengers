@@ -13,6 +13,7 @@ import Map from "./pages/request/Map";
 import RescueLogin from "./pages/rescueLogin/RescueLogin";
 import MapPage from "./pages/request/MapPage";
 import ReviewRequest from './pages/review request/ReviewRequest'
+import UpdateData from "./pages/UpdateData";
 import { createContext } from "react";
 import AuthContext from "./context/AuthContext";
 import reviewContext from "./context/ReviewRequestContext";
@@ -37,7 +38,7 @@ function App() {
           <Route path="/home" element={<Landingpage user={user} />} />
           <Route path="/request" element={<MapPage user={user} />} />
           <Route path="/review" element={<ReviewRequest user={user} />} />
-
+          <Route path="/resource" element={<UpdateData/>} />
         </Routes>
         </reviewContext.Provider>
       </div>
