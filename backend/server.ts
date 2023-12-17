@@ -78,12 +78,20 @@ io.on('connection', (socket) => {
     socket.to(room).emit('receive-request', request_data);
   });
 
-  socket.on('send-message', (room, message) => {
-    socket.to(room).emit('receive-message', message);
+  socket.on('new-message', (room, message) => {
+    socket.to(room).emit('receive-message', message, room);
   });
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket.on('typing', (username, chatId) => {
+    socket.to(chatId).emit('is-typing', username, chatId);
+  });
+
+  socket.on('stop-typing', (username, chatId) => {
+    socket.to(chatId).emit('isnt-typing', username, chatId);
   });
 });
 
