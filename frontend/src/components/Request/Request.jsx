@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import '../../pages/request/Request.scss'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useContext } from "react";
+import reviewContext from "../../context/ReviewRequestContext.jsx";
 
 const Request = ({ user, payload, socket,setPayLoad }) => {
+  
   console.log(payload);
   const [requestSend, setRequestSend] = useState(null);
-
+  const {reviewData,setReviewData}=useContext(reviewContext)
 
   useEffect(()=>{
 
@@ -40,7 +43,7 @@ const Request = ({ user, payload, socket,setPayLoad }) => {
     // setRequestSend(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast("Request Sent Successfully");
-
+    setReviewData([...reviewData,dummyReq])
     setTimeout(()=>{
       setPayLoad(null)
     },5000)

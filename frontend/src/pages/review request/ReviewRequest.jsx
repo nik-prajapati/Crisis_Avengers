@@ -3,6 +3,11 @@ import axios from 'axios'
 import './ReviewRequest.scss'
 import SideBar from '../request/SideBar';
 import MapPageHeader from '../request/MapPageHeader';
+import { useContext } from "react";
+import reviewContext from "../../context/ReviewRequestContext.jsx";
+import { useEffect } from 'react';
+
+
 const dummyData = {
     sentRequests: [
       {
@@ -58,21 +63,33 @@ const dummyData = {
 const ReviewRequest = () => {
 
     const [sentSection,setSentSection]=useState(true)
-     
-    // useEffect(()=>{
-    //     const fetchReviewRequest=async ()=>{
-    //     const resp=await axios.get('https://localhost:3000')
-    //     if(resp.status==200){
-    //         setSentRequest(resp.data.sent)
-    //         setRecieveRequest(resp.data.recieve)
-    //     }
-    //     }
-    // })
+    const {reviewData,setReviewData}=useContext(reviewContext)
+    const [dummyD,setDummyD]=useState({})
+    // console.log(reviewData)
 
+    useEffect(()=>{
+        const fetchReviewRequest=async ()=>{
+          const [sentResp, receivedResp] = await Promise.all([
+            axios.get('http://localhost:3000/getsentrequests'),
+            axios.get('http://localhost:3000/getreceivedrequests')
+          ]);
+          
+        if(sentResp.status==200){
+            setDummyD({ ...dummyD, sentRequests: sentResp }) 
+        }
+        if(receivedResp==200){
+          setDummyD({ ...dummyD, receivedRequests: receivedResp }) 
+        }
+        }
+
+        fetchReviewRequest()
+    },[])
+
+    console.log(dummyD)
 
   return (
     <div>
-    
+
     <MapPageHeader />
     <div className="review-request-container">
     <SideBar/>
