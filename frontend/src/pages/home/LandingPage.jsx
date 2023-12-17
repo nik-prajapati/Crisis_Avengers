@@ -74,7 +74,9 @@ export default function Landingpage({ user }) {
       <div className="navbar">
         <div className="logo">
           <div className="logoLeft">
+          <Link to='/'>
             <img src={apadaLogo} alt="APADA Logo" />
+          </Link>
           </div>
 
           <div className="line"></div>

@@ -10,7 +10,7 @@ import axios from "axios";
 import Request from "../../components/Request/Request";
 import socket from "../../helpers/socket";
 // import Request from "./Request";
-import ReqBlock from "../ReqBlock";
+import ReqBlock from "../ReqBlock.jsx";
 import { Link } from "react-router-dom";
 import MapRequestForm from './MapRequestForm.jsx'
 import ListSection from "./ListSection.jsx";
@@ -78,7 +78,7 @@ function Map({ user }) {
       if (user) {
         // console.log("called fetchData")
         const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
+          `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`,{withCredentials:true}
         );
         const d = resp.data.agencies;
         // console.log(d)
@@ -153,7 +153,7 @@ function Map({ user }) {
     }}> LIST</button>
     </div>
 
-      <ListSection agencies={agencies} mapClass={mapClass}/>
+      <ListSection agencies={agencies} mapClass={mapClass} handleMarker={handleMarker}/>
       <div className={mapClass ? "active-section":"disable-section"}>
       <MapContainer center={duser.geocode} zoom={12} >
         <TileLayer
