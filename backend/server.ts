@@ -53,7 +53,6 @@ app.use(
 );
 app.use(router);
 
-// creating socket server
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
