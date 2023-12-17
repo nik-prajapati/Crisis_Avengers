@@ -1,214 +1,88 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "../styles/UpdateData.css";
+import React, { useState } from 'react';
+import './UpdateData.css';
+import SideBar from './request/SideBar';
+import MapPageHeader from './request/MapPageHeader';
 
-const UpdateData = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [idx, newidx] = useState(-1);
-  const [resources, setResources] = useState([]);
-  const [selectedResource, setSelectedResource] = useState({
-    name: "",
-    type: "",
-    quantity: 0,
-    unit: 0,
-  }); // State to store the selected resource
+const UpdateData = () =>{
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (index) => {
-    setShowModal(true);
-    newidx(index);
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setShowModal(false);
+    setIsModalOpen(false);
   };
-
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    console.log(idx);
-    if (idx !== -1) {
-      const updatedResources = [...resources];
-      updatedResources[idx] = selectedResource;
-      setResources(updatedResources);
-    }
-    const updatedResourceData = {
-      _id: resources[idx]._id,
-      type: selectedResource.type,
-      name: selectedResource.name,
-      quantity: selectedResource.quantity,
-      unit: selectedResource.unit,
-    };
-    console.log(updatedResourceData);
-    // const response = axios.post('http://localhost:3000/updateresources', updatedResourceData)
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/updateresources",
-        updatedResourceData,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log("Resource updated successfully", response.data);
-    } catch (error) {
-      console.error("Error updating resource:", error);
-    }
-  };
-  console.log(selectedResource);
-  console.log(resources);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/getresources", {
-          withCredentials: true,
-        });
-        console.log(response.data);
-        setResources(response.data.resources);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div>
-      <div className='table-container'>
-        <table className='rwd-table'>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Unit</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {resources.map((resource, index) => (
-              <tr key={index}>
-                <td data-th='Type'>{resource.type}</td>
-                <td data-th='Name'>{resource.name}</td>
-                <td data-th='Quantity'>{resource.quantity}</td>
-                <td data-th='Unit'>{resource.unit}</td>
-                <td data-th='Update'>
-                  <button className='danger' onClick={() => openModal(index)}>
+      <MapPageHeader/>
+      <div className={isModalOpen?'page_blur':'page'}>
+        <SideBar />
+        <main>
+          <div className="tab" style={{ overflowX: 'auto' }}>
+            <table>
+              <tr>
+                <th>TYPE</th>
+                <th>NAME</th>
+                <th>QUANTITY</th>
+                <th>UNITS</th>
+                <th>STATUS</th>
+              </tr>
+
+              <tr>
+                <td>Bed</td>
+                <td>Bed</td>
+                <td>Bed</td>
+                <td>Bed</td>
+                <td>
+                  <button className="res" onClick={openModal}>
                     Update
                   </button>
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+              <tr>
+                <td>Bed</td>
+                <td>Bed</td>
+                <td>Bed</td>
+                <td>Bed</td>
+                <td>
+                  <button className="res" onClick={openModal}>
+                    <i className="bi bi-pencil"></i>Update
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </main>
       </div>
 
-      {showModal && (
-        <div className='modal'>
-          <div className='modalcontent'>
-            <div className='innermodal'>
-              <div className='modalcontent'>
-                <div className='innermodal'>
-                  <form className='form'>
-                    <div className='separator'>
-                      <hr className='line' />
-                      <h3>Update details</h3>
-                      <hr className='line' />
-                    </div>
-                    <div className='credit-card-info--form'>
-                      <div class='input_container'>
-                        <label for='type' class='input_label'>
-                          Type
-                        </label>
-                        <input
-                          id='type'
-                          class='input_field'
-                          type='text'
-                          name='type'
-                          title='Inpit title'
-                          placeholder='Enter type of resource'
-                          value={selectedResource.type}
-                          onChange={(e) =>
-                            setSelectedResource({
-                              ...resources[idx],
-                              type: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div class='input_container'>
-                        <label for='name' class='input_label'>
-                          Name
-                        </label>
-                        <input
-                          id='password_field'
-                          class='input_field'
-                          type='text'
-                          name='name'
-                          title='Inpit title'
-                          placeholder='Enter name of your resource'
-                          value={selectedResource.name}
-                          onChange={(e) =>
-                            setSelectedResource({
-                              ...resources[idx],
-                              name: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div class='input_container'>
-                        <label for='password_field' class='input_label'>
-                          Quantity
-                        </label>
-                        <input
-                          id='quantity'
-                          class='input_field'
-                          type='text'
-                          name='quantity'
-                          title='Inpit title'
-                          placeholder='Quantity'
-                          value={selectedResource.quantity}
-                          onChange={(e) =>
-                            setSelectedResource({
-                              ...resources[idx],
-                              quantity: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div class='input_container'>
-                        <label for='password_field' class='input_label'>
-                          Units
-                        </label>
-                        <input
-                          id='password_field'
-                          class='input_field'
-                          type='text'
-                          name='unit'
-                          title='Inpit title'
-                          placeholder='Enter units'
-                          value={selectedResource.unit}
-                          onChange={(e) =>
-                            setSelectedResource({
-                              ...resources[idx],
-                              unit: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                    </div>
-                    <button className='purchase--btn' onClick={handleUpdate}>
-                      Update
-                    </button>
-                    <button className='purchase--btn' onClick={closeModal}>
-                      Cancel
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
+      {isModalOpen && (
+  <div className="modal-overlay">
+    <div className="modal">
+    <span className="close-btn" onClick={closeModal}>&times;</span>
+      <select >
+        <option disabled selected>Select type</option>
+        <option >Bed</option>
+        <option >Medical</option>
+        <option  >Food</option>
+        <option >Boats</option>
+      </select>
+
+
+
+      <input type="text" className='modal_input' placeholder="Enter the name"/>
+
+      <input  type="number" className='modal_input' id="quantity" name="quantity" placeholder="Quantity"/>
+
+      <input  type="number"className='modal_input' id="units" name="units" placeholder="Units"/>
+      <button className="submit_data">
+                   Commit Changes
+                  </button>
+    </div>
+  </div>
+)}
     </div>
   );
 };
