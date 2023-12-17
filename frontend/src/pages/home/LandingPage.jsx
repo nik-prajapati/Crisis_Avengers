@@ -43,6 +43,11 @@ export default function Landingpage({ user }) {
               Contact Us
             </Link>
           </p>
+          <p className="navopt ">
+            <Link to="/chat-page" style={{ textDecoration: "none" }}>
+              Chats
+            </Link>
+          </p>
           <p className="navopt">
             <Link to="/" style={{ textDecoration: "none" }}>
               Services
@@ -166,8 +171,6 @@ export default function Landingpage({ user }) {
           </div>
         </div>
       </div>
-
-      
 
       {/* <div className="aboutUs">
         <div id="cont2" className="govtcontainer ">

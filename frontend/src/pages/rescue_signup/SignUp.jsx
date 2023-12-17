@@ -3,9 +3,8 @@ import "./SignUp.css";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import apadalogo from '../../image/aapdalogo.jpg'
-import rescueimg from "../../image/Rsignup.png";
 import apadalogo from "../../image/aapdalogo.jpg";
+import rescueimg from "../../image/Rsignup.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -60,7 +59,7 @@ const SignUp = () => {
         "http://localhost:3000/signup",
         formData
       );
-      console.log(response)
+      console.log(response);
       if (response.data.error === false) {
         alert("SignUp successful");
         console.log("Signup successful");
@@ -68,9 +67,9 @@ const SignUp = () => {
       } else {
         setError(response.data.message);
 
-        setTimeout(()=>{
-          setError(null)
-        },3000)
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
       }
     } catch (error) {
       window.alert("Login Error: " + error.message);
@@ -107,7 +106,7 @@ const SignUp = () => {
   return (
     <div className="main-box">
       <div className="left">
-      <div className="left-head">
+        <div className="left-head">
           <div className="glass-container">
             <div className="left-glass">
               <img
@@ -125,13 +124,10 @@ const SignUp = () => {
           <div className="glass-container2">
             <div className="left-glass"></div>
             <p>
-              <strong>
-                Register and Connect with our community
-              </strong>
+              <strong>Register and Connect with our community</strong>
             </p>
           </div>
         </div>
-
       </div>
 
       <div className="right">
@@ -206,12 +202,19 @@ const SignUp = () => {
                       onChange={(e) => handlePhoneChange(e, index)}
                       placeholder="Enter a phone number"
                     />
-                    <button className="removebtn" onClick={() => handleRemovePhone(index)}>
+                    <button
+                      className="removebtn"
+                      onClick={() => handleRemovePhone(index)}
+                    >
                       Remove
                     </button>
                   </div>
                 ))}
-                <button className="addbtn" type="button" onClick={handleAddPhone}>
+                <button
+                  className="addbtn"
+                  type="button"
+                  onClick={handleAddPhone}
+                >
                   Add Contact No.
                 </button>
               </p>
@@ -228,14 +231,14 @@ const SignUp = () => {
               ></textarea>
             </p>
             <p>
-              <button className="registerbtn" onClick={handleSubmit}>REGISTER</button>
+              <button className="registerbtn" onClick={handleSubmit}>
+                REGISTER
+              </button>
             </p>
           </form>
         </div>
       </div>
-      {
-        error && <div>{error}</div>
-      }
+      {error && <div>{error}</div>}
     </div>
   );
 };

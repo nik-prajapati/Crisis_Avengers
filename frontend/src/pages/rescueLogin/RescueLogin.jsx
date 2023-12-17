@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
 import r1 from "../../image/r1.png";
 import r2 from "../../image/r2.png";
 import upleft from "../../image/upleft.png";
@@ -53,6 +52,7 @@ const RescueLogin = ({ setUser }) => {
         window.location.reload(true);
       } else {
         setUser(response.data.user);
+        console.log(response.data);
         navigate("/");
         // alert('Logged in succesfully');
         // console.log('Logged in succesfully');
@@ -83,11 +83,7 @@ const RescueLogin = ({ setUser }) => {
 
           <div className="glass-container2">
             <div className="left-glass"></div>
-            <p>
-              
-                Login Now ! Your mission awaits,Respond with Purpose
-              
-            </p>
+            <p>Login Now ! Your mission awaits,Respond with Purpose</p>
           </div>
         </div>
         <div className="left-bottom">
@@ -136,9 +132,9 @@ const RescueLogin = ({ setUser }) => {
           </div>
           <div className="input-container">
             <label htmlFor="email" className="right-container__label">
-             Email
+              Email
             </label>
-            
+
             <input
               type="text"
               className="right-container__input glass-input"

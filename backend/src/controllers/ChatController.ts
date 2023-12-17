@@ -59,6 +59,19 @@ const chatList = async (req: Request, res: Response) => {
   }
 };
 
+const getChat = async (req: Request, res: Response) => {
+  try {
+    const { chatId } = req.params;
+
+    const chat = await Chat.findById(chatId);
+
+    return res.status(200).json(chat);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const getMessages = async (req: Request, res: Response) => {
   try {
     const { chatId } = req.params;
@@ -160,4 +173,4 @@ const addToChat = async (req: Request, res: Response) => {
   }
 };
 
-export { chatList, createChat, addToChat, getMessages, sendMessage };
+export { chatList, createChat, addToChat, getMessages, sendMessage, getChat };

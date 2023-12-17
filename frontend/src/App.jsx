@@ -12,14 +12,14 @@ import Landingpage from "./pages/home/LandingPage";
 import Map from "./pages/request/Map";
 import RescueLogin from "./pages/rescueLogin/RescueLogin";
 import MapPage from "./pages/request/MapPage";
-import ReviewRequest from './pages/review request/ReviewRequest'
+import ReviewRequest from "./pages/review request/ReviewRequest";
+import Chat from "./pages/chat/Chat";
 
 function App() {
   const [user, setUser] = useState(null);
-  console.log(user)
+  console.log(user);
 
   return (
-    
     <BrowserRouter>
       <div className="App">
         <Routes>
@@ -31,7 +31,10 @@ function App() {
           <Route path="/home" element={<Landingpage user={user} />} />
           <Route path="/request" element={<MapPage user={user} />} />
           <Route path="/review" element={<ReviewRequest user={user} />} />
-
+          <Route
+            path="/chat-page"
+            element={<Chat email={user ? user.email : ""} />}
+          />
         </Routes>
       </div>
     </BrowserRouter>
