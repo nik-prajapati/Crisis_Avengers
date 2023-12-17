@@ -84,9 +84,9 @@ const RescueLogin = ({ setUser }) => {
           <div className="glass-container2">
             <div className="left-glass"></div>
             <p>
-              <strong>
+              
                 Login Now ! Your mission awaits,Respond with Purpose
-              </strong>
+              
             </p>
           </div>
         </div>
