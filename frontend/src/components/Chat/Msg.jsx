@@ -82,7 +82,7 @@ export default function Msg({
       ) : (
         <>
           {(lastMessage === null ||
-            lastMessage.sender.username !== sender ||
+            lastMessage.sender.email !== sender ||
             new Date(timestamp).getTime() -
               new Date(lastMessage.createdAt).getTime() >=
               300000) && (
@@ -92,7 +92,7 @@ export default function Msg({
             </div>
           )}
           <div>{content}</div>
-          {username === sender && (
+          {email === sender && (
             <Icon src={editIcon} alt="Edit message" onClick={startEdit} />
           )}
         </>

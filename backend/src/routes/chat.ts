@@ -15,7 +15,7 @@ router.post('/', isAuthenticated, createChat);
 router.put('/', isAuthenticated, addToChat);
 router.post('/:chatId', isAuthenticated, sendMessage);
 router.get('/chats', isAuthenticated, chatList);
-router.get('/:chatid', isAuthenticated, getChat);
+router.get('/:chatId', isAuthenticated, getChat);
 router.get('/:chatId/messages', isAuthenticated, getMessages);
 
 // router.post('/', createChat);

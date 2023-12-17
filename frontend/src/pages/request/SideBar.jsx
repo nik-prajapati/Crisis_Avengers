@@ -10,7 +10,7 @@ const SideBar = () => {
   return (
     <div className='sidebar-container'>
     <div className="access-btn"><GraphicEqIcon />Activity Records</div>
-    <div className="access-btn"><AddShoppingCartIcon />Resource</div>
+    <div className="access-btn"><AddShoppingCartIcon /><Link to='/resource' style={{ textDecoration: 'none', color: 'inherit' }}>Resource</Link></div>
     <div className="access-btn"><Link to='/review' style={{ textDecoration: 'none', color: 'inherit' }}><NotificationsIcon />Review Requests</Link></div>
     <div className="access-btn"><Link to='/request' style={{ textDecoration: 'none', color: 'inherit' }}><Groups2Icon />Collaborate</Link></div>
     </div>

@@ -13,6 +13,7 @@ const Chat = ({ email }) => {
       <ChatList
         setChat={setChat}
         setMessages={setMessages}
+        chats={chats}
         setChats={setChats}
         email={email}
       />

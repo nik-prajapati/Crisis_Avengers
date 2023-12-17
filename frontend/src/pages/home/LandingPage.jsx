@@ -4,7 +4,6 @@ import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import timeline from "./Timeline";
 
 // import images
 import disasterManagementImage from "../../image/Disaster-Management.jpg";
@@ -14,9 +13,65 @@ import apadaLogo from "../../image/apadalogo.png";
 import map from "../../image/map.png";
 import rescueforce from "../../image/rescueforce.png";
 import communicate from "../../image/communicate.png";
+import card1 from "../../image/card1.png";
+import card2 from "../../image/card2.png";
+import card3 from "../../image/card3.jpeg";
+import card4 from "../../image/card4.png";
+import card5 from "../../image/card5.jpeg";
+import card6 from "../../image/card6.jpg";
 
 export default function Landingpage({ user }) {
   console.log(user);
+
+  const cards = [
+    {
+      id: 1,
+      icon: card1,
+      title: "Real-Time Location-Based Insights",
+      content:
+        "Using GPS technology, government entities can pinpoint nearby rescue agencies on a map",
+    },
+
+    {
+      id: 2,
+      icon: card2,
+      title: "Priority-Based Assignments",
+      content:
+        "Our platform automatically suggests primary and secondary rescue agencies based on preferences and availability, ensuring the best-suited responders are engaged.",
+    },
+
+    {
+      id: 3,
+      icon: card3,
+      title: "Tailored Requests",
+      content:
+        "Government officials can specify the area of the disaster, the type of disaster, and send requests directly to registered rescue agencies",
+    },
+
+    {
+      id: 4,
+      icon: card4,
+      title: "Request Management",
+      content:
+        "Agencies can efficiently accept or decline requests based on their capacity and expertise, optimizing resource allocation during emergencies",
+    },
+    {
+      id: 5,
+      icon: card5,
+      title: "Efficient Communication",
+      content:
+        "Built-in chatbotx facilitates direct and efficient communication between agencies, promoting coordination and information sharing.",
+    },
+
+    {
+      id: 6,
+      icon: card6,
+      title: "Activity Timeline",
+      content:
+        "Maintain a detailed record of all past activities in a blog or timeline format, helping agencies keep track of their contributions and achievements over time.",
+    },
+  ];
+
   return (
     <>
       <div className="navbar">
@@ -110,29 +165,6 @@ export default function Landingpage({ user }) {
           <img className="info-img" src={communicate}></img>
         </div>
 
-        {/* <div className="right-info">
-          <div className="outline">
-            <h1 style={{ color: "#F04D1A", fontSize: "2.2em" }}>ABOUT US</h1>
-            <div className="hrline"></div>
-
-            <div
-              style={{
-                height: "40px",
-                width: "350px",
-                padding: "10px",
-                fontSize: "1.8em",
-                fontWeight: "bold",
-              }}
-            >
-              <p>"Together we stand united for Relief."</p>
-
-              
-            </div>
-
-            
-          </div>
-        </div> */}
-
         <div className="right-info">
           <div className="outline">
             <h1 style={{ color: "#F04D1A", fontSize: "2.2em" }}>ABOUT US</h1>
@@ -169,6 +201,22 @@ export default function Landingpage({ user }) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="scroll">
+        <div className="card-grid">
+          {cards.map((card) => (
+            <div key={card.id} className="card">
+              <div className="card-image">
+                <img src={card.icon} alt={`Icon for ${card.title}`} />
+              </div>
+              <div className="card-info">
+                <h2 style={{ color: "#F04D1A" }}>{card.title}</h2>
+                <p style={{ color: "white" }}>{card.content}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

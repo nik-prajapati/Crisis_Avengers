@@ -16,9 +16,13 @@ export default function SendMessage({ chatId, messages, setMessages, email }) {
       e.preventDefault();
 
       if (content.trim() !== "") {
-        const res = await axios.post(ENDPOINT + `/chat/${chatId}`, {
-          content: content.trim(),
-        });
+        const res = await axios.post(
+          ENDPOINT + `/chat/${chatId}`,
+          {
+            content: content.trim(),
+          },
+          { withCredentials: true }
+        );
 
         setMessages([...messages, res.data]);
         socket.emit("new-message", chatId, res.data);

@@ -19,7 +19,7 @@ export default function ChatList({
   // setShowSideBar,
 }) {
   // const [friendUsername, setFriendUsername] = useState("");
-  // const [groupName, setGroupName] = useState("");
+  // const [groupName, setGroupName] = useState("")
   const [errMsg, setErrMsg] = useState("");
 
   const [isMobile, setIsMobile] = useState(false);
@@ -36,20 +36,24 @@ export default function ChatList({
 
   const getChatList = async () => {
     try {
-      const res = await axios.get(ENDPOINT + "/chat/chats");
+      if (email) {
+        const res = await axios.get(ENDPOINT + "/chat/chats", {
+          withCredentials: true,
+        });
 
-      // const chats = res.data.map((chat) => {
-      //   if (!chat.isGroup) {
-      //     const chatName = chat.members.find(
-      //       (mem) => mem.username !== username
-      //     ).username;
-      //     return { chatName, ...chat };
-      //   } else {
-      //     return chat;
-      //   }
-      // });
+        // const chats = res.data.map((chat) => {
+        //   if (!chat.isGroup) {
+        //     const chatName = chat.members.find(
+        //       (mem) => mem.username !== username
+        //     ).username;
+        //     return { chatName, ...chat };
+        //   } else {
+        //     return chat;
+        //   }
+        // });
 
-      setChats(res.data);
+        setChats(res.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -57,13 +61,21 @@ export default function ChatList({
 
   useEffect(() => {
     getChatList();
-  }, []);
+  }, [email]);
+
+  useEffect(() => {
+    console.log(chats);
+  }, [chats]);
 
   const getChat = async (chatId) => {
     try {
-      const messages = await axios.get(ENDPOINT + `/chat/${chatId}/messages`);
+      const messages = await axios.get(ENDPOINT + `/chat/${chatId}/messages`, {
+        withCredentials: true,
+      });
 
-      let chat = await axios.get(ENDPOINT + `/chat/${chatId}`);
+      let chat = await axios.get(ENDPOINT + `/chat/${chatId}`, {
+        withCredentials: true,
+      });
 
       // if (!chat.data.isGroup) {
       //   const chatName = chat.data.members.find(
@@ -73,9 +85,10 @@ export default function ChatList({
       // } else {
       //   chat = chat.data;
       // }
+      console.log(chatId);
 
-      setChat(chat);
-      socket.emit("join-chat", chatId);
+      setChat(chat.data);
+      socket.emit("join-room", chatId);
       setMessages(messages.data.messages);
     } catch (error) {
       console.log(error);
