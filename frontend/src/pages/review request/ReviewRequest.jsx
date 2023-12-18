@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import './ReviewRequest.scss'
-import SideBar from '../request/SideBar';
-import MapPageHeader from '../request/MapPageHeader';
+import React, { useState } from "react";
+import axios from "axios";
+import "./ReviewRequest.scss";
+import SideBar from "../request/SideBar";
+import MapPageHeader from "../request/MapPageHeader";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
-import { useEffect } from 'react';
-
+import { useEffect } from "react";
+// import chatIcon from "../../image/chat.svg";
 
 const ReviewRequest = () => {
 
@@ -23,8 +23,7 @@ const ReviewRequest = () => {
           console.log(sentResp, receivedResp)
         // if(sentResp.status==200){
             // setDummyD({ ...dummyD, sentRequests: sentResp.data.requests }) 
-            sentResp.data.requests.reverse()
-            receivedResp.data.requests.reverse()
+
             const allData={
               sentRequests: sentResp.data.requests ,
               receivedRequests: receivedResp.data.requests
@@ -40,26 +39,38 @@ const ReviewRequest = () => {
 
   return (
     <div>
-
-    <MapPageHeader />
-    <div className="review-request-container">
-    <SideBar/>
-    <div className="section">
-    
-      <div className="btn-section">
-      <button className={sentSection ? 'review-btn active-btn' : 'review-btn disable-btn'} onClick={()=>setSentSection(true)}>Sent</button>
-      <button className={sentSection ? 'review-btn disable-btn' : 'review-btn active-btn'} onClick={()=>setSentSection(false)}>Recived</button>
-      </div>
+      <MapPageHeader />
+      <div className="review-request-container">
+        <SideBar />
+        <div className="section">
+          <div className="btn-section">
+            <button
+              className={
+                sentSection ? "review-btn active-btn" : "review-btn disable-btn"
+              }
+              onClick={() => setSentSection(true)}
+            >
+              Sent
+            </button>
+            <button
+              className={
+                sentSection ? "review-btn disable-btn" : "review-btn active-btn"
+              }
+              onClick={() => setSentSection(false)}
+            >
+              Recived
+            </button>
+          </div>
 
       <div className='review-section'>
       <div className={sentSection ? 'sent-section active-section':'sent-section disable-section'}>
       <ul>
       {
-        dummyD.sentRequests && dummyD.sentRequests.reverse().map((recieve,idx)=>{
+        dummyD.sentRequests && dummyD.sentRequests.map((recieve,idx)=>{
           return <div className="request-card">
           <div className="agency-info">
-          <p>To : {recieve.requestee_id}</p>
-          <p>From: {recieve.rescue_requester_id}</p>
+          <p>Requestee ID: {recieve.requestee_id}</p>
+          <p>Rescue Requester ID: {recieve.rescue_requester_id}</p>
           </div>
          { 
           <div className="time-info">
@@ -71,7 +82,7 @@ const ReviewRequest = () => {
           </div>
         }
 
-
+        
           <div className="status-info">
           <button className={`status-btn ${recieve.status.toLowerCase()}`}>
           {recieve.status}
@@ -91,34 +102,13 @@ const ReviewRequest = () => {
         {
           dummyD.receivedRequests && dummyD.receivedRequests.map((recieve,idx)=>{
             return <div className="request-card">
-            <div className="agency-info">
-            <p>From: {recieve.requestee_id}</p>
-            <p>To : {recieve.rescue_requester_id}</p>
-            </div>
-           { 
-            <div className="time-info">
-  
-            <p>Created At: {new Date(recieve.createdAt).toLocaleString()}</p>
-            {
-              recieve.updatedAt!=recieve.createdAt && <p>Updated At: {new Date(recieve.updatedAt).toLocaleString()}</p>
-            }
-            </div>
-          }
-  
-  
-            <div className="status-info">
-            <div className={`recieve-status-btn `}>
-            {
-              recieve.status=='Pending' ?
-              <div>
-              <button className='status-btn-accept'>Accept</button>
-              <button className='status-btn-reject'>Reject</button>
-              </div> : <button className='status-btn-declined'>Declined</button>
-            }
             
-            </div>
-            </div>
-            </div>
+            <p>Status: {recieve.status}</p>
+            <p>Created At: {new Date(recieve.createdAt).toLocaleString()}</p>
+            <p>Updated At: {new Date(recieve.updatedAt).toLocaleString()}</p>
+            <p>Requestee ID: {recieve.requestee_id}</p>
+            <p>Rescue Requester ID: {recieve.rescue_requester_id}</p>
+          </div>
             })
       }
       </ul>
@@ -128,7 +118,7 @@ const ReviewRequest = () => {
     </div>
     </div>
     </div>
-  )
-}
+  );
+};
 
-export default ReviewRequest
+export default ReviewRequest;

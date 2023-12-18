@@ -8,7 +8,9 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import router from './src/routes/index';
 import { instrument } from '@socket.io/admin-ui';
-import { addRequest } from './src/controllers/RequestController';
+import { addRequest, updateRequest } from './src/controllers/RequestController';
+import nodemailer from 'nodemailer';
+import User from './src/models/user';
 
 dotenv.config();
 
@@ -65,6 +67,35 @@ const io = new Server(server, {
   },
 });
 
+// nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'crisis.avengers@gmail.com',
+    pass: 'crisisavengers',
+  },
+});
+
+function sendMail(to: string, subject: string, text: string) {
+  try {
+    const mailOptions = {
+      from: 'crisis.avengers@gmail.com',
+      to: to,
+      subject: subject,
+      text: text,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 
@@ -74,12 +105,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send-request', async (room, req_data) => {
-    console.log( "before Request : ");
-    console.log(req_data )
     const request_data = await addRequest(req_data);
-    console.log("after Request Data : ")
-    console.log(request_data)
     socket.to(room).emit('receive-request', request_data);
+    const email = (await User.findOne({ _id: req_data.requestee_id }))?.email;
+    if (email) {
+      sendMail(email, 'helllo', 'helllo');
+    }
+  });
+
+  socket.on('respond-to-request', async (room, reqId, newStatus) => {
+    await updateRequest(reqId, newStatus);
+    socket.to(room).emit('responded-to-request', reqId, newStatus);
   });
 
   socket.on('new-message', (room, message) => {
