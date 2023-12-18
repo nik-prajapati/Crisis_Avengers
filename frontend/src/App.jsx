@@ -17,7 +17,6 @@ import UpdateData from "./pages/UpdateData";
 import { createContext } from "react";
 import AuthContext from "./context/AuthContext";
 import reviewContext from "./context/ReviewRequestContext";
-import UpdateData from "./pages/UpdateData";
 function App() {
   const [user, setUser] = useState(null);
   console.log(user)
@@ -38,6 +37,7 @@ function App() {
           <Route path="/home" element={<Landingpage user={user} />} />
           <Route path="/request" element={<MapPage user={user} />} />
           <Route path="/review" element={<ReviewRequest user={user} />} />
+          <Route path="/resource" element={<UpdateData user={user} />} />
 
         </Routes>
         </reviewContext.Provider>

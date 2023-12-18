@@ -81,7 +81,7 @@ function Map({ user }) {
           `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
         );
         const d = resp.data.agencies;
-        // console.log(d)
+        console.log(d)
         const myself = d.filter((agency) => {
           return agency._doc._id == user._id;
         });
@@ -112,6 +112,7 @@ function Map({ user }) {
       address: agency._doc.address,
       description: agency._doc.description,
       distance: agency.distance,
+      email:agency._doc.email
     };
     
     const requestBody = {
@@ -133,11 +134,10 @@ function Map({ user }) {
     //   setRequestBody(requestBody);
     }
   
-
+    console.log(agencies)
   return (
     <div className="Map-section-columns">
     <MapRequestForm />
-    
     <div className="Map-container">
     <div className="option-btn">
     <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
@@ -183,7 +183,7 @@ function Map({ user }) {
           // currentUser &&
         }
 
-        {agencies.map((agency, idx) => (
+        {agencies.map((agency, idx)=>(
           <Marker
             position={[
               Number(agency._doc.location.latitude),
@@ -194,6 +194,7 @@ function Map({ user }) {
           >
             <Popup>
               <h3>{agency._doc.name}</h3>
+              <h3>{agency._doc.email}</h3>
               <h5>{agency._doc.address}</h5>
               <h5>{agency._doc.description}</h5>
               <h5>{agency._doc.type}</h5>
