@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
-import sendMail from "../../pages/request/nodemailer";
+// import sendMail from "../../pages/request/nodemailer";
 
 
 const Request = ({ user, payload, socket, setPayLoad }) => {
@@ -39,7 +39,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast("Request Sent Successfully");
     sendMail(dummyReq.reqAgency.email,"New Request Arrived","Please Review the review Page for further info")
-    
+
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {
       setPayLoad(null);
