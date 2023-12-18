@@ -1,0 +1,119 @@
+[{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed62143123"
+  },
+  "name": "Mumbai Municipal Corporation 7",
+  "description": "Local Government Office",
+  "email": "mumbai.gov7@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.085,
+    "longitude": 72.865
+  },
+  "address": "222 Civic Center, Mumbai, India",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed6214311d"
+  },
+  "name": "Mumbai Municipal Corporation 1",
+  "description": "Local Government Office",
+  "email": "mumbai.gov1@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.076,
+    "longitude": 72.8777
+  },
+  "address": "123 Municipal Building, Mumbai, India",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed62143120"
+  },
+  "name": "Mumbai Municipal Corporation 4",
+  "description": "Local Government Office",
+  "email": "mumbai.gov4@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.08,
+    "longitude": 72.885
+  },
+  "address": "456 Civic Center, Mumbai, India",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed62143122"
+  },
+  "name": "Mumbai Municipal Corporation 6",
+  "description": "Local Government Office",
+  "email": "mumbai.gov6@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.07,
+    "longitude": 72.875
+  },
+  "address": "101 Civic Plaza, Mumbai, India",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed6214311e"
+  },
+  "name": "Mumbai Municipal Corporation 2",
+  "description": "Local Government Office",
+  "email": "mumbai.gov2@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.08,
+    "longitude": 72.899
+  },
+  "address": "123 Municipal Building, Mumbai, India",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed6214311f"
+  },
+  "name": "Mumbai Municipal Corporation 3",
+  "description": "Local Government Office",
+  "email": "mumbai.gov3@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.04,
+    "longitude": 72.1
+  },
+  "address": "123 Municipal Building, Mumbai, India",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed62143121"
+  },
+  "name": "Mumbai Municipal Corporation 5",
+  "description": "Local Government Office",
+  "email": "mumbai.gov5@example.com",
+  "phone": [
+    "123-456-7890"
+  ],
+  "location": {
+    "latitude": 19.095,
+    "longitude": 72.86
+  },
+  "address": "789 City Hall, Mumbai, India",
+  "__v": 0
+}]

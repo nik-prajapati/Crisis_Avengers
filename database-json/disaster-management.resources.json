@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "6501f669d1c6750db6ad96a6"
+  },
+  "agency_id": {
+    "$oid": "6502e69f7334dcc0d7599115"
+  },
+  "type": "Medical",
+  "name": "Injections",
+  "quantity": 250,
+  "unit": "pieces",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2023-09-13T17:50:33.136Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-14T19:50:57.627Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6501f669d1c6750db6ad96a7"
+  },
+  "agency_id": {
+    "$oid": "6502ea0f7334dcc0d7599131"
+  },
+  "type": "Food",
+  "name": "Canned Food",
+  "quantity": 200,
+  "unit": "cans",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2023-09-13T17:50:33.136Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-13T17:50:33.136Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6501f669d1c6750db6ad96a5"
+  },
+  "agency_id": {
+    "$oid": "6502e69f7334dcc0d7599115"
+  },
+  "type": "Medical",
+  "name": "Bandages",
+  "quantity": 200,
+  "unit": "pieces",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2023-09-13T17:50:33.135Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-14T19:50:39.625Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65035a762af60823590b06fb"
+  },
+  "agency_id": {
+    "$oid": "6502e69f7334dcc0d7599115"
+  },
+  "type": "medical",
+  "name": "beds",
+  "quantity": 10,
+  "unit": "pieces",
+  "createdAt": {
+    "$date": "2023-09-14T19:09:42.223Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-14T19:09:42.223Z"
+  },
+  "__v": 0
+}]
