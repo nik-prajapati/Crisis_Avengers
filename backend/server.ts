@@ -8,7 +8,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import router from './src/routes/index';
 import { instrument } from '@socket.io/admin-ui';
-import { addRequest } from './src/controllers/RequestController';
+import { addRequest, updateRequest } from './src/controllers/RequestController';
 
 dotenv.config();
 
@@ -74,12 +74,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send-request', async (room, req_data) => {
-    console.log( "before Request : ");
-    console.log(req_data )
+    console.log('before Request : ');
+    console.log(req_data);
     const request_data = await addRequest(req_data);
-    console.log("after Request Data : ")
-    console.log(request_data)
+    console.log('after Request Data : ');
+    console.log(request_data);
     socket.to(room).emit('receive-request', request_data);
+  });
+
+  socket.on('respond-to-request', async (room, reqId, newStatus) => {
+    await updateRequest(reqId, newStatus);
+    socket.to(room).emit('responded-to-request', reqId, newStatus);
   });
 
   socket.on('new-message', (room, message) => {

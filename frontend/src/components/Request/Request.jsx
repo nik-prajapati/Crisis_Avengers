@@ -13,7 +13,6 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
   const notify = () => {};
 
   const handlerequestSend = () => {
-    console.log("helllo")
     const dummyReq = {
       rescue_requester_id: user._id,
       requestee_id: payload.reqAgency.id,
@@ -33,7 +32,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       },
     };
     // setRequestSend(dummyReq)
-    console.log(dummyReq)
+    console.log(dummyReq);
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast("Request Sent Successfully");
     setReviewData([...reviewData, dummyReq]);
