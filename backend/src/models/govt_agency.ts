@@ -2,23 +2,24 @@ import { Schema, model } from 'mongoose';
 import { GovtAgency } from '../types/schema';
 
 const GovtAgencySchema = new Schema<GovtAgency>({
+  _id: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   name: {
     type: String,
     required: true,
   },
   description: String,
-  email: {
-    type: String,
-    required: true,
-  },
   phone: [{ type: String }],
   location: {
-    latitude: {
-      type: Number,
+    type: {
+      type: String,
+      enum: ['Point'],
       required: true,
     },
-    longitude: {
-      type: Number,
+    coordinates: {
+      type: [Number],
       required: true,
     },
   },
@@ -28,6 +29,12 @@ const GovtAgencySchema = new Schema<GovtAgency>({
   },
 });
 
-const GovtAgency = model<GovtAgency>('GovernmentAgency', GovtAgencySchema, 'government-agencies');
+GovtAgencySchema.index({ location: '2dsphere' });
+
+const GovtAgency = model<GovtAgency>(
+  'GovernmentAgency',
+  GovtAgencySchema,
+  'government-agencies'
+);
 
 export default GovtAgency;

@@ -9,6 +9,7 @@ const router = Router();
 router.get('/', isAuthenticated, isRescueAgency, async (req, res) => {
   if (!req.user) return;
   const requests = await Request.find({ requestee_id: req.user.id });
+  
   res.json({ requests: requests });
 });
 
