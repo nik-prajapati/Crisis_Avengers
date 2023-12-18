@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './UpdateData.css';
-<<<<<<< HEAD:frontend/src/pages/UpdateData.jsx
-import SideBar from './request/SideBar';
-import MapPageHeader from './request/MapPageHeader';
-import Loader from './Loader'; // Import your Loader component
-=======
-import SideBar from '../request/SideBar';
-import MapPageHeader from '../request/MapPageHeader';
->>>>>>> a0a8a243f2b3d695568f4e1e3ffdc26c4da797a5:frontend/src/pages/resource/UpdateData.jsx
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./UpdateData.css";
+import SideBar from "../request/SideBar";
+import MapPageHeader from "../request/MapPageHeader";
+import Loader from "../Loader"; // Import your Loader component
 
 const UpdateData = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);
   const [formData, setFormData] = useState({
-    _id: '',
-    type: '',
-    name: '',
+    _id: "",
+    type: "",
+    name: "",
     quantity: 0,
-    unit: ''
+    unit: "",
   });
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
@@ -28,7 +23,7 @@ const UpdateData = () => {
       console.log("Identity", id);
       const updatedFormData = {
         ...formData,
-        _id: id
+        _id: id,
       };
       console.log(formData);
       setIsLoading(true);
@@ -36,27 +31,26 @@ const UpdateData = () => {
         "http://localhost:3000/updateresources",
         updatedFormData,
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
       console.log(response);
       closeModal();
       setIsLoading(false); // Set loading to false when the operation is complete
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       setIsLoading(false); // Set loading to false in case of an error
     }
-  }
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const apiUrl = 'http://localhost:3000/getresources';
+  const apiUrl = "http://localhost:3000/getresources";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +59,9 @@ const UpdateData = () => {
           withCredentials: true,
         });
         console.log(response.data);
-        const allObjectIds = response.data.resources.map(resource => resource._id);
+        const allObjectIds = response.data.resources.map(
+          (resource) => resource._id
+        );
         console.log("All Object IDs:", allObjectIds);
 
         setResources(response.data.resources);
@@ -85,7 +81,7 @@ const UpdateData = () => {
   };
   const addData = () => {
     setIsModalOpen(true);
-  }
+  };
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -93,11 +89,11 @@ const UpdateData = () => {
   return (
     <div>
       <MapPageHeader />
-      <div className={isModalOpen || isLoading ? 'page_blur' : 'page'}>
+      <div className={isModalOpen || isLoading ? "page_blur" : "page"}>
         <SideBar />
         <main>
           {isLoading && <Loader />} {/* Render loader when isLoading is true */}
-          <div className="tab" style={{ overflowX: 'auto' }}>
+          <div className="tab" style={{ overflowX: "auto" }}>
             <table>
               <thead>
                 <tr>
@@ -109,7 +105,7 @@ const UpdateData = () => {
                 </tr>
               </thead>
               <tbody>
-                {resources.map(resource => (
+                {resources.map((resource) => (
                   <tr key={resource._id}>
                     <td>{resource.type}</td>
                     <td>{resource.name}</td>
@@ -131,10 +127,7 @@ const UpdateData = () => {
                   <td></td>
                   <td></td>
                   <td>
-                    <button
-                      className="res"
-                      onClick={() => addData()}
-                    >
+                    <button className="res" onClick={() => addData()}>
                       Add
                     </button>
                   </td>
@@ -156,7 +149,9 @@ const UpdateData = () => {
               value={formData.type}
               onChange={handleInputChange}
             >
-              <option disabled defaultValue>Select type</option>
+              <option disabled defaultValue>
+                Select type
+              </option>
               <option>Bed</option>
               <option>Medical</option>
               <option>Food</option>
@@ -166,14 +161,14 @@ const UpdateData = () => {
             <input
               type="text"
               name="name"
-              className='modal_input'
+              className="modal_input"
               placeholder="Enter the name"
               value={formData.name}
               onChange={handleInputChange}
             />
             <input
               type="number"
-              className='modal_input'
+              className="modal_input"
               id="quantity"
               name="quantity"
               placeholder="Quantity"
@@ -182,7 +177,7 @@ const UpdateData = () => {
             />
             <input
               type="text"
-              className='modal_input'
+              className="modal_input"
               id="unit"
               name="unit"
               placeholder="Units"
