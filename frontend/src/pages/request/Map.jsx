@@ -96,13 +96,14 @@ function Map({ user }) {
         // console.log(oth)
         setAgencies(oth);
         setCurrentUser(myself[0]._doc);
+
       }
     };
 
     fetchData();
   }, []);
 
-  
+    console.log(agencies)
 
   //marker handle
   const handleMarker = (agency) => {
@@ -139,6 +140,8 @@ function Map({ user }) {
     <MapRequestForm />
     
     <div className="Map-container">
+
+    
     <div className="option-btn">
     <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
       ()=>{
@@ -152,7 +155,15 @@ function Map({ user }) {
       
     }}> LIST</button>
     </div>
-
+    {requestBody && (
+      <Request
+        user={user}
+        payload={requestBody}
+        socket={socket}
+        setPayLoad={setRequestBody}
+        
+      />
+    )}
       <ListSection agencies={agencies} mapClass={mapClass} handleMarker={handleMarker}/>
       <div className={mapClass ? "active-section":"disable-section"}>
       <MapContainer center={duser.geocode} zoom={12} >
@@ -217,15 +228,7 @@ function Map({ user }) {
 
       }
 
-      {requestBody && (
-        <Request
-          user={user}
-          payload={requestBody}
-          socket={socket}
-          setPayLoad={setRequestBody}
-          
-        />
-      )}
+      
 
       <div className='cardStyle'>
         {recieveRequest &&
