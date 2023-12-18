@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './UpdateData.css';
-import SideBar from './request/SideBar';
-import MapPageHeader from './request/MapPageHeader';
+import SideBar from '../request/SideBar';
+import MapPageHeader from '../request/MapPageHeader';
 
 const UpdateData = () =>{
   const [isModalOpen, setIsModalOpen] = useState(false);

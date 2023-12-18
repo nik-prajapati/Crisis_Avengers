@@ -70,8 +70,8 @@ const ReviewRequest = () => {
     useEffect(()=>{
         const fetchReviewRequest=async ()=>{
           const [sentResp, receivedResp] = await Promise.all([
-            axios.get('http://localhost:3000/getsentrequests'),
-            axios.get('http://localhost:3000/getreceivedrequests')
+            axios.get('http://localhost:3000/getsentrequests', { withCredentials: true }),
+            axios.get('http://localhost:3000/getreceivedrequests', { withCredentials: true })
           ]);
           
         if(sentResp.status==200){
@@ -104,8 +104,8 @@ const ReviewRequest = () => {
       <div className={sentSection ? 'sent-section active-section':'sent-section disable-section'}>
       <ul>
       {
-          dummyData.receivedRequests.map((sent)=>{
-        return <div>
+          dummyData.receivedRequests.map((sent,idx)=>{
+        return <div key={idx}>
         <li>TO : {sent.rescueAgency.name}</li>
         <li>Distance : {sent.distance}</li>
         <li>Status : {sent.status}</li>
@@ -119,8 +119,8 @@ const ReviewRequest = () => {
       {
         <ul>
         {
-            dummyData.receivedRequests.map((recieve)=>{
-          return <div>
+            dummyData.receivedRequests.map((recieve,idx)=>{
+          return <div key={idx}>
           <li>From : {recieve.rescueAgency.name}</li>
           <li>Distance : {recieve.distance}</li>
           <li>Status : {recieve.status}</li>
