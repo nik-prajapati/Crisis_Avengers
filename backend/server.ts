@@ -71,8 +71,8 @@ const io = new Server(server, {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'crisis.avengers@gmail.com',
-    pass: 'crisisavengers',
+    user: 'crisis.avengers.spit@gmail.com',
+    pass: 'lsqycualzbdtpxlv',
   },
 });
 

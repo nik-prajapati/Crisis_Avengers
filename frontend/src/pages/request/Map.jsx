@@ -55,7 +55,7 @@ function Map({ user }) {
     if (user) {
       socket.on("receive-request", (req_data) => {
         console.log(req_data);
-        toast("New Request Received");
+        toast.success("New Request Received");
         setRecieveRequest([...recieveRequest, req_data]);
         setTimeout(()=>{
         setRecieveRequest(null)
