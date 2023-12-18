@@ -73,13 +73,14 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: 'crisis.avengers.spit@gmail.com',
     pass: 'lsqycualzbdtpxlv',
+
   },
 });
 
 function sendMail(to: string, subject: string, text: string) {
   try {
     const mailOptions = {
-      from: 'crisis.avengers@gmail.com',
+      from: 'crisis.avengers.spit@gmail.com',
       to: to,
       subject: subject,
       text: text,
@@ -107,9 +108,22 @@ io.on('connection', (socket) => {
   socket.on('send-request', async (room, req_data) => {
     const request_data = await addRequest(req_data);
     socket.to(room).emit('receive-request', request_data);
-    const email = (await User.findOne({ _id: req_data.requestee_id }))?.email;
+    // console.log(request_data);
+    let itemString = '';
+    for (let i = 0; i < request_data.requested_items.length; i++) {
+      itemString += `${i + 1}. Type: ${
+        request_data.requested_items[i].type
+      }\nName: ${request_data.requested_items[i].name}\nQuantity: ${
+        request_data.requested_items[i].qty
+      }\nUnit: ${request_data.requested_items[i].unit}\n`;
+    }
+    const email = (await User.findOne({ _id: req_data.requestee_id }))?.email.trim();
     if (email) {
-      sendMail(email, 'helllo', 'helllo');
+      sendMail(
+        email,
+        `Request from ${request_data.rescue_requester_id.name}`,
+        `Rescue agency ${request_data.rescue_requester_id.name} has sent a request:\n\n\nRequested resources:\n${itemString}`
+      );
     }
   });
 
