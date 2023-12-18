@@ -1,0 +1,125 @@
+[{
+  "_id": {
+    "$oid": "6502e4e07334dcc0d7599107"
+  },
+  "email": "ndrf@gov.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$kTnqO5Hmb2nwoqaZA8UFVw$r6l3E+HZ7XxAZUMjwSglmfNnaFHCK+TarDwUuiKa3dI",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502e6207334dcc0d759910e"
+  },
+  "email": "mumbai.fire.dept@gov.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$1vPy3QkG+yysVEVFguPbWA$fyeI4By6LwU3c/KRPzzLT6nFikX0GlzuCcdXJa0sYpI",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502e69f7334dcc0d7599115"
+  },
+  "email": "sdrf@gov.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$Je7rhO/9SxehJ6RUBNDbBQ$942j6o9EQoDmVTie0A1nRAuYqrN6VVf3hiE9vP5oBKg",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502e7e17334dcc0d759911c"
+  },
+  "email": "ndma@gov.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$g4jYDPW0VpKVXDip+IH8OA$Yhoxf0V+NOME4J8wNzoMqvlTJzyl4hinQNYB8MwDyJ8",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502e85a7334dcc0d7599123"
+  },
+  "email": "sdma@gov.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$EGoJIDwuBibH+yU8+BOfHg$7RM311Zt70bJl5QpK0iZgyENHJnyE+5AcExev+uyzyI",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502e8fa7334dcc0d759912a"
+  },
+  "email": "rr@gov.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$bs+2ErghwfAdtofpkmb+nw$+WsfXETlleOw2wVekDIAurXSKvbWedM9P03xQyTYiSU",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502ea0f7334dcc0d7599131"
+  },
+  "email": "smileindia@si.org.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$albAkmSEmkiLFcC+U9H3Kw$YLiNOWaBMk5kcAw4UXtLEPAN8Y7S6GvAVPkTN3aQeTc",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6502ec7c71700a3ec31d1970"
+  },
+  "email": "smileindia123@si.org.in",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$mG9AV9fmwqcXOahCcG9b2Q$o2lHyWLlLkIjz5KFampjRMhEjMaLtHPQcnktG2MyJ/A",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65032981e9f5d0ba8f357fd5"
+  },
+  "email": "n@gmail.com",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$N6af6xQ1e2IEgC0ZouaI+g$1lxvXSAnb5ejYCxxQQnRvE9hxzh2N/KywGQl7iybyvM",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65032f8189cd216acd8a1088"
+  },
+  "email": "bmc@gmail.com",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$Jt6de7e3wkaBIJQXhq/32g$Z9HfXEpM0QcB9jCNwvow/rnjuWWxlbVlRDLgkvOVi2s",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65032fd789cd216acd8a1090"
+  },
+  "email": "bm@gmail.com",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$KvBn/nKyIY/Oo9Fr2QFV3w$LjkzHOP8dk4jptx/WSdT9xqEFg0jnbmbSPxgHdgsIyY",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6503442489cd216acd8a1383"
+  },
+  "email": "test1@gmail.com",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$e4oK1ZD7x03q39AnAJNSrA$19NjC19/tgpt+YSZ0z80ePTN2DN0NNqwAADWlqRg+Js",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "650344a289cd216acd8a1389"
+  },
+  "email": "test2@gmail.com",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$PH4jqD68tW9L+vcqhXnaKw$QdsaBcDQBBs9+tx1Gjf6lBZQveYyBSDNuB3dRQGCwk8",
+  "role": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6501f2d76d5b47ed6214311d"
+  },
+  "email": "mumbai.gov1@example.com",
+  "hash": "$argon2id$v=19$m=65536,t=3,p=4$gmrYxnIVNc0td/fanNClzA$FKuw0QwbDXMVpyaUkY59WfDS/BHZrLiKlIQrKA/oQ18",
+  "role": 0
+}]
