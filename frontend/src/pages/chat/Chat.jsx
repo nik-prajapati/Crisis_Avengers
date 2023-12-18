@@ -9,7 +9,7 @@ const Chat = ({ email }) => {
   console.log(email);
 
   return (
-    <div>
+    <div className="chat grid overlay">
       <ChatList
         setChat={setChat}
         setMessages={setMessages}
