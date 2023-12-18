@@ -12,13 +12,8 @@ import Landingpage from "./pages/home/LandingPage";
 import Map from "./pages/request/Map";
 import RescueLogin from "./pages/rescueLogin/RescueLogin";
 import MapPage from "./pages/request/MapPage";
-<<<<<<< HEAD
-import ReviewRequest from './pages/review request/ReviewRequest'
-import UpdateData from "./pages/resource/UpdateData";
-=======
 import ReviewRequest from "./pages/review request/ReviewRequest";
-import UpdateData from "./pages/UpdateData";
->>>>>>> d9f9252d9dcbd438c87c0cd923d720631c88b31a
+import UpdateData from "./pages/resource/UpdateData";
 import { createContext } from "react";
 import AuthContext from "./context/AuthContext";
 import reviewContext from "./context/ReviewRequestContext";
