@@ -10,7 +10,7 @@ import axios from "axios";
 import Request from "../../components/Request/Request";
 import socket from "../../helpers/socket";
 // import Request from "./Request";
-import ReqBlock from "../ReqBlock";
+import ReqBlock from "../ReqBlock.jsx";
 import { Link } from "react-router-dom";
 import MapRequestForm from './MapRequestForm.jsx'
 import ListSection from "./ListSection.jsx";
@@ -78,7 +78,7 @@ function Map({ user }) {
       if (user) {
         // console.log("called fetchData")
         const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
+          `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`,{withCredentials:true}
         );
         const d = resp.data.agencies;
         console.log(d)
@@ -96,13 +96,14 @@ function Map({ user }) {
         // console.log(oth)
         setAgencies(oth);
         setCurrentUser(myself[0]._doc);
+
       }
     };
 
     fetchData();
   }, []);
 
-  
+    console.log(agencies)
 
   //marker handle
   const handleMarker = (agency) => {
@@ -139,6 +140,8 @@ function Map({ user }) {
     <div className="Map-section-columns">
     <MapRequestForm />
     <div className="Map-container">
+
+    
     <div className="option-btn">
     <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
       ()=>{
@@ -152,8 +155,16 @@ function Map({ user }) {
       
     }}> LIST</button>
     </div>
-
-      <ListSection agencies={agencies} mapClass={mapClass}/>
+    {requestBody && (
+      <Request
+        user={user}
+        payload={requestBody}
+        socket={socket}
+        setPayLoad={setRequestBody}
+        
+      />
+    )}
+      <ListSection agencies={agencies} mapClass={mapClass} handleMarker={handleMarker}/>
       <div className={mapClass ? "active-section":"disable-section"}>
       <MapContainer center={duser.geocode} zoom={12} >
         <TileLayer
@@ -218,15 +229,7 @@ function Map({ user }) {
 
       }
 
-      {requestBody && (
-        <Request
-          user={user}
-          payload={requestBody}
-          socket={socket}
-          setPayLoad={setRequestBody}
-          
-        />
-      )}
+      
 
       <div className='cardStyle'>
         {recieveRequest &&
