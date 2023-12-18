@@ -35,6 +35,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
     console.log(dummyReq);
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast("Request Sent Successfully");
+    console.log(dummyReq.reqAgency)
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {
       setPayLoad(null);
