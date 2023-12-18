@@ -62,8 +62,14 @@
         .active-section{
             display: block;
         }
+        
+        .time-info{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
 
-        .status-btn{
+        @mixin status_btn{
             display: inline-block;
             padding: 8px 16px;
             font-size: 14px;
@@ -76,6 +82,11 @@
             transition: background-color 0.3s;
             color: white;
         }
+        .status-btn{
+          @include status_btn()  
+            
+        }
+
         .pending{
             background-color: #ffc107; /* yellow for pending status */
         
@@ -88,6 +99,28 @@
             background-color: #dc3545; /* red for rejected status */
             
           }
+
+          .recieve-status-btn{
+            
+            // background-color: #121029;
+            .status-btn-reject{
+                @include status_btn();
+                background-color: #dc3545;
+                margin: 10px
+            }
+            
+            .status-btn-accept{
+                @include status_btn();
+                background-color: #1e64d6;
+            }
+
+            .status-btn-declined{
+            @include status_btn();
+            background-color:gray;
+            }
+          }
+
+        
     }
 
     
