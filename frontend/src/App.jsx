@@ -17,6 +17,8 @@ import UpdateData from "./pages/resource/UpdateData";
 import { createContext } from "react";
 import AuthContext from "./context/AuthContext";
 import reviewContext from "./context/ReviewRequestContext";
+import Chat from './pages/chat/Chat'
+
 function App() {
   const [user, setUser] = useState(null);
   console.log(user);

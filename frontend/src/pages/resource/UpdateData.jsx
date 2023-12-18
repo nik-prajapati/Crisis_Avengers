@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateData.css';
-<<<<<<< HEAD:frontend/src/pages/UpdateData.jsx
-import SideBar from './request/SideBar';
-import MapPageHeader from './request/MapPageHeader';
-import Loader from './Loader'; // Import your Loader component
-=======
 import SideBar from '../request/SideBar';
 import MapPageHeader from '../request/MapPageHeader';
->>>>>>> a0a8a243f2b3d695568f4e1e3ffdc26c4da797a5:frontend/src/pages/resource/UpdateData.jsx
 
 const UpdateData = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
