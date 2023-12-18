@@ -107,9 +107,16 @@ const ReviewRequest = () => {
   
   
             <div className="status-info">
-            <button className={`status-btn ${recieve.status.toLowerCase()}`}>
-            {recieve.status=='Pending' ? 'accept' : 'reject' }
-            </button>
+            <div className={`recieve-status-btn `}>
+            {
+              recieve.status=='Pending' ?
+              <div>
+              <button className='status-btn-accept'>Accept</button>
+              <button className='status-btn-reject'>Reject</button>
+              </div> : <button className='status-btn-declined'>Declined</button>
+            }
+            
+            </div>
             </div>
             </div>
             })

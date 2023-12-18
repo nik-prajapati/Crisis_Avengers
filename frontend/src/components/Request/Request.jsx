@@ -10,7 +10,6 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
   const [requestSend, setRequestSend] = useState(null);
   const { reviewData, setReviewData } = useContext(reviewContext);
 
-  const notify = () => {};
 
   const handlerequestSend = () => {
     console.log("helllo")
@@ -18,6 +17,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       rescue_requester_id: user._id,
       requestee_id: payload.reqAgency.id,
       distance: payload.reqAgency.distance,
+      
       requested_items: [
         {
           type: "Medical",
@@ -32,7 +32,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
         longitude: 72.821693,
       },
     };
-    // setRequestSend(dummyReq)
+    
     console.log(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast("Request Sent Successfully");

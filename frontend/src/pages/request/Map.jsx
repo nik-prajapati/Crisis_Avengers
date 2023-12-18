@@ -14,6 +14,7 @@ import ReqBlock from "../ReqBlock.jsx";
 import { Link } from "react-router-dom";
 import MapRequestForm from './MapRequestForm.jsx'
 import ListSection from "./ListSection.jsx";
+import { ToastContainer, toast } from "react-toastify";
 
 
 const duser = {
@@ -45,10 +46,6 @@ function Map({ user }) {
   const [mapClass,setMapClass]=useState(true);
 
 
-  
-  // console.log(reviewData)
-
-  
   useEffect(() => {
     // console.log(user);
     if (user) socket.emit("join-room", user._id);
@@ -58,7 +55,11 @@ function Map({ user }) {
     if (user) {
       socket.on("receive-request", (req_data) => {
         console.log(req_data);
+        toast("New Request Received");
         setRecieveRequest([...recieveRequest, req_data]);
+        setTimeout(()=>{
+        setRecieveRequest(null)
+        },300000)
       });
 
       socket.on("receive-message", (newMessage) => {
@@ -70,7 +71,7 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-    // console.log(user);
+    
   });
 
   useEffect(() => {
@@ -137,10 +138,36 @@ function Map({ user }) {
 
   return (
     <div className="Map-section-columns">
+
     <MapRequestForm />
-    
+    <ToastContainer />
     <div className="Map-container">
 
+    
+    {recieveRequest &&
+      recieveRequest.map((body, idx) => {
+        return (
+          <div className='receive-request-card'>
+          <div className='cardbody' key={idx}>
+
+                <h5 className='card-title' >
+                  From : {body.rescue_requester_id.name}
+                </h5>
+                <p className='card-text' >
+                  Address : {body.rescue_requester_id.address}
+                </p>
+                <p className='card-text' >
+                  Distance : {Math.floor(Math.random() * 50 + 1)}km
+                </p>
+              </div>
+              </div>
+        );
+      }
+      
+      )
+    }
+  
+    
     
     <div className="option-btn">
     <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
@@ -228,30 +255,6 @@ function Map({ user }) {
 
       }
 
-      
-
-      <div className='cardStyle'>
-        {recieveRequest &&
-          recieveRequest.map((body, idx) => {
-            return (
-              <div className='cardbody' key={idx}>
-                <div className='card' style={{ width: "18rem" }}>
-                  <div className='card-body' style={{ color: "black" }}>
-                    <h5 className='card-title' style={{ color: "black" }}>
-                      From : {body.rescue_requester_id.name}
-                    </h5>
-                    <p className='card-text' style={{ color: "black" }}>
-                      Address : {body.rescue_requester_id.address}
-                    </p>
-                    <p className='card-text' style={{ color: "black" }}>
-                      Distance : {Math.floor(Math.random() * 50 + 1)}km
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
     </div>
     </div>
   );
