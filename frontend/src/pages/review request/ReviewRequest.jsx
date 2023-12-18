@@ -23,7 +23,8 @@ const ReviewRequest = () => {
           console.log(sentResp, receivedResp)
         // if(sentResp.status==200){
             // setDummyD({ ...dummyD, sentRequests: sentResp.data.requests }) 
-
+            sentResp.data.requests.reverse()
+            receivedResp.data.requests.reverse()
             const allData={
               sentRequests: sentResp.data.requests ,
               receivedRequests: receivedResp.data.requests
@@ -54,11 +55,11 @@ const ReviewRequest = () => {
       <div className={sentSection ? 'sent-section active-section':'sent-section disable-section'}>
       <ul>
       {
-        dummyD.sentRequests && dummyD.sentRequests.map((recieve,idx)=>{
+        dummyD.sentRequests && dummyD.sentRequests.reverse().map((recieve,idx)=>{
           return <div className="request-card">
           <div className="agency-info">
-          <p>Requestee ID: {recieve.requestee_id}</p>
-          <p>Rescue Requester ID: {recieve.rescue_requester_id}</p>
+          <p>To : {recieve.requestee_id}</p>
+          <p>From: {recieve.rescue_requester_id}</p>
           </div>
          { 
           <div className="time-info">
@@ -70,7 +71,7 @@ const ReviewRequest = () => {
           </div>
         }
 
-        
+
           <div className="status-info">
           <button className={`status-btn ${recieve.status.toLowerCase()}`}>
           {recieve.status}
@@ -90,13 +91,27 @@ const ReviewRequest = () => {
         {
           dummyD.receivedRequests && dummyD.receivedRequests.map((recieve,idx)=>{
             return <div className="request-card">
-            
-            <p>Status: {recieve.status}</p>
+            <div className="agency-info">
+            <p>From: {recieve.requestee_id}</p>
+            <p>To : {recieve.rescue_requester_id}</p>
+            </div>
+           { 
+            <div className="time-info">
+  
             <p>Created At: {new Date(recieve.createdAt).toLocaleString()}</p>
-            <p>Updated At: {new Date(recieve.updatedAt).toLocaleString()}</p>
-            <p>Requestee ID: {recieve.requestee_id}</p>
-            <p>Rescue Requester ID: {recieve.rescue_requester_id}</p>
-          </div>
+            {
+              recieve.updatedAt!=recieve.createdAt && <p>Updated At: {new Date(recieve.updatedAt).toLocaleString()}</p>
+            }
+            </div>
+          }
+  
+  
+            <div className="status-info">
+            <button className={`status-btn ${recieve.status.toLowerCase()}`}>
+            {recieve.status=='Pending' ? 'accept' : 'reject' }
+            </button>
+            </div>
+            </div>
             })
       }
       </ul>

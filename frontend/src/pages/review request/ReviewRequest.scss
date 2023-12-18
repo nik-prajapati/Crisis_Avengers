@@ -62,7 +62,12 @@
         .active-section{
             display: block;
         }
-
+        
+        .time-info{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
         .status-btn{
             display: inline-block;
             padding: 8px 16px;
