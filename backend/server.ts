@@ -74,7 +74,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send-request', async (room, req_data) => {
+    console.log( "before Request : ");
+    console.log(req_data )
     const request_data = await addRequest(req_data);
+    console.log("after Request Data : ")
+    console.log(request_data)
     socket.to(room).emit('receive-request', request_data);
   });
 
