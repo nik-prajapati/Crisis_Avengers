@@ -199,12 +199,14 @@ function Map({ user }) {
           handleMarker={handleMarker}
         />
         <div className={mapClass ? "active-section" : "disable-section"}>
-          <MapContainer center={duser.geocode} zoom={12}>
+        
+        { location && 
+        <MapContainer center={[location.latitude,location.longitude]} zoom={7}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
-
+  
             {user && location && (
               <Marker
                 position={[
@@ -224,11 +226,11 @@ function Map({ user }) {
                 </Popup>
               </Marker>
             )}
-
+  
             {
               // currentUser &&
             }
-
+  
             {agencies &&
               agencies.map((agency, idx) => (
                 <Marker
@@ -256,6 +258,8 @@ function Map({ user }) {
                 </Marker>
               ))}
           </MapContainer>
+                }
+          
         </div>
         {
           // <button onClick={() => handleRequest()} className='body-submit-btn'>
