@@ -73,13 +73,25 @@ function Map({ user }) {
   });
 
   useEffect(() => {
+    let location;
     // Check if the Geolocation API is available in the browser
     if ("geolocation" in navigator) {
       // Get the current location
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log(latitude, longitude)
+          const resp = await axios.get(
+            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=3000000`,
+            { withCredentials: true }
+          );
+          console.log(resp.data);
+          const d = resp.data;
+          console.log(d);
+          let myself = {
+            user: user,
+            location: location,
+          };
+          setAgencies(d);
           setLocation({ latitude, longitude });
         },
         (error) => {
@@ -88,27 +100,11 @@ function Map({ user }) {
       );
     } else {
       console.error("Geolocation is not supported in this browser.");
-    }
-
-    const fetchData = async (location) => {
-      if (location) {
-        const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=${location.latitude}&longitude=${location.longitude}&radius=1000000`,
-          
-        );
-        console.log(resp.data);
-        const d = resp.data;
-
-        setAgencies(d);
-        
-      }
-    };
-
-    fetchData(location);
-  }, []);
+}},
+[]);
 
   // console.log(currentUser);
-  // console.log(agencies);
+  // console.log(location);
 
   //marker handle
   const handleMarker = (agency) => {
@@ -208,7 +204,7 @@ function Map({ user }) {
             url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
   
-              {user && location && (
+              {user && (
                 <Marker
                   position={[
                     Number(location.latitude),

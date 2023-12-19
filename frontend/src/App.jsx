@@ -31,7 +31,7 @@ function App() {
   if(Cookies)
   {
   setUser(Cookies['apadarelief'])
-  // console.log()
+
   }
   },[])
 
