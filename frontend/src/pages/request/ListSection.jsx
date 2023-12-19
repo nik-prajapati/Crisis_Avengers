@@ -14,7 +14,13 @@ const ListSection = ({agencies,mapClass,handleMarker}) => {
             <div className="body">
             <div className='agency-info'>
             <h3>{agency._doc.name}</h3>
-            <h5>{agency._doc.type}</h5> 
+            <h3>{agency._doc.email}</h3>
+            <h5>{agency._doc.address}</h5>
+            <h5>{agency._doc.description}</h5>
+            <h5>{agency._doc.type}</h5>
+            </div>
+            <div className="agency-dstance">
+            <h4>{agency.distance} km</h4>  
             </div>
               {
                 // <p>Distance: {distance} miles</p>
