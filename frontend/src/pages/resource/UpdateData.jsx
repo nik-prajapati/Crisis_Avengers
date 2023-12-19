@@ -17,40 +17,7 @@ const UpdateData = () => {
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  // const DeleteRecord=async(id)=>{
-  //   try {
-  //     console.log("id of object",id);
-  //     const resourceData = resources.find(resource => resource._id === id);
-  //     //  console.log(resourceData)
-  //     setFormData({
-  //       // _id: resourceData._id,
-  //       type: resourceData.type,
-  //       name: resourceData.name,
-  //       quantity: resourceData.quantity,
-  //       unit: resourceData.unit,
-  //       del: true
-  //     });
-
-  //     setIsLoading(true);
-
-  //     const response = await axios.post(
-  //       "http://localhost:3000/updateresources",
-  //       formData,
-  //       {
-  //         withCredentials: true
-  //       }
-  //     );
-
-  //     console.log(response);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
-
+  
   const commitChanges = async (id) => {
     try {
       console.log("Identity", id);
@@ -115,35 +82,44 @@ const UpdateData = () => {
 
   const delrec = async (objectId) => {
     console.log(objectId);
-    try 
-    {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        _id: objectId,
-        type: 'jbv',
-        name: 'knfe',
-        quantity: 0,
-        unit: 'ksnfex',
-        del: true
-      }));
-      
-      console.log(formData)
+    try {
       setIsLoading(true);
       const response = await axios.post(
         "http://localhost:3000/updateresources",
-        formData,
         {
-          withCredentials:true
+          _id: objectId,
+          type: "a",
+          name: "a",
+          quantity: 0,
+          unit: "a",
+          del: true,
+        },
+        {
+          withCredentials: true,
         }
       );
+      const apiUrl = "http://localhost:3000/getresources";
+      // console.log(response);
+      try {
+        const response = await axios.get(apiUrl, {
+          withCredentials: true,
+        });
+        console.log(response.data);
+        const allObjectIds = response.data.resources.map(
+          (resource) => resource._id
+        );
+        console.log("All Object IDs:", allObjectIds);
 
-      console.log(response);
-      setIsLoading(false);
+        setResources(response.data.resources);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error:", error);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
     }
-
-  }
+  };
 
   const addData = () => {
     setIsModalOpen(true);
@@ -159,7 +135,7 @@ const UpdateData = () => {
         <SideBar />
         <main>
           {isLoading && <Loader />}
-          <div className="tab" style={{ overflowX: 'auto' }}>
+          <div className='tab' style={{ overflowX: "auto" }}>
             <table>
               <thead>
                 <tr>
@@ -180,7 +156,7 @@ const UpdateData = () => {
                     <td>{resource.unit}</td>
                     <td>
                       <button
-                        className="res"
+                        className='res'
                         onClick={() => openModal(resource._id)}
                       >
                         Update
@@ -188,7 +164,7 @@ const UpdateData = () => {
                     </td>
                     <td>
                       <button
-                        className="res"
+                        className='res'
                         onClick={() => delrec(resource._id)}
                       >
                         Delete
@@ -203,7 +179,7 @@ const UpdateData = () => {
                   <td></td>
                   <td></td>
                   <td>
-                    <button className="res" onClick={() => addData()}>
+                    <button className='res' onClick={() => addData()}>
                       Add
                     </button>
                   </td>
@@ -215,13 +191,13 @@ const UpdateData = () => {
       </div>
 
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <span className="close-btn" onClick={closeModal}>
+        <div className='modal-overlay'>
+          <div className='modal'>
+            <span className='close-btn' onClick={closeModal}>
               &times;
             </span>
             <select
-              name="type"
+              name='type'
               value={formData.type}
               onChange={handleInputChange}
             >
@@ -235,33 +211,33 @@ const UpdateData = () => {
             </select>
 
             <input
-              type="text"
-              name="name"
-              className="modal_input"
-              placeholder="Enter the name"
+              type='text'
+              name='name'
+              className='modal_input'
+              placeholder='Enter the name'
               value={formData.name}
               onChange={handleInputChange}
             />
             <input
-              type="number"
-              className="modal_input"
-              id="quantity"
-              name="quantity"
-              placeholder="Quantity"
+              type='number'
+              className='modal_input'
+              id='quantity'
+              name='quantity'
+              placeholder='Quantity'
               value={formData.quantity}
               onChange={handleInputChange}
             />
             <input
-              type="text"
-              className="modal_input"
-              id="unit"
-              name="unit"
-              placeholder="Units"
+              type='text'
+              className='modal_input'
+              id='unit'
+              name='unit'
+              placeholder='Units'
               value={formData.unit}
               onChange={handleInputChange}
             />
             <button
-              className="submit_data"
+              className='submit_data'
               onClick={() => commitChanges(selectedObjectId)}
             >
               Commit Changes
