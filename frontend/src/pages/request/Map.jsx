@@ -34,6 +34,7 @@ const duserCustomIcon = new Icon({
 });
 
 function Map({ user }) {
+  console.log(user);
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
@@ -72,13 +73,25 @@ function Map({ user }) {
   });
 
   useEffect(() => {
+    let location;
     // Check if the Geolocation API is available in the browser
     if ("geolocation" in navigator) {
       // Get the current location
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log(latitude, longitude)
+          const resp = await axios.get(
+            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=3000000`,
+            { withCredentials: true }
+          );
+          console.log(resp.data);
+          const d = resp.data;
+          console.log(d);
+          let myself = {
+            user: user,
+            location: location,
+          };
+          setAgencies(d);
           setLocation({ latitude, longitude });
         },
         (error) => {
@@ -88,33 +101,7 @@ function Map({ user }) {
     } else {
       console.error("Geolocation is not supported in this browser.");
     }
-
-    const fetchData = async (location) => {
-      if (user && location) {
-        const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=${location.latitude}&longitude=${location.longitude}&radius=3000000`,
-          { withCredentials: true }
-        );
-        console.log(resp.data);
-        const d = resp.data;
-        console.log(d);
-        let myself = {
-          user :user,
-          location:location
-        }
-
-      
-        // console.log(oth)
-        setAgencies(d);
-        // setCurrentUser(myself);
-      }
-    };
-
-    fetchData(location);
   }, []);
-
-  // console.log(currentUser);
-  // console.log(agencies);
 
   //marker handle
   const handleMarker = (agency) => {
@@ -132,7 +119,7 @@ function Map({ user }) {
       reqduser: user,
     };
 
-    console.log(requestBody)
+    console.log(requestBody);
     setMarker(markerData);
     setRequestBody(requestBody);
   };
@@ -150,67 +137,73 @@ function Map({ user }) {
   // console.log(user);
 
   return (
-    <div className="Map-section-columns">
+    <div className='Map-section-columns'>
+      <MapRequestForm />
 
-    <MapRequestForm />
-    
-    <div className="Map-container">
-
-    
-    {recieveRequest &&
-      recieveRequest.map((body, idx) => {
-        return (
-          <div className='receive-request-card'>
-          <div className='cardbody' key={idx}>
-
-                <h5 className='card-title' >
-                  From : {body.rescue_requester_id.name}
-                </h5>
-                <p className='card-text' >
-                  Address : {body.rescue_requester_id.address}
-                </p>
-                <p className='card-text' >
-                  Distance : {body.distance} km
-                </p>
+      <div className='Map-container'>
+        {recieveRequest &&
+          recieveRequest.map((body, idx) => {
+            return (
+              <div className='receive-request-card'>
+                <div className='cardbody' key={idx}>
+                  <h5 className='card-title'>
+                    From : {body.rescue_requester_id.name}
+                  </h5>
+                  <p className='card-text'>
+                    Address : {body.rescue_requester_id.address}
+                  </p>
+                  <p className='card-text'>Distance : {body.distance} km</p>
+                </div>
               </div>
-              </div>
-        );
-      }
-      
-      )
-    }
-  
-    
-    
-    <div className="option-btn">
-    <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
-      ()=>{
-      setMapClass(true)
-     
-      }
-    }>MAP</button>
-    <button className={mapClass ? 'section-option-btn disable':'section-option-btn active'} 
-    onClick={(e)=>{
-      setMapClass(false)
-      
-    }}> LIST</button>
-    </div>
-    {requestBody && (
-      <Request
-        user={user}
-        payload={requestBody}
-        socket={socket}
-        setPayLoad={setRequestBody}
-        
-      />
-    )}
-      <ListSection agencies={agencies} mapClass={mapClass} handleMarker={handleMarker}/>
-      <div className={mapClass ? "active-section":"disable-section"}>
-      <MapContainer center={duser.geocode} zoom={12} >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+            );
+          })}
+
+        <div className='option-btn'>
+          <button
+            className={
+              mapClass
+                ? "section-option-btn active"
+                : "section-option-btn disable"
+            }
+            onClick={() => {
+              setMapClass(true);
+            }}
+          >
+            MAP
+          </button>
+          <button
+            className={
+              mapClass
+                ? "section-option-btn disable"
+                : "section-option-btn active"
+            }
+            onClick={(e) => {
+              setMapClass(false);
+            }}
+          >
+            {" "}
+            LIST
+          </button>
+        </div>
+        {requestBody && (
+          <Request
+            user={user}
+            payload={requestBody}
+            socket={socket}
+            setPayLoad={setRequestBody}
+          />
+        )}
+        <ListSection
+          agencies={agencies}
+          mapClass={mapClass}
+          handleMarker={handleMarker}
         />
+        <div className={mapClass ? "active-section" : "disable-section"}>
+          <MapContainer center={duser.geocode} zoom={12}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+            />
 
             {user && location && (
               <Marker
@@ -227,7 +220,6 @@ function Map({ user }) {
                     // <h5>{user.address}</h5>
                     // <h5>{user.description}</h5>
                     // <h5>{user.type}</h5>
-
                   }
                 </Popup>
               </Marker>
@@ -237,31 +229,32 @@ function Map({ user }) {
               // currentUser &&
             }
 
-            {agencies && agencies.map((agency, idx) => (
-              <Marker
-                position={[
-                  Number(agency.location.coordinates[1]),
-                  Number(agency.location.coordinates[0]),
-                ]}
-                key={idx}
-                icon={customIcon}
-              >
-                <Popup>
-                  <h3>{agency.name}</h3>
-                  <h3>{agency.email}</h3>
-                  <h5>{agency.address}</h5>
-                  <h6>{agency.description}</h6>
-                  <h6>{agency.type}</h6>
-                  <h4>{(agency.distance)/(1000)} km</h4>
-                  <button
-                    className="marker-btn"
-                    onClick={() => handleMarker(agency)}
-                  >
-                    Collaborate
-                  </button>
-                </Popup>
-              </Marker>
-            ))}
+            {agencies &&
+              agencies.map((agency, idx) => (
+                <Marker
+                  position={[
+                    Number(agency.location.coordinates[1]),
+                    Number(agency.location.coordinates[0]),
+                  ]}
+                  key={idx}
+                  icon={customIcon}
+                >
+                  <Popup>
+                    <h3>{agency.name}</h3>
+                    <h3>{agency.email}</h3>
+                    <h5>{agency.address}</h5>
+                    <h6>{agency.description}</h6>
+                    <h6>{agency.type}</h6>
+                    <h4>{agency.distance / 1000} km</h4>
+                    <button
+                      className='marker-btn'
+                      onClick={() => handleMarker(agency)}
+                    >
+                      Collaborate
+                    </button>
+                  </Popup>
+                </Marker>
+              ))}
           </MapContainer>
         </div>
         {
