@@ -104,7 +104,7 @@ function Map({ user }) {
     fetchData();
   }, []);
 
-    console.log(agencies)
+    // console.log(agencies)
 
   //marker handle
   const handleMarker = (agency) => {
