@@ -19,7 +19,7 @@ import AuthContext from "./context/AuthContext";
 import reviewContext from "./context/ReviewRequestContext";
 import Chat from "./pages/chat/Chat";
 import { useCookies } from "react-cookie";
-
+import socket from "./helpers/socket";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,14 +27,15 @@ function App() {
   const [reviewData, setReviewData] = useState([1, 2]);
   const [Cookies, setCookies, removeCookies] = useCookies(["apadarelief"]);
 
-  useEffect(()=>{
-  if(Cookies)
-  {
-  setUser(Cookies['apadarelief'])
+  useEffect(() => {
+    if (user) socket.emit("join-room", user.id);
+  }, [user]);
 
-  }
-  },[])
-
+  useEffect(() => {
+    if (Cookies) {
+      setUser(Cookies["apadarelief"]);
+    }
+  }, []);
 
   return (
     <BrowserRouter>

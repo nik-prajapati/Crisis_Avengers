@@ -6,6 +6,7 @@ import MapPageHeader from "../request/MapPageHeader";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 import { useEffect } from "react";
+import socket from "../../helpers/socket.js";
 // import chatIcon from "../../image/chat.svg";
 
 const ReviewRequest = () => {
@@ -14,6 +15,25 @@ const ReviewRequest = () => {
   // const [dummyD, setDummyD] = useState({});
   const [sentRequests, setSentRequests] = useState([]);
   const [rcvdRequests, setRcvdRequests] = useState([]);
+
+  useEffect(() => {
+    console.log(sentRequests);
+    socket.on("responded-to-request", (reqId, newStatus) => {
+      console.log("hello");
+      setSentRequests((prev) => {
+        const newarray = prev.map((item) => {
+          if (item._id === reqId) return { ...item, status: newStatus };
+          return item;
+        });
+        console.log(newarray);
+        return newarray;
+      });
+    });
+
+    return () => {
+      socket.off("responded-to-request");
+    };
+  }, []);
 
   useEffect(() => {
     const fetchReviewRequest = async () => {
@@ -41,27 +61,41 @@ const ReviewRequest = () => {
     fetchReviewRequest();
   }, []);
 
-  const handleAccept = (e, reqId) => {
+  const handleStatusChange = (e, reqId, requesterId, status) => {
     try {
       e.preventDefault();
-      const ind = rcvdRequests.find((x) => x._id === reqId);
+      const ind = rcvdRequests.findIndex((x) => x._id === reqId);
       setRcvdRequests((prev) => {
-        console.log(prev);
-        prev[ind] = { ...prev[ind], status: "Accepted" };
-        return prev;
+        const newarray = prev.map((p, i) => {
+          if (i === ind) return { ...p, status: status };
+          return p;
+        });
+
+        return newarray;
       });
+
+      socket.emit("respond-to-request", requesterId, reqId, status);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleReject = (e, reqId) => {
-    try {
-      e.preventDefault();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleReject = (e, reqId, requesterId) => {
+  //   try {
+  //     e.preventDefault();
+  //     const ind = rcvdRequests.findIndex((x) => x._id === reqId);
+  //     setRcvdRequests((prev) => {
+  //       const newarray = prev.map((p, i) => {
+  //         if (i === ind) return { ...p, status: "Rejected" };
+  //         return p;
+  //       });
+  //       console.log(newarray);
+  //       return newarray;
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
@@ -184,13 +218,27 @@ const ReviewRequest = () => {
                           <div className="flex gap-4">
                             <button
                               className="status-btn completed"
-                              onClick={(e) => handleAccept(e, recieve._id)}
+                              onClick={(e) =>
+                                handleStatusChange(
+                                  e,
+                                  recieve._id,
+                                  recieve.rescue_requester_id._id,
+                                  "Accepted"
+                                )
+                              }
                             >
                               Accept
                             </button>
                             <button
                               className="status-btn rejected"
-                              onClick={(e) => handleReject(e, recieve._id)}
+                              onClick={(e) =>
+                                handleStatusChange(
+                                  e,
+                                  recieve._id,
+                                  recieve.rescue_requester_id._id,
+                                  "Rejected"
+                                )
+                              }
                             >
                               Reject
                             </button>
