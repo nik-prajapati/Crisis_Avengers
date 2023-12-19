@@ -125,9 +125,9 @@ export default function Landingpage({ user }) {
           {user && (
             <h2 className="navopt">{user.agencyDetails.name}</h2>
           )}
-          <Link to="/govtlogin">
+          <Link to="/signup">
             <button className="gov-button" href="#">
-              Government Agency Login
+              Rescue Agency Signup
             </button>
           </Link>
 
