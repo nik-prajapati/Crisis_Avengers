@@ -79,18 +79,6 @@
     border-bottom: 1px solid #1bbc9b;
 }
 
-.bottomFooter{
-    display: flex;
-    align-items: center;
-    padding-bottom: 2px;
-}
-
-.textfoot{
-    align-items: center;
-    padding-left: 500px;
-   
-}
-
 .lastCol{
     padding-right: 20px;
 }
@@ -117,3 +105,110 @@
     padding-top: 5px;
     color: #c2c2c2;
 }
+
+.footerlogo {
+    
+    margin-left: 280px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex: 4;
+    padding-left: 0px;
+    text-align: center; /* Center align the content */
+    
+}
+
+.footerlogo img {
+    margin-bottom: 10px; /* Adjust the margin as needed */
+    width: 180px; /* Ensure consistent width with the image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.footerlogo span {
+    color: white;
+    font-weight: bolder;
+    white-space: nowrap; 
+    max-width: none; /* Limit the width of the tagline */
+    text-align: center; /* Center align the tagline */
+}
+
+.section{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    justify-items: center;
+}
+
+.links{
+    flex: 3;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 75px; 
+    margin-right: 350px;
+}
+
+.useful{
+    width: 300px;
+    height: 200px;
+    padding-left: 40px;
+    margin-left: 20px;
+}
+
+.useful ul li{
+    color: white;
+    padding: 0 0 5px;
+    
+}
+
+.useful a{
+    color: white;
+    text-decoration: none;
+}
+
+.useful img{
+    padding: 15px 5px 0 5px;
+}
+
+@media screen and (max-width: 767px) {
+    .footerlogo {
+      margin-left: -50px; /* Reset margin */
+      padding-left: 0; /* Reset padding */
+      text-align: center; /* Center-align text */
+      order: -1; /* Move the footerlogo section to the top */
+    }
+  
+    .links {
+      
+      margin-top: -250rem; /* Add margin at the top for spacing */
+      margin-left: 0; /* Reset margin */
+    }
+  
+    .useful {
+      width: auto; /* Adjust width for responsiveness */
+      max-width: 300px; /* Set maximum width */
+      margin: 0 10px; /* Add margin for spacing */
+      padding: 10px; /* Add padding */
+    }
+
+    .useful ul{
+        padding-left: 24px;
+    }
+  
+    .useful ul li {
+      padding: 5px 0 0 10px; /* Adjust padding */
+    }
+  
+    .useful img {
+      padding: 10px 5px 0; /* Adjust padding */
+    }
+
+    .section{
+        flex-direction: column;
+        height: 100rem;
+        position: fixed;
+    }
+
+    
+  }

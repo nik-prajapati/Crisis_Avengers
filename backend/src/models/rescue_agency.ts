@@ -1,9 +1,12 @@
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { RescueAgency } from '../types/schema';
 
 const RescueAgencySchema = new Schema<RescueAgency>(
   {
-    _id: Types.ObjectId,
+    _id: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
     name: {
       type: String,
       required: true,
@@ -11,12 +14,13 @@ const RescueAgencySchema = new Schema<RescueAgency>(
     description: String,
     phone: [{ type: String }],
     location: {
-      latitude: {
-        type: Number,
+      type: {
+        type: String,
+        enum: ['Point'],
         required: true,
       },
-      longitude: {
-        type: Number,
+      coordinates: {
+        type: [Number],
         required: true,
       },
     },
@@ -24,14 +28,22 @@ const RescueAgencySchema = new Schema<RescueAgency>(
       type: String,
       required: true,
     },
-    type: String,
+    type: {
+      type: String,
+      enum: ['NDRF', 'SDRF', 'DDRF', 'NGO'],
+    },
   },
   {
     timestamps: true,
-    // _id: false
   }
 );
 
-const RescueAgency = model<RescueAgency>('RescueAgency', RescueAgencySchema,'rescue-agencies');
+RescueAgencySchema.index({ location: '2dsphere' });
+
+const RescueAgency = model<RescueAgency>(
+  'RescueAgency',
+  RescueAgencySchema,
+  'rescue-agencies'
+);
 
 export default RescueAgency;

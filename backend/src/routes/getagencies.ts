@@ -11,7 +11,7 @@ const router = Router();
 const API_KEY =
   process.env.MAPQUEST_API_KEY || 'nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm';
 
-// get all agencies within a particular radius (in kilometers)
+// get all agencies within a particular radius (in meters)
 router.get('/', async (req, res) => {
   const { latitude, longitude, radius } = req.query;
   console.log(req.query);
@@ -24,22 +24,37 @@ router.get('/', async (req, res) => {
   } else {
     const lat = Number(latitude);
     const long = Number(longitude);
-    const rad = radius ? Number(radius) : 50;
-    let agencies = await RescueAgency.find({});
+    const rad = radius ? Number(radius) : 500000;
+    console.log(lat, long, rad);
+    const agencies = await RescueAgency.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: 'Point',
+            coordinates: [long, lat],
+          },
+          maxDistance: rad,
+          spherical: true,
+          distanceField: 'distance',
+        },
+      }
+    ]);
+    console.log(agencies);
+    res.send(agencies);
     // console.log(agencies)
     // console.log(agencies);
-    agencies = agencies.filter((agency) => {
-      agency.location.latitude;
-      return (
-        haversineDistance(
-          { latitude: lat, longitude: long },
-          {
-            latitude: agency.location.latitude,
-            longitude: agency.location.longitude,
-          }
-        ) <= rad
-      );
-    });
+    // agencies = agencies.filter((agency) => {
+    //   agency.location.latitude;
+    //   return (
+    //     haversineDistance(
+    //       { latitude: lat, longitude: long },
+    //       {
+    //         latitude: agency.location.latitude,
+    //         longitude: agency.location.longitude,
+    //       }
+    //     ) <= rad
+    //   );
+    // });
     // console.log(agencies);
     // const dist: number[] = [];
     // for (let i = 0; i < agencies.length; i += 49) {
@@ -68,19 +83,20 @@ router.get('/', async (req, res) => {
     //     console.error(e);
     //   }
     // }
-    const resources: any[] = [];
-    for (let i = 0; i < agencies.length; i++) {
-      const x = await Resource.find({ agency_id: agencies[i]._id }).exec();
-      resources.push(x);
-    }
-    res.json({
-      error: false,
-      agencies: agencies
-        .map((agency, idx) => {
-          return { ...agency, resources: resources[idx] };
-        })
-        // .sort((a, b) => a.distance - b.distance),
-    });
+
+
+    // const resources: any[] = [];
+    // for (let i = 0; i < agencies.length; i++) {
+    //   const x = await Resource.find({ agency_id: agencies[i]._id }).exec();
+    //   resources.push(x);
+    // }
+    // res.json({
+    //   error: false,
+    //   agencies: agencies.map((agency, idx) => {
+    //     return { ...agency, resources: resources[idx] };
+    //   }),
+    //   // .sort((a, b) => a.distance - b.distance),
+    // });
   }
 });
 
