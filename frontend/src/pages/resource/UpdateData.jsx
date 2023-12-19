@@ -117,14 +117,16 @@ const UpdateData = () => {
     console.log(objectId);
     try 
     {
-      setFormData({
+      setFormData(prevFormData => ({
+        ...prevFormData,
         _id: objectId,
-        type: ' ',
-        name: ' ',
-        quantity:0,
-        unit: ' ',
+        type: 'jbv',
+        name: 'knfe',
+        quantity: 0,
+        unit: 'ksnfex',
         del: true
-      });
+      }));
+      
       console.log(formData)
       setIsLoading(true);
       const response = await axios.post(
