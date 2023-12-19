@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import apadalogo from "../../image/aapdalogo.jpg";
 import rescueimg from "../../image/Rsignup.png";
-
 import signup from "../../image/signupimg.png";
 import signupleft from "../../image/signupLeft.png";
 import signupright from "../../image/signupright.png";
-
+import { ToastContainer,toast } from "react-toastify";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -80,10 +79,13 @@ const SignUp = () => {
       );
       console.log(response);
       if (response.data.error === false) {
-        alert("SignUp successful");
+        // alert("SignUp successful");
+        toast.success("Registered Successfully !!")
+
         console.log("Signup successful");
-        navigate("/");
+        navigate("/request");
       } else {
+        toast.error(response.data.message)
         setError(response.data.message);
 
         setTimeout(() => {
@@ -126,7 +128,9 @@ const SignUp = () => {
     });
   };
   return (
+    
     <div className="main-box">
+      <ToastContainer />
       <div className="left">
         <div className="left-head">
           <div className="glass-container">
