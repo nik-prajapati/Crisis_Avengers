@@ -3,8 +3,7 @@ import axios from "axios";
 import "./UpdateData.css";
 import SideBar from "../request/SideBar";
 import MapPageHeader from "../request/MapPageHeader";
-import Loader from "../Loader"; // Import your Loader component
-
+import Loader from "../Loader";
 const UpdateData = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);

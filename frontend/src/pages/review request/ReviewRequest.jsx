@@ -6,7 +6,7 @@ import MapPageHeader from "../request/MapPageHeader";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 import { useEffect } from "react";
-import chatIcon from "../../image/chat.svg";
+// import chatIcon from "../../image/chat.svg";
 
 const ReviewRequest = () => {
   const [sentSection, setSentSection] = useState(true);
