@@ -4,26 +4,26 @@ import './ListSection.css'
 const ListSection = ({agencies,mapClass,handleMarker}) => {
 
   const [filterAgency, setFilterAgency]=useState(agencies)
-  const [inputValue, setInputValue]=useState('')
+  // const [inputValue, setInputValue]=useState('')
 
   const handleFilter=(e)=>{
-  
-  const filterData=agencies.filter((agency)=>{
-    return agency.name.toLowerCase().includes(e.target.value) || agency.address.toLowerCase().includes(e.target.value)
-  })
-
-  setFilterAgency(filterData)
-  setInputValue(e.target.value)
+    console.log(e.target.value)
+    const filterData=agencies.filter((agency)=>{
+      return agency.name.toLowerCase().includes(e.target.value) || agency.address.toLowerCase().includes(e.target.value)
+    })
+    
+    setFilterAgency(filterData)
+    
   }
 
   return (
     <div>
     <div className={mapClass ? "disable-section":"active-section"}>
 
-    <input type="text" onChange={(e)=>handleFilter(e)} value={inputValue} className='list-section-input' placeholder='Search For specific Agency Name'/>
+    <input type="text" onChange={(e)=>handleFilter(e)} className='list-section-input' placeholder='Search For specific Agency Name'/>
     <ul>
     {   
-        agencies.length>0 &&
+        agencies  &&
         filterAgency.map((agency,idx)=>{
             return (
               <div className='request-card' key={idx}>
