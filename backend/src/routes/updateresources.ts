@@ -15,14 +15,19 @@ router.post('/', isAuthenticated, isRescueAgency, async (req, res) => {
     name,
     quantity,
     unit,
+    del
   }: {
     _id?: Types.ObjectId;
     type: string;
     name: string;
     quantity: number;
     unit: string;
+    del?: boolean;
   } = req.body;
-  if (!_id) {
+  if(del && _id) {
+    await Resource.findByIdAndRemove(_id);
+  }
+  else if (!_id) {
     await (
       await Resource.create({
         agency_id: req.user.id,
