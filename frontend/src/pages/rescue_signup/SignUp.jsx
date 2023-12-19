@@ -9,7 +9,7 @@ import rescueimg from "../../image/Rsignup.png";
 import signup from "../../image/signupimg.png";
 import signupleft from "../../image/signupLeft.png";
 import signupright from "../../image/signupright.png";
-
+import FillLocationOption from "./FillLocationOption";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,6 +25,9 @@ const SignUp = () => {
     type: "",
   });
   const [error, setError] = useState(null);
+  const [showMap, setShowmap] = useState(true);
+  const [addressValue,setAddressValue]=useState('')
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -127,7 +130,9 @@ const SignUp = () => {
   };
   return (
     <div className="main-box">
+    <FillLocationOption showMap={showMap} setShowMap={setShowmap}/>
       <div className="left">
+      
         <div className="left-head">
           <div className="glass-container">
             <div className="left-glass">
@@ -235,15 +240,19 @@ const SignUp = () => {
                 />
               </p>
 
-              <p>
-                <label>Address </label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  placeholder="Enter your postal address"
-                />
+              <p> 
+              <label>Address </label>
+              <div className="address-container">
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Enter your postal address"
+                className="Address-input"
+              />
+              <div className="choose-from-map" onClick={e=>setShowmap(true)}>MAP</div>
+              </div>
               </p>
             </div>
 
@@ -290,7 +299,7 @@ const SignUp = () => {
               </p>
             </div>
 
-            <p class="full">
+            <p className="full">
               <label>Description</label>
               <textarea
                 name="description"
@@ -313,8 +322,10 @@ const SignUp = () => {
             </p>
           </form>
         </div>
+        
       </div>
       {error && <div>{error}</div>}
+
     </div>
   );
 };
