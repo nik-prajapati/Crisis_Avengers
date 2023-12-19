@@ -12,7 +12,6 @@ import socket from "../../helpers/socket.js";
 const ReviewRequest = () => {
   const [sentSection, setSentSection] = useState(true);
   const { reviewData, setReviewData } = useContext(reviewContext);
-  // const [dummyD, setDummyD] = useState({});
   const [sentRequests, setSentRequests] = useState([]);
   const [rcvdRequests, setRcvdRequests] = useState([]);
 
@@ -194,10 +193,6 @@ const ReviewRequest = () => {
                         <p>
                           On: {new Date(recieve.createdAt).toLocaleString()}
                         </p>
-                        {/* <p>
-          Updated At:{" "}
-          {new Date(recieve.updatedAt).toLocaleString()}
-        </p> */}
                         <div className="flex flex-col">
                           <p>
                             To:{" "}

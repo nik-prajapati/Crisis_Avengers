@@ -4,7 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
-// import sendMail from "../../pages/request/nodemailer";
 
 
 const Request = ({ user, payload, socket, setPayLoad }) => {
@@ -34,7 +33,6 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
         longitude: 72.821693,
       },
     };
-    // setRequestSend(dummyReq)
     console.log(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast.success("Request Sent Successfully");

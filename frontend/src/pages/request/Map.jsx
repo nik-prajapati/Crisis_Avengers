@@ -82,7 +82,7 @@ function Map({ user }) {
           const { latitude, longitude } = position.coords;
           console.log(latitude, longitude);
           const resp = await axios.get(
-            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=3000000`,
+            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
             { withCredentials: true }
           );
           console.log(resp.data);
