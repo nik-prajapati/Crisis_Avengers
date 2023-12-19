@@ -25,4 +25,9 @@ const addRequest = async (req_data: req) => {
   return request;
 };
 
-export { addRequest };
+const updateRequest = async (reqId: Types.ObjectId, newStatus: string) => {
+  const res = await Request.findByIdAndUpdate(reqId, { status: newStatus });
+  return res;
+};
+
+export { addRequest, updateRequest };

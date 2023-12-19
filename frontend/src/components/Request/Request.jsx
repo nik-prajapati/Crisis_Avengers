@@ -4,19 +4,22 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
+// import sendMail from "../../pages/request/nodemailer";
+
 
 const Request = ({ user, payload, socket, setPayLoad }) => {
+ 
   console.log(payload);
   const [requestSend, setRequestSend] = useState(null);
   const { reviewData, setReviewData } = useContext(reviewContext);
 
-  const notify = () => {};
 
   const handlerequestSend = () => {
     const dummyReq = {
       rescue_requester_id: user._id,
-      requestee_id: payload.reqAgency._id,
+      requestee_id: payload.reqAgency.id,
       distance: payload.reqAgency.distance,
+      
       requested_items: [
         {
           type: "Medical",
@@ -32,8 +35,11 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       },
     };
     // setRequestSend(dummyReq)
+    console.log(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
-    toast("Request Sent Successfully");
+    toast.success("Request Sent Successfully");
+    sendMail(dummyReq.reqAgency.email,"New Request Arrived","Please Review the review Page for further info")
+
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {
       setPayLoad(null);

@@ -75,7 +75,7 @@ export default function SendMessage({ chatId, messages, setMessages, email }) {
           name="send-msg"
           value={content}
           onChange={handleTyping}
-          placeholder="Send a message"
+          placeholder="Send a message..."
         />
         <Icon src={sendIcon} alt="Send message" onClick={handleSubmit} />
       </form>
