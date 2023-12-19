@@ -10,10 +10,12 @@ import axios from "axios";
 import Request from "../../components/Request/Request";
 import socket from "../../helpers/socket";
 // import Request from "./Request";
-import ReqBlock from "../ReqBlock";
+import ReqBlock from "../ReqBlock.jsx";
 import { Link } from "react-router-dom";
 import MapRequestForm from './MapRequestForm.jsx'
 import ListSection from "./ListSection.jsx";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const duser = {
   duser: "Ram Shirke",
@@ -43,7 +45,6 @@ function Map({ user }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass,setMapClass]=useState(true);
 
-  
 
   useEffect(() => {
     // console.log(user);
@@ -54,7 +55,11 @@ function Map({ user }) {
     if (user) {
       socket.on("receive-request", (req_data) => {
         console.log(req_data);
+        toast.success("New Request Received");
         setRecieveRequest([...recieveRequest, req_data]);
+        setTimeout(()=>{
+        setRecieveRequest(null)
+        },300000)
       });
 
       socket.on("receive-message", (newMessage) => {
@@ -66,7 +71,7 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-    // console.log(user);
+    
   });
 
   useEffect(() => {
@@ -74,10 +79,10 @@ function Map({ user }) {
       if (user) {
         // console.log("called fetchData")
         const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`
+          `http://localhost:3000/getagencies?latitude=19&longitude=72&radius=200`,{withCredentials:true}
         );
         const d = resp.data.agencies;
-        // console.log(d)
+        console.log(d)
         const myself = d.filter((agency) => {
           return agency._doc._id == user._id;
         });
@@ -92,13 +97,14 @@ function Map({ user }) {
         // console.log(oth)
         setAgencies(oth);
         setCurrentUser(myself[0]._doc);
+
       }
     };
 
     fetchData();
   }, []);
 
-  
+    // console.log(agencies)
 
   //marker handle
   const handleMarker = (agency) => {
@@ -108,6 +114,7 @@ function Map({ user }) {
       address: agency._doc.address,
       description: agency._doc.description,
       distance: agency.distance,
+      email:agency._doc.email
     };
     
     const requestBody = {
@@ -129,12 +136,39 @@ function Map({ user }) {
     //   setRequestBody(requestBody);
     }
   
-
+    console.log(agencies)
   return (
     <div className="Map-section-columns">
+
     <MapRequestForm />
     
     <div className="Map-container">
+
+    
+    {recieveRequest &&
+      recieveRequest.map((body, idx) => {
+        return (
+          <div className='receive-request-card'>
+          <div className='cardbody' key={idx}>
+
+                <h5 className='card-title' >
+                  From : {body.rescue_requester_id.name}
+                </h5>
+                <p className='card-text' >
+                  Address : {body.rescue_requester_id.address}
+                </p>
+                <p className='card-text' >
+                  Distance : {body.distance} km
+                </p>
+              </div>
+              </div>
+        );
+      }
+      
+      )
+    }
+  
+
     <div className="option-btn">
     <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
       ()=>{
@@ -148,8 +182,16 @@ function Map({ user }) {
       
     }}> LIST</button>
     </div>
-
-      <ListSection agencies={agencies} mapClass={mapClass}/>
+    {requestBody && (
+      <Request
+        user={user}
+        payload={requestBody}
+        socket={socket}
+        setPayLoad={setRequestBody}
+        
+      />
+    )}
+      <ListSection agencies={agencies} mapClass={mapClass} handleMarker={handleMarker}/>
       <div className={mapClass ? "active-section":"disable-section"}>
       <MapContainer center={duser.geocode} zoom={12} >
         <TileLayer
@@ -179,7 +221,7 @@ function Map({ user }) {
           // currentUser &&
         }
 
-        {agencies.map((agency, idx) => (
+        {agencies.map((agency, idx)=>(
           <Marker
             position={[
               Number(agency._doc.location.latitude),
@@ -190,6 +232,7 @@ function Map({ user }) {
           >
             <Popup>
               <h3>{agency._doc.name}</h3>
+              <h3>{agency._doc.email}</h3>
               <h5>{agency._doc.address}</h5>
               <h5>{agency._doc.description}</h5>
               <h5>{agency._doc.type}</h5>
@@ -213,38 +256,6 @@ function Map({ user }) {
 
       }
 
-      {requestBody && (
-        <Request
-          user={user}
-          payload={requestBody}
-          socket={socket}
-          setPayLoad={setRequestBody}
-          
-        />
-      )}
-
-      <div className='cardStyle'>
-        {recieveRequest &&
-          recieveRequest.map((body, idx) => {
-            return (
-              <div className='cardbody' key={idx}>
-                <div className='card' style={{ width: "18rem" }}>
-                  <div className='card-body' style={{ color: "black" }}>
-                    <h5 className='card-title' style={{ color: "black" }}>
-                      From : {body.rescue_requester_id.name}
-                    </h5>
-                    <p className='card-text' style={{ color: "black" }}>
-                      Address : {body.rescue_requester_id.address}
-                    </p>
-                    <p className='card-text' style={{ color: "black" }}>
-                      Distance : {Math.floor(Math.random() * 50 + 1)}km
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
     </div>
     </div>
   );

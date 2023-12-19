@@ -22,7 +22,9 @@
     "express-validator": "^7.0.1",
     "jose": "^4.14.6",
     "mongoose": "^7.5.0",
+    "moongoose": "^0.0.5",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.9.7",
     "socket.io": "^4.7.2",
     "ts-node": "^10.9.2",
     "validator": "^13.11.0"
@@ -34,12 +36,13 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/morgan": "^1.9.5",
     "@types/node": "^20.5.8",
+    "@types/nodemailer": "^6.4.14",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "concurrently": "^8.2.1",
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.0.2",
     "typescript": "^5.2.2"
   }
 }

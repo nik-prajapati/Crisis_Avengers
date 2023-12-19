@@ -8,11 +8,12 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import router from './src/routes/index';
 import { instrument } from '@socket.io/admin-ui';
-import { addRequest } from './src/controllers/RequestController';
+import { addRequest, updateRequest } from './src/controllers/RequestController';
+import nodemailer from 'nodemailer';
+import User from './src/models/user';
 
 dotenv.config();
 
-// connect to database
 async function connect() {
   if (process.env.MONGODB_CONNECTION_STRING) {
     await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
@@ -54,7 +55,6 @@ app.use(
 );
 app.use(router);
 
-// creating socket server
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
@@ -67,6 +67,36 @@ const io = new Server(server, {
   },
 });
 
+nodemailer;
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'crisis.avengers.spit@gmail.com',
+    pass: 'lsqycualzbdtpxlv',
+
+  },
+});
+
+function sendMail(to: string, subject: string, text: string) {
+  try {
+    const mailOptions = {
+      from: 'crisis.avengers.spit@gmail.com',
+      to: to,
+      subject: subject,
+      text: text,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 
@@ -78,14 +108,45 @@ io.on('connection', (socket) => {
   socket.on('send-request', async (room, req_data) => {
     const request_data = await addRequest(req_data);
     socket.to(room).emit('receive-request', request_data);
+    // console.log(request_data);
+    let itemString = '';
+    for (let i = 0; i < request_data.requested_items.length; i++) {
+      itemString += `${i + 1}. Type: ${
+        request_data.requested_items[i].type
+      }\nName: ${request_data.requested_items[i].name}\nQuantity: ${
+        request_data.requested_items[i].qty
+      }\nUnit: ${request_data.requested_items[i].unit}\n`;
+    }
+    const email = (await User.findOne({ _id: req_data.requestee_id }))?.email.trim();
+    if (email) {
+      sendMail(
+        // email,
+        'nikhilprajapati6509@gmail.com',
+        `Request from ${request_data.rescue_requester_id.name}`,
+        `Rescue agency ${request_data.rescue_requester_id.name} has sent a request:\n\n\nRequested resources:\n${itemString}`
+      );
+    }
   });
 
-  socket.on('send-message', (room, message) => {
-    socket.to(room).emit('receive-message', message);
+  socket.on('respond-to-request', async (room, reqId, newStatus) => {
+    await updateRequest(reqId, newStatus);
+    socket.to(room).emit('responded-to-request', reqId, newStatus);
+  });
+
+  socket.on('new-message', (room, message) => {
+    socket.to(room).emit('receive-message', message, room);
   });
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket.on('typing', (username, chatId) => {
+    socket.to(chatId).emit('is-typing', username, chatId);
+  });
+
+  socket.on('stop-typing', (username, chatId) => {
+    socket.to(chatId).emit('isnt-typing', username, chatId);
   });
 });
 

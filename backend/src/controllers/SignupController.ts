@@ -66,6 +66,7 @@ export default async function SignupController(req: Request, res: Response) {
       signed: true,
       maxAge: 5 * 24 * 60 * 60 * 1000,
       sameSite: 'none',
+      secure: true
     });
     const [lat, long] = location.split(',');
     await (

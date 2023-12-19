@@ -54,8 +54,22 @@ const chatList = async (req: Request, res: Response) => {
     }
     return res.status(400).json({ message: 'no user id passed' });
   } catch (error) {
+    console.log('1st2');
     console.log(error);
     return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getChat = async (req: Request, res: Response) => {
+  try {
+    const { chatId } = req.params;
+
+    const chat = await Chat.findById(chatId);
+
+    return res.status(200).json(chat);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -160,4 +174,4 @@ const addToChat = async (req: Request, res: Response) => {
   }
 };
 
-export { chatList, createChat, addToChat, getMessages, sendMessage };
+export { chatList, createChat, addToChat, getMessages, sendMessage, getChat };

@@ -4,9 +4,12 @@ import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+<<<<<<< HEAD
 import $ from 'jquery';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+=======
+>>>>>>> c2acd9d51193a0d26da47e3fdf69f374e4a78a96
 
 // import images
 import disasterManagementImage from "../../image/Disaster-Management.jpg";
@@ -23,7 +26,6 @@ import card4 from "../../image/card4.png";
 import card5 from "../../image/card5.jpeg";
 import card6 from "../../image/card6.jpg";
 
-
 export default function Landingpage({ user }) {
   console.log(user);
 
@@ -31,54 +33,65 @@ export default function Landingpage({ user }) {
     {
       id: 1,
       icon: card1,
-      title: 'Real-Time Location-Based Insights',
-      content: 'Using GPS technology, government entities can pinpoint nearby rescue agencies on a map',
+      title: "Real-Time Location-Based Insights",
+      content:
+        "Using GPS technology, government entities can pinpoint nearby rescue agencies on a map",
     },
 
     {
       id: 2,
       icon: card2,
-      title: 'Priority-Based Assignments',
-      content: 'Our platform automatically suggests primary and secondary rescue agencies based on preferences and availability, ensuring the best-suited responders are engaged.',
+      title: "Priority-Based Assignments",
+      content:
+        "Our platform automatically suggests primary and secondary rescue agencies based on preferences and availability, ensuring the best-suited responders are engaged.",
     },
 
     {
       id: 3,
       icon: card3,
-      title: 'Tailored Requests',
-      content: 'Government officials can specify the area of the disaster, the type of disaster, and send requests directly to registered rescue agencies',
+      title: "Tailored Requests",
+      content:
+        "Government officials can specify the area of the disaster, the type of disaster, and send requests directly to registered rescue agencies",
     },
 
     {
       id: 4,
       icon: card4,
-      title: 'Request Management',
-      content: 'Agencies can efficiently accept or decline requests based on their capacity and expertise, optimizing resource allocation during emergencies',
+      title: "Request Management",
+      content:
+        "Agencies can efficiently accept or decline requests based on their capacity and expertise, optimizing resource allocation during emergencies",
     },
     {
       id: 5,
       icon: card5,
-      title: 'Efficient Communication',
-      content: 'Built-in chatbotx facilitates direct and efficient communication between agencies, promoting coordination and information sharing.',
+      title: "Efficient Communication",
+      content:
+        "Built-in chatbotx facilitates direct and efficient communication between agencies, promoting coordination and information sharing.",
     },
 
     {
       id: 6,
       icon: card6,
-      title: 'Activity Timeline',
-      content: 'Maintain a detailed record of all past activities in a blog or timeline format, helping agencies keep track of their contributions and achievements over time.',
+      title: "Activity Timeline",
+      content:
+        "Maintain a detailed record of all past activities in a blog or timeline format, helping agencies keep track of their contributions and achievements over time.",
     },
   ];
 
+<<<<<<< HEAD
   
 
 
+=======
+>>>>>>> c2acd9d51193a0d26da47e3fdf69f374e4a78a96
   return (
     <>
       <div className="navbar">
         <div className="logo">
           <div className="logoLeft">
+          <Link to='/'>
             <img src={apadaLogo} alt="APADA Logo" />
+          </Link>
           </div>
 
           <div className="line"></div>
@@ -97,6 +110,11 @@ export default function Landingpage({ user }) {
           <p className="navopt ">
             <Link to="/" style={{ textDecoration: "none" }}>
               Contact Us
+            </Link>
+          </p>
+          <p className="navopt ">
+            <Link to="/chat-page" style={{ textDecoration: "none" }}>
+              Chats
             </Link>
           </p>
           <p className="navopt">
@@ -201,6 +219,7 @@ export default function Landingpage({ user }) {
       </div>
 
       <div className="scroll">
+<<<<<<< HEAD
       <h1 className="services" style={{ color: "#F04D1A", fontSize: "2.2em",paddingTop:'-10px' }}>SERVICES</h1>
       <div className="hrline" style={{marginBottom:'32px'}}>_</div>
       <div className="card-grid">
@@ -213,10 +232,21 @@ export default function Landingpage({ user }) {
             <h2 style={{color:'#F04D1A'}}>{card.title}</h2>
             <p style={{color:'white'}}>{card.content}</p>
           </div>
+=======
+        <div className="card-grid">
+          {cards.map((card) => (
+            <div key={card.id} className="card">
+              <div className="card-image">
+                <img src={card.icon} alt={`Icon for ${card.title}`} />
+              </div>
+              <div className="card-info">
+                <h2 style={{ color: "#F04D1A" }}>{card.title}</h2>
+                <p style={{ color: "white" }}>{card.content}</p>
+              </div>
+            </div>
+          ))}
+>>>>>>> c2acd9d51193a0d26da47e3fdf69f374e4a78a96
         </div>
-      ))}
-    </div>
-
       </div>
 
       <div className="last" id="cont1">
