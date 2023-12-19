@@ -6,7 +6,7 @@ import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 
 
-const Request = ({ user, payload, socket, setPayLoad }) => {
+const Request = ({ user, payload, socket, setPayLoad,subtypearray }) => {
  
   console.log(user,payload);
   const [requestSend, setRequestSend] = useState(null);
@@ -19,15 +19,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       requestee_id: payload.reqAgency.id,
       distance: payload.reqAgency.distance,
       
-      requested_items: [
-        {
-          type: "Medical",
-          name: "Bandages",
-          qty: 50,
-          unit: "pieces",
-        },
-        { type: "Basic", name: "Water", qty: 20, unit: "L" },
-      ],
+      requested_items:subtypearray,
       location: {
         latitude: 18.914042,
         longitude: 72.821693,
@@ -36,7 +28,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
     console.log(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast.success("Request Sent Successfully");
-    sendMail("nikhilprajapati6509@gmail.com","New Request Arrived","Please Review the review Page for further info")
+    // sendMail("nikhilprajapati6509@gmail.com","New Request Arrived","Please Review the review Page for further info")
 
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {
@@ -68,7 +60,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
             <div className="request-body">
               <div className="request-personal-info">
                 <h3>To : {payload.reqAgency.name} </h3>
-                <h3>From : {user.email.split("@")[0].toUpperCase()} </h3>
+                <h3>From : {user.agencyDetails.name} </h3>
               </div>
 
               <div className="action-btn">
