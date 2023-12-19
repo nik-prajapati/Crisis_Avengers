@@ -1,5 +1,10 @@
 /* RequestCard.css */
-
+.list-section-input{
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
 .request-card {
     border: 1px solid #ddd;
     border-radius: 8px;
