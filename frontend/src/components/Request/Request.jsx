@@ -8,14 +8,14 @@ import reviewContext from "../../context/ReviewRequestContext.jsx";
 
 const Request = ({ user, payload, socket, setPayLoad }) => {
  
-  console.log(payload);
+  console.log(user,payload);
   const [requestSend, setRequestSend] = useState(null);
   const { reviewData, setReviewData } = useContext(reviewContext);
 
 
   const handlerequestSend = () => {
     const dummyReq = {
-      rescue_requester_id: user._id,
+      rescue_requester_id: user.id,
       requestee_id: payload.reqAgency.id,
       distance: payload.reqAgency.distance,
       
@@ -34,7 +34,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       },
     };
     console.log(dummyReq)
-    socket.emit("send-request", payload.reqAgency._id, dummyReq);
+    socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast.success("Request Sent Successfully");
     sendMail("nikhilprajapati6509@gmail.com","New Request Arrived","Please Review the review Page for further info")
 

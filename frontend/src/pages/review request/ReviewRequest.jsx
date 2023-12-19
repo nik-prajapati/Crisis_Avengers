@@ -44,7 +44,15 @@ const ReviewRequest = () => {
           withCredentials: true,
         }),
       ]);
-      console.log(sentResp, receivedResp);
+      console.log(sentResp.data.requests);
+      // if(sentResp.status==200){
+      // setDummyD({ ...dummyD, sentRequests: sentResp.data.requests })
+
+      // const allData = {
+      //   sentRequests: sentResp.data.requests,
+      //   rcvdRequests: receivedResp.data.requests,
+      // };
+      // setDummyD(allData);
       setSentRequests(sentResp.data.requests);
       setRcvdRequests(receivedResp.data.requests);
     };
@@ -71,6 +79,7 @@ const ReviewRequest = () => {
     }
   };
 
+
   // const handleReject = (e, reqId, requesterId) => {
   //   try {
   //     e.preventDefault();
@@ -87,6 +96,7 @@ const ReviewRequest = () => {
   //     console.log(error);
   //   }
   // };
+
 
   return (
     <div>
