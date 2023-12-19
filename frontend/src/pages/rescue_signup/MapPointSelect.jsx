@@ -4,15 +4,40 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import "leaflet/dist/leaflet.css";
 import '../request/mapstyle.css'
 
+import axios from "axios";
+
+let MAPQUEST_API_KEY = 'nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm';
+
+
+
 
 const Map = ({ onLocationSelected,showMap}) => {
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState('');
+    const [geocodedAdd,setGeoCodeAdd]=useState('')
+
+    async function getAddress(latitude, longitude) {
+        const uri = `https://www.mapquestapi.com/geocoding/v1/reverse?key=${MAPQUEST_API_KEY}&location=${latitude},${longitude}`;
+      
+        try {
+          const response = await axios.get(uri);
+          const { street, adminArea6, adminArea5, adminArea4, adminArea3, adminArea2, adminArea1, postalCode } = response.data.results[0].locations[0];
+          let address = [street, adminArea6, adminArea5, adminArea4, adminArea3, adminArea2, adminArea1].filter((x) => x !== undefined && x !== null && typeof x === 'string' && x.length > 0).filter((item,
+            index, arr) => arr.indexOf(item) === index).join(', ');
+          address += `, PIN - ${postalCode}`;
+          
+          console.log(address)
+        } catch (e) {
+          console.error(e);
+      }
+      }
+
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng;
 
-    console.log({ lat, lng })
+    // console.log({ lat, lng })
+    getAddress(lat,lng)
     setSelectedLocation({ lat, lng });
     onLocationSelected({ lat, lng });
   };
@@ -25,7 +50,7 @@ const Map = ({ onLocationSelected,showMap}) => {
     return null;
   };
 
-  
+console.log(selectedLocation)
   return (
     <MapContainer center={[12,80]} zoom={7} style={{'width':'600px','height':'600px'}} >
     <MapClickHandler />
