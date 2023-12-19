@@ -18,7 +18,7 @@ const UpdateData = () => {
   });
   const resourceOptions = {
     Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],
-    'Rescue tolls': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
+    'Rescue tools': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
     Shelter: ['Tents', 'Beds'],
     Medical: ['First aid kits', 'Pain relievers', 'Ambulances', 'Medical personnel', 'Stretchers'],
   };
@@ -48,6 +48,7 @@ const UpdateData = () => {
       );
       console.log(response);
       closeModal();
+      window.location.reload();
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -135,6 +136,7 @@ const UpdateData = () => {
 
         setResources(response.data.resources);
         setIsLoading(false);
+        window.location.reload();
       } catch (error) {
         console.error("Error:", error);
         setIsLoading(false);
@@ -227,7 +229,7 @@ const UpdateData = () => {
             >
               <option value=''>Select Resource</option>
               <option>Food</option>
-              <option>Rescue tolls</option>
+              <option>Rescue tools</option>
               <option>Shelter</option>
               <option>Medical</option>
             </select>
