@@ -38,7 +38,7 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
     console.log(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast.success("Request Sent Successfully");
-    sendMail(dummyReq.reqAgency.email,"New Request Arrived","Please Review the review Page for further info")
+    // sendMail(dummyReq.reqAgency.email,"New Request Arrived","Please Review the review Page for further info")
 
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {
