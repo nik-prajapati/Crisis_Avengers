@@ -36,7 +36,7 @@ export type RequestItem = {
   type: string;
   name: string;
   qty: number;
-  unit: string;
+  unit?: string;
 };
 
 export type DRequest = {
@@ -54,7 +54,7 @@ export type Resource = {
   type: string;
   name: string;
   quantity: number;
-  unit: string;
+  unit?: string;
   created_at: Date;
   updated_at: Date;
 };

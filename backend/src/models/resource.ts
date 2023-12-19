@@ -22,7 +22,6 @@ const ResourceSchema = new Schema<Resource>(
     },
     unit: {
       type: String,
-      required: true,
     },
   },
   {

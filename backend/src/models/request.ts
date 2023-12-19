@@ -31,7 +31,6 @@ const RequestSchema = new Schema<DRequest>(
         },
         unit: {
           type: String,
-          required: true,
         },
       },
     ],
