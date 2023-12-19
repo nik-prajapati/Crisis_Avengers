@@ -6,6 +6,8 @@ const MapRequestForm = () => {
   const [addedResources, setAddedResources] = useState([]);
   const [subtypearray, setsubtypearray] = useState([]);
   const [subtype, handlesubtype] = useState('');
+  const [dist,getdist]=useState(0);
+  const [quantity,getquant]=useState(0);
 
   const resourceOptions = {
     Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],

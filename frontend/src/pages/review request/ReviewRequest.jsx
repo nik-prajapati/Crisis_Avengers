@@ -6,12 +6,10 @@ import MapPageHeader from "../request/MapPageHeader";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 import { useEffect } from "react";
-// import chatIcon from "../../image/chat.svg";
 
 const ReviewRequest = () => {
   const [sentSection, setSentSection] = useState(true);
   const { reviewData, setReviewData } = useContext(reviewContext);
-  // const [dummyD, setDummyD] = useState({});
   const [sentRequests, setSentRequests] = useState([]);
   const [rcvdRequests, setRcvdRequests] = useState([]);
 
@@ -26,14 +24,6 @@ const ReviewRequest = () => {
         }),
       ]);
       console.log(sentResp, receivedResp);
-      // if(sentResp.status==200){
-      // setDummyD({ ...dummyD, sentRequests: sentResp.data.requests })
-
-      // const allData = {
-      //   sentRequests: sentResp.data.requests,
-      //   rcvdRequests: receivedResp.data.requests,
-      // };
-      // setDummyD(allData);
       setSentRequests(sentResp.data.requests);
       setRcvdRequests(receivedResp.data.requests);
     };
@@ -158,10 +148,6 @@ const ReviewRequest = () => {
                         <p>
                           On: {new Date(recieve.createdAt).toLocaleString()}
                         </p>
-                        {/* <p>
-          Updated At:{" "}
-          {new Date(recieve.updatedAt).toLocaleString()}
-        </p> */}
                         <div className="flex flex-col">
                           <p>
                             To:{" "}
