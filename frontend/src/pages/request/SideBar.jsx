@@ -19,7 +19,7 @@ const SideBar = () => {
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <AddShoppingCartIcon />
-          Resource
+          Resource Management
         </Link>
       </div>
       <div className="access-btn">

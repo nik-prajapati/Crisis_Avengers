@@ -36,7 +36,7 @@ export type RequestItem = {
   type: string;
   name: string;
   qty: number;
-  unit: string;
+  unit?: string;
 };
 
 export type DRequest = {
