@@ -4,6 +4,7 @@
     // max-width: 450px;
     // background-color: gray;
     margin-right:1rem;
+
     
     .input-section{
         position: relative;
@@ -85,7 +86,8 @@
     gap: 1.1rem;
     font-size: 1.2rem;
     font-weight: 300;
-    box-shadow: 0 4px 8px rgb(255, 255, 255);
+    //box-shadow: 0 4px 8px rgb(255, 255, 255);
+    // box-shadow: 3px 15px 15px 0px rgba(251, 249, 249, 0.4);
     padding: 1.5rem;
     border-radius: 8px;
   }
@@ -96,15 +98,17 @@
     gap: 1.1rem;
     font-size: 1.2rem;
     font-weight: 300;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.829),
-                0 0 8px rgba(255, 255, 255, 0.433);
+    // box-shadow: 0 0 8px rgba(255, 255, 255, 0.829),
+    //             0 0 8px rgba(255, 255, 255, 0.433);
+    box-shadow: 3px 15px 15px 0px rgba(251, 249, 249, 0.4);
     padding: 1.5rem;
     border-radius: 8px;
   }
   
 
   .req_form_box{
-    border: 1px solid white;
+    
+    // border: 1px solid white;
     padding: 20px;
   }
 
