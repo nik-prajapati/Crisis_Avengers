@@ -158,7 +158,7 @@ function Map({ user }) {
                   Address : {body.rescue_requester_id.address}
                 </p>
                 <p className='card-text' >
-                  Distance : {Math.floor(Math.random() * 50 + 1)}km
+                  Distance : {body.distance} km
                 </p>
               </div>
               </div>
@@ -168,8 +168,7 @@ function Map({ user }) {
       )
     }
   
-    
-    
+
     <div className="option-btn">
     <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
       ()=>{
