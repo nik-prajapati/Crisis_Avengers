@@ -217,9 +217,11 @@
 }
 
 .typing-indicator {
-  min-height: 30px;
+  /* min-height: 30px;
   padding: 0.5rem 2rem;
-  border-bottom: 4px solid rgba(40, 40, 40, 0.3);
+  border-bottom: 4px solid rgba(40, 40, 40, 0.3); */
+  position: absolute;
+  bottom: 0rem;
 }
 
 .dot {

@@ -11,7 +11,7 @@ const ENDPOINT = "http://localhost:3000";
 export default function Msg({
   msgId,
   chatId,
-  email,
+  name,
   sender,
   content,
   timestamp,
@@ -82,17 +82,17 @@ export default function Msg({
       ) : (
         <>
           {(lastMessage === null ||
-            lastMessage.sender.email !== sender ||
+            lastMessage.sender.name !== sender ||
             new Date(timestamp).getTime() -
               new Date(lastMessage.createdAt).getTime() >=
               300000) && (
             <div className="flex gap-8 justify-start align-center sender relative">
-              <div className="sender">{email === sender ? "You" : sender}</div>
+              <div className="sender">{name === sender ? "You" : sender}</div>
               <span className="timestamp">{timeString}</span>
             </div>
           )}
           <div>{content}</div>
-          {email === sender && (
+          {name === sender && (
             <Icon src={editIcon} alt="Edit message" onClick={startEdit} />
           )}
         </>

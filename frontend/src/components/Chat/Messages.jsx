@@ -6,7 +6,7 @@ export default function Messages({
   messages,
   isTyping,
   typers,
-  email,
+  name,
   setMessages,
   chatId,
 }) {
@@ -24,8 +24,8 @@ export default function Messages({
               chatId={chatId}
               key={m._id}
               msgId={m._id}
-              sender={m.sender.email}
-              email={email}
+              sender={m.sender.name}
+              name={name}
               timestamp={m.createdAt}
               content={m.content}
               lastMessage={ind >= 1 ? messages[ind - 1] : null}
