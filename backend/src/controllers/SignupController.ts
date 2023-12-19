@@ -91,7 +91,10 @@ export default async function SignupController(req: Request, res: Response) {
         await RescueAgency.create({
           _id: user._id,
           name: name,
-          location: { latitude: lat, longitude: long },
+          location: {
+            type: 'Point',
+            coordinates: [long, lat],
+          },
           type: type,
           address: address,
           email: email,

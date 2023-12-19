@@ -8,6 +8,7 @@ import rescueimg from "../../image/Rsignup.png";
 import signup from "../../image/signupimg.png";
 import signupleft from "../../image/signupLeft.png";
 import signupright from "../../image/signupright.png";
+import FillLocationOption from "./FillLocationOption";
 import { ToastContainer, toast } from "react-toastify";
 
 const SignUp = () => {
@@ -24,6 +25,9 @@ const SignUp = () => {
     type: "",
   });
   const [error, setError] = useState(null);
+  const [showMap, setShowmap] = useState(true);
+  const [addressValue,setAddressValue]=useState('')
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -127,67 +131,73 @@ const SignUp = () => {
       phonesNumbers: updatedPhones,
     });
   };
+
+  console.log(addressValue)
   return (
     <div className="main-box">
       <ToastContainer />
-      <div className="left">
-        <div className="left-head">
-          <div className="glass-container">
-            <div className="left-glass">
-              <img
-                src={apadalogo}
-                style={{ width: "50px", height: "40px" }}
-              ></img>
-            </div>
-            <p>
-              <strong>apadaRelief</strong>
-            </p>
-          </div>
+    <FillLocationOption showMap={showMap} setShowMap={setShowmap} formData={formData} setFormData={setFormData}/>
+     {
+      // <div className="left">
+      
+      //   <div className="left-head">
+      //     <div className="glass-container">
+      //       <div className="left-glass">
+      //         <img
+      //           src={apadalogo}
+      //           style={{ width: "50px", height: "40px" }}
+      //         ></img>
+      //       </div>
+      //       <p>
+      //         <strong>apadaRelief</strong>
+      //       </p>
+      //     </div>
 
-          <div className="tagline">ONE NETWORK,COUNTLESS HEROES</div>
+      //     <div className="tagline">ONE NETWORK,COUNTLESS HEROES</div>
 
-          <div className="glass-container2">
-            <div className="left-glass"></div>
-            <p>
-              <strong>Register and Connect with our community</strong>
-            </p>
-          </div>
+      //     <div className="glass-container2">
+      //       <div className="left-glass"></div>
+      //       <p>
+      //         <strong>Register and Connect with our community</strong>
+      //       </p>
+      //     </div>
 
-          <div className="left-bottom">
-            <div className="up">
-              <div
-                className="upLeft"
-                style={{
-                  backgroundImage: `url(${signupleft})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></div>
+      //     <div className="left-bottom">
+      //       <div className="up">
+      //         <div
+      //           className="upLeft"
+      //           style={{
+      //             backgroundImage: `url(${signupleft})`,
+      //             backgroundSize: "cover",
+      //             backgroundPosition: "center",
+      //             backgroundRepeat: "no-repeat",
+      //           }}
+      //         ></div>
 
-              <div
-                className="upRight"
-                style={{
-                  backgroundImage: `url(${signupright})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></div>
-            </div>
+      //         <div
+      //           className="upRight"
+      //           style={{
+      //             backgroundImage: `url(${signupright})`,
+      //             backgroundSize: "cover",
+      //             backgroundPosition: "center",
+      //             backgroundRepeat: "no-repeat",
+      //           }}
+      //         ></div>
+      //       </div>
 
-            <div
-              className="down"
-              style={{
-                backgroundImage: `url(${signup})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
+      //       <div
+      //         className="down"
+      //         style={{
+      //           backgroundImage: `url(${signup})`,
+      //           backgroundSize: "cover",
+      //           backgroundPosition: "center",
+      //           backgroundRepeat: "no-repeat",
+      //         }}
+      //       ></div>
+      //     </div>
+      //   </div>
+      // </div>
+      }
 
       <div className="right">
         <div className="contact">
@@ -235,15 +245,19 @@ const SignUp = () => {
                 />
               </p>
 
-              <p>
-                <label>Address </label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  placeholder="Enter your postal address"
-                />
+              <p> 
+              <label>Address </label>
+              <div className="address-container">
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Enter your postal address"
+                className="Address-input"
+              />
+              <div className="choose-from-map" onClick={e=>setShowmap(true)}>MAP</div>
+              </div>
               </p>
             </div>
 
@@ -258,6 +272,7 @@ const SignUp = () => {
                 >
                   <option value="NDRF">NDRF</option>
                   <option value="SDRF">SDRF</option>
+                  <option value="DDRF">DDRF</option>
                   <option value="NGO">NGO</option>
                 </select>
               </p>
@@ -290,7 +305,7 @@ const SignUp = () => {
               </p>
             </div>
 
-            <p class="full">
+            <p className="full">
               <label>Description</label>
               <textarea
                 name="description"
@@ -313,8 +328,10 @@ const SignUp = () => {
             </p>
           </form>
         </div>
+        
       </div>
       {error && <div>{error}</div>}
+
     </div>
   );
 };
