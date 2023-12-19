@@ -6,6 +6,11 @@ import axios from "axios";
 import apadalogo from "../../image/aapdalogo.jpg";
 import rescueimg from "../../image/Rsignup.png";
 
+import signup from "../../image/signupimg.png";
+import signupleft from "../../image/signupLeft.png";
+import signupright from "../../image/signupright.png";
+
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [sentOtp, setSentOtp] = useState(false);
@@ -143,7 +148,44 @@ const SignUp = () => {
             <p>
               <strong>Register and Connect with our community</strong>
             </p>
+
           </div>
+
+          <div className='left-bottom'>
+          <div className='up'>
+            <div
+              className='upLeft'
+              style={{
+                backgroundImage: `url(${signupleft})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></div>
+
+            <div
+              className='upRight'
+              style={{
+                backgroundImage: `url(${signupright})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></div>
+          </div>
+
+          <div
+            className='down'
+            style={{
+              backgroundImage: `url(${signup})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+        </div>
+
+
         </div>
       </div>
 
