@@ -67,7 +67,7 @@ const io = new Server(server, {
   },
 });
 
-// nodemailer
+nodemailer;
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {

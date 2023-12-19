@@ -324,7 +324,9 @@ export default function ChatList({
                   className="flex align-start gap-8"
                   id={ch._id}
                 >
-                  {ch._id}
+                  {ch.members[0].email === email
+                    ? ch.members[1].email
+                    : ch.members[0].email}
                 </button>
               ))}
             </div>

@@ -87,7 +87,7 @@ export default function Msg({
               new Date(lastMessage.createdAt).getTime() >=
               300000) && (
             <div className="flex gap-8 justify-start align-center sender relative">
-              <div className="sender">{sender}</div>
+              <div className="sender">{email === sender ? "You" : sender}</div>
               <span className="timestamp">{timeString}</span>
             </div>
           )}
