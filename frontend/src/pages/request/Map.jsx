@@ -202,7 +202,7 @@ function Map({ user }) {
         <div className={mapClass ? "active-section" : "disable-section"}>
         
         { location && 
-        <MapContainer center={[location.latitude,location.longitude]} zoom={7}>
+        <MapContainer center={[location.latitude,location.longitude]} zoom={7} onClick={(e)=>console.log(e)}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'

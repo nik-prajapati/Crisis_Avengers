@@ -9,7 +9,7 @@ import userSettingsIcon from "../../image/settings-filled.svg";
 const ENDPOINT = "http://localhost:3000";
 
 export default function ChatList({
-  email,
+  name,
   chats,
   setChat,
   setChats,
@@ -36,7 +36,7 @@ export default function ChatList({
 
   const getChatList = async () => {
     try {
-      if (email) {
+      if (name) {
         const res = await axios.get(ENDPOINT + "/chat/chats", {
           withCredentials: true,
         });
@@ -61,7 +61,7 @@ export default function ChatList({
 
   useEffect(() => {
     getChatList();
-  }, [email]);
+  }, [name]);
 
   useEffect(() => {
     console.log(chats);
@@ -237,7 +237,7 @@ export default function ChatList({
           <form className="flex-col hidden new-dm">
             <div className="input flex-col gap-4">
               <div className="flex justify-between align-center">
-                <label htmlFor="email" className="required flex gap-4">
+                <label htmlFor="name" className="required flex gap-4">
                   {"Friend's username"} <div className="error">{errMsg}</div>
                 </label>
                 <Icon
@@ -279,7 +279,7 @@ export default function ChatList({
           <form className="flex-col gap-16 hidden new-group">
             <div className="input flex-col gap-4">
               <div className="flex justify-between align-center">
-                <label htmlFor="email" className="required flex gap-4">
+                <label htmlFor="name" className="required flex gap-4">
                   {"Group Name"}
                 </label>
 
@@ -324,9 +324,9 @@ export default function ChatList({
                   className="flex align-start gap-8"
                   id={ch._id}
                 >
-                  {ch.members[0].email === email
-                    ? ch.members[1].email
-                    : ch.members[0].email}
+                  {ch.members[0].name === name
+                    ? ch.members[1].name
+                    : ch.members[0].name}
                 </button>
               ))}
             </div>
@@ -334,7 +334,7 @@ export default function ChatList({
         </div>
 
         <div className="user-settings flex justify-between align-center relative">
-          <div>{email}</div>
+          <div>{name}</div>
           <Icon
             src={userSettingsIcon}
             alt="User Settings"
