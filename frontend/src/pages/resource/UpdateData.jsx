@@ -7,6 +7,8 @@ import Loader from "../Loader";
 const UpdateData = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);
+  const [selectedResource, setSelectedResource] = useState('');
+  const [subtype, handlesubtype] = useState('');
   const [formData, setFormData] = useState({
     _id: "",
     type: "",
@@ -14,16 +16,26 @@ const UpdateData = () => {
     quantity: 0,
     unit: "",
   });
+  const resourceOptions = {
+    Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],
+    'Rescue tools': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
+    Shelter: ['Tents', 'Beds'],
+    Medical: ['First aid kits', 'Pain relievers', 'Ambulances', 'Medical personnel', 'Stretchers'],
+  };
+
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const commitChanges = async (id) => {
     try {
       console.log("Identity", id);
       const updatedFormData = {
         ...formData,
         _id: id,
+        name: selectedResource,
+        type: subtype
+
       };
       console.log(formData);
       setIsLoading(true);
@@ -36,12 +48,24 @@ const UpdateData = () => {
       );
       console.log(response);
       closeModal();
-      setIsLoading(false); // Set loading to false when the operation is complete
+      window.location.reload();
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false); // Set loading to false in case of an error
+      setIsLoading(false);
     }
   };
+ 
+  const handletypeSelect = (e) => {
+    setSelectedResource(e.target.value);
+  };
+
+  const handlesubtypechange = (e) => {
+    const val = e.target.value;
+    handlesubtype(val);
+  }
+
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -112,6 +136,7 @@ const UpdateData = () => {
 
         setResources(response.data.resources);
         setIsLoading(false);
+        window.location.reload();
       } catch (error) {
         console.error("Error:", error);
         setIsLoading(false);
@@ -196,52 +221,68 @@ const UpdateData = () => {
             <span className='close-btn' onClick={closeModal}>
               &times;
             </span>
+
             <select
               name='type'
-              value={formData.type}
-              onChange={handleInputChange}
+              onChange={handletypeSelect}
+              value={selectedResource}
             >
-              <option disabled defaultValue>
-                Select type
-              </option>
-              <option>Bed</option>
-              <option>Medical</option>
+              <option value=''>Select Resource</option>
               <option>Food</option>
-              <option>Boats</option>
+              <option>Rescue tools</option>
+              <option>Shelter</option>
+              <option>Medical</option>
             </select>
 
-            <input
-              type='text'
-              name='name'
-              className='modal_input'
-              placeholder='Enter the name'
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-            <input
-              type='number'
-              className='modal_input'
-              id='quantity'
-              name='quantity'
-              placeholder='Quantity'
-              value={formData.quantity}
-              onChange={handleInputChange}
-            />
-            <input
-              type='text'
-              className='modal_input'
-              id='unit'
-              name='unit'
-              placeholder='Units'
-              value={formData.unit}
-              onChange={handleInputChange}
-            />
-            <button
-              className='submit_data'
-              onClick={() => commitChanges(selectedObjectId)}
-            >
-              Commit Changes
-            </button>
+            <div className='input-section'>
+              <select
+                name='additionalSelect'
+                onChange={handlesubtypechange}
+                value={subtype}
+              >
+                <option value=''>Select Additional Option</option>
+                {selectedResource && Object.keys(resourceOptions).map((type) => {
+                  console.log(selectedResource)
+                  if (selectedResource === type) {
+                    return (
+                      <optgroup key={type} label={type}>
+                        {resourceOptions[type].map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </optgroup>
+                    );
+                  }
+                  return null;
+                })}
+              </select>
+
+              <input
+                type='number'
+                className='modal_input'
+                id='quantity'
+                name='quantity'
+                placeholder='Quantity'
+                value={formData.quantity}
+                onChange={handleInputChange}
+              />
+              <input
+                type='text'
+                className='modal_input'
+                id='unit'
+                name='unit'
+                placeholder='Units'
+                value={formData.unit}
+                onChange={handleInputChange}
+              />
+              <button
+                className='submit_data'
+                onClick={() => commitChanges(selectedObjectId)}
+              >
+                Commit Changes
+              </button>
+            </div>
           </div>
         </div>
       )}

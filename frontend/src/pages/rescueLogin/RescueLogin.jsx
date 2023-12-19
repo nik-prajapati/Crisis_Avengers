@@ -60,7 +60,7 @@ const RescueLogin = ({ setUser }) => {
           sameSite: "none",
           secure: true,
         });
-        navigate("/");
+        navigate("/request");
         // alert('Logged in succesfully');
         // console.log('Logged in succesfully');
       }

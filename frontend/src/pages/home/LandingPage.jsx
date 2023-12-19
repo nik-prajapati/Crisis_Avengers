@@ -123,11 +123,11 @@ export default function Landingpage({ user }) {
 
         <div className="buttons">
           {user && (
-            <h2 className="navopt">{user.agencyDetails.name}</h2>
+            <h2 className="navopt agencyname">{user.agencyDetails.name}</h2>
           )}
-          <Link to="/govtlogin">
+          <Link to="/signup">
             <button className="gov-button" href="#">
-              Government Agency Login
+              Rescue Agency Signup
             </button>
           </Link>
 

@@ -4,7 +4,6 @@ import './MapRequestForm.scss';
 const MapRequestForm = () => {
   const [selectedResource, setSelectedResource] = useState('');
   const [addedResources, setAddedResources] = useState([]);
-  // const [additionalSelectOptions, setAdditionalSelectOptions] = useState([]);
   const [subtypearray, setsubtypearray] = useState([]);
   const [subtype, handlesubtype] = useState('');
 
@@ -25,15 +24,7 @@ const MapRequestForm = () => {
     handlesubtype(val);
     console.log(subtype);
     setsubtypearray([...subtypearray, val]);
-    // console.log(subtypearray);
   }
-
-  const handleAddResource = () => {
-    if (selectedResource.trim() !== '') {
-      setAddedResources((prevResources) => [...prevResources, selectedResource]);
-      setSelectedResource('');
-    }
-  };
 
   useEffect(() => {
     console.log('subtypearray:', subtypearray);
@@ -43,45 +34,61 @@ const MapRequestForm = () => {
   return (
     <div className='req_form'>
       <h2>Filters</h2>
-      <div className='input-section'>
-        <div className='input-Title'>Select</div>
-        <select name='type' onChange={handletypeSelect} value={selectedResource}>
-          <option value=''>Select Resource</option>
-          <option>Food</option>
-          <option>Rescue tolls</option>
-          <option>Shelter</option>
-          <option>Medical</option>
-        </select>
+      <div className="req_form_box">
+        <h3>Your request</h3>
+        <div className='input-section'>
+          <div className="input-title">
+            <h4>Select resource</h4>
+          </div>
+          <select name='type' onChange={handletypeSelect} value={selectedResource}>
+            <option value=''>Select Resource</option>
+            <option>Food</option>
+            <option>Rescue tolls</option>
+            <option>Shelter</option>
+            <option>Medical</option>
+          </select>
+        </div>
+
+        <div className='input-section'>
+          <select
+            name='additionalSelect'
+            onChange={handlesubtypechange}
+            value={subtype}
+          >
+            <option value=''>Select Additional Option</option>
+            {selectedResource && Object.keys(resourceOptions).map((type) => (
+              selectedResource === type && (
+                <optgroup key={type} label={type}>
+                  {resourceOptions[type].map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </optgroup>
+              )
+            ))}
+          </select>
+          <br />
+
+          <div className="input-section">
+            Distance
+            <input type="number" />
+          </div>
+          <div className="input-section">
+            Quantity
+            <input type="number" />
+          </div>
+        </div>
+
+        <button className='submit_data' onClick={() => alert('Please select from dropdown list')}>Add Resource</button>
+
+        <div className='input-section'>
+          <h4>Requested resources</h4>
+          <p>{subtypearray.join('\n')}</p>
+        </div>
+
       </div>
 
-      <div className='input-section'>
-        <div className='input-Title'>Additional Select</div>
-        <select
-          name='additionalSelect'
-          onChange={handlesubtypechange}
-          value={subtype}
-        >
-          <option value=''>Select Additional Option</option>
-          {selectedResource && Object.keys(resourceOptions).map((type) => (
-            selectedResource === type && (
-              <optgroup key={type} label={type}>
-                {resourceOptions[type].map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </optgroup>
-            )
-          ))}
-        </select>
-      </div>
-
-      <button className='submit_data' onClick={() =>alert('Please select from dropdown list')}>Add Resource</button>
-
-      <div className='input-section'>
-        <p>Selected Subtypes: {subtypearray.join(', ')}</p>
-      </div>
-      
     </div>
   );
 };
