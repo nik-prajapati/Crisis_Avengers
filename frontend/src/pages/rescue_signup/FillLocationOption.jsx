@@ -32,7 +32,7 @@ const FillLocationOption = ({showMap,setShowMap,setFormData,formData}) => {
       <form onSubmit={()=>handleSubmit()}>
         <MapPointSelect onLocationSelected={handleLocationSelected} formData={formData} setFormData={setFormData}/>
         <br />
-        <button type="submit">Register</button>
+        
       </form>
     </div>
     </div>

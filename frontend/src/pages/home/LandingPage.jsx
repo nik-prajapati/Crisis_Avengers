@@ -127,12 +127,12 @@ export default function Landingpage({ user }) {
           )}
           <Link to="/signup">
             <button className="gov-button" href="#">
-              Rescue Agency Signup
+              Signup
             </button>
           </Link>
 
           <Link to="/rescue">
-            <button className="rescue-button">Rescue Agency Login</button>
+            <button className="rescue-button">Login</button>
           </Link>
         </div>
       </div>

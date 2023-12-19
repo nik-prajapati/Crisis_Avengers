@@ -37,6 +37,8 @@ function App() {
     }
   }, []);
 
+  console.log(user);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -56,7 +58,7 @@ function App() {
             <Route path="/resource" element={<UpdateData user={user} />} />
             <Route
               path="/chat-page"
-              element={<Chat email={user ? user.email : ""} />}
+              element={<Chat name={user ? user.agencyDetails.name : ""} />}
             />
           </Routes>
         </reviewContext.Provider>

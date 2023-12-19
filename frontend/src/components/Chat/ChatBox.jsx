@@ -9,7 +9,7 @@ export default function ChatBox({
   chat,
   messages,
   setMessages,
-  email,
+  name,
   setShowGroupModal,
   setShowSideBar,
 }) {
@@ -67,14 +67,14 @@ export default function ChatBox({
           messages={messages}
           isTyping={isTyping}
           typers={typers}
-          email={email}
+          name={name}
           setMessages={setMessages}
           chatId={chat._id}
         />
         <SendMessage
           chatId={chat._id}
           messages={messages}
-          email={email}
+          name={name}
           setMessages={setMessages}
         />
       </div>

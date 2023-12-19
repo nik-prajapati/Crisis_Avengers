@@ -8,7 +8,7 @@ import "./chat.css";
 
 const ENDPOINT = "http://localhost:3000";
 
-export default function SendMessage({ chatId, messages, setMessages, email }) {
+export default function SendMessage({ chatId, messages, setMessages, name }) {
   const [content, setContent] = useState("");
 
   const sendMessage = async (e) => {
@@ -51,15 +51,15 @@ export default function SendMessage({ chatId, messages, setMessages, email }) {
     const startTime = new Date().getTime();
 
     if (text !== "") {
-      socket.emit("typing", email, chatId);
+      socket.emit("typing", name, chatId);
 
       setTimeout(() => {
         if (new Date().getTime() - startTime > 3000) {
-          socket.emit("stop-typing", email, chatId);
+          socket.emit("stop-typing", name, chatId);
         }
       }, 3000);
     } else {
-      socket.emit("stop-typing", email, chatId);
+      socket.emit("stop-typing", name, chatId);
     }
   };
 
