@@ -13,8 +13,12 @@ const ListSection = ({agencies,mapClass,handleMarker}) => {
               <div className='request-card'>
             <div className="body">
             <div className='agency-info'>
-            <h3>{agency._doc.name}</h3>
-            <h5>{agency._doc.type}</h5> 
+            <h3>{agency.name}</h3>
+            <h3>{agency.email}</h3>
+            <h5>{agency.address}</h5>
+            <h5>{agency.description}</h5>
+            <h5>{agency.type}</h5>
+            <h4>{(agency.distance)/(1000)} km</h4>
             </div>
               {
                 // <p>Distance: {distance} miles</p>
