@@ -23,4 +23,14 @@
             
         }
     }
+    .Profile-container{
+        margin: 10px;
+        display: flex;
+        .profile-name{
+            padding: 0;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+    }
 }

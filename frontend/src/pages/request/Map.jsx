@@ -92,10 +92,10 @@ function Map({ user }) {
     const fetchData = async (location) => {
       if (user && location) {
         const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=${location.latitude}&longitude=${location.longitude}&radius=1000000`,
+          `http://localhost:3000/getagencies?latitude=${location.latitude}&longitude=${location.longitude}&radius=3000000`,
           { withCredentials: true }
         );
-        // console.log(resp.data);
+        console.log(resp.data);
         const d = resp.data;
         console.log(d);
         let myself = {

@@ -18,8 +18,10 @@ const MapPageHeader = ({user}) => {
     </div>
     </div> 
     <div className='Profile-container'>
-    <AccountCircleIcon />
-    <span>{user && user.email.split('@')[0].toUpperCase()}</span>
+    
+    <div className="profile-name">
+    <span>{user && user.agencyDetails.name}</span>
+    </div>
     </div>
     </div>
   )

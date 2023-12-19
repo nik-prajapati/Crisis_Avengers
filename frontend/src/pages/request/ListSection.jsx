@@ -1,16 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ListSection.css'
 
 const ListSection = ({agencies,mapClass,handleMarker}) => {
+
+  const [filterAgency, setFilterAgency]=useState(agencies)
+  const [inputValue, setInputValue]=useState('')
+
+  const handleFilter=(e)=>{
+  
+  const filterData=agencies.filter((agency)=>{
+    return agency.name.toLowerCase().includes(e.target.value) || agency.address.toLowerCase().includes(e.target.value)
+  })
+
+  setFilterAgency(filterData)
+  setInputValue(e.target.value)
+  }
+
   return (
     <div>
     <div className={mapClass ? "disable-section":"active-section"}>
+
+    <input type="text" onChange={(e)=>handleFilter(e)} value={inputValue} className='list-section-input' placeholder='Search For specific Agency Name'/>
     <ul>
     {   
         agencies.length>0 &&
-        agencies.map((agency,idx)=>{
+        filterAgency.map((agency,idx)=>{
             return (
-              <div className='request-card'>
+              <div className='request-card' key={idx}>
             <div className="body">
             <div className='agency-info'>
             <h3>{agency.name}</h3>
