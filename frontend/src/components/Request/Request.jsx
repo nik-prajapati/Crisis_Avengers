@@ -13,13 +13,13 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
   const [requestSend, setRequestSend] = useState(null);
   const { reviewData, setReviewData } = useContext(reviewContext);
 
-  const notify = () => {};
 
   const handlerequestSend = () => {
     const dummyReq = {
       rescue_requester_id: user._id,
       requestee_id: payload.reqAgency.id,
       distance: payload.reqAgency.distance,
+      
       requested_items: [
         {
           type: "Medical",
@@ -35,10 +35,10 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       },
     };
     // setRequestSend(dummyReq)
-    console.log(dummyReq);
+    console.log(dummyReq)
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
-    toast("Request Sent Successfully");
-    sendMail(dummyReq.reqAgency.email,"New Request Arrived","Please Review the review Page for further info")
+    toast.success("Request Sent Successfully");
+    // sendMail(dummyReq.reqAgency.email,"New Request Arrived","Please Review the review Page for further info")
 
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {

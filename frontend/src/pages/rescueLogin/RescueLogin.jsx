@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 import r1 from "../../image/r1.png";
 import r2 from "../../image/r2.png";
@@ -19,6 +20,7 @@ const RescueLogin = ({ setUser }) => {
     password: "",
     role: "1",
   });
+  const [cookies, setCookie, removeCookie] = useCookies(["apadarelief"]);
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -52,7 +54,12 @@ const RescueLogin = ({ setUser }) => {
         window.location.reload(true);
       } else {
         setUser(response.data.user);
-        console.log(response.data);
+        console.log(response.data.user);
+        setCookie("apadarelief", response.data.user, {
+          maxAge: 24 * 60 * 60,
+          sameSite: "none",
+          secure: true,
+        });
         navigate("/");
         // alert('Logged in succesfully');
         // console.log('Logged in succesfully');
@@ -64,11 +71,11 @@ const RescueLogin = ({ setUser }) => {
     }
   };
   return (
-    <div className="outermainc">
-      <div className="left-out">
-        <div className="left-head">
-          <div className="glass-container">
-            <div className="left-glass">
+    <div className='outermainc'>
+      <div className='left-out'>
+        <div className='left-head'>
+          <div className='glass-container'>
+            <div className='left-glass'>
               <img
                 src={apadalogo}
                 style={{ width: "50px", height: "40px" }}
@@ -79,17 +86,17 @@ const RescueLogin = ({ setUser }) => {
             </p>
           </div>
 
-          <div className="tagline">ONE NETWORK,COUNTLESS HEROES</div>
+          <div className='tagline'>ONE NETWORK,COUNTLESS HEROES</div>
 
-          <div className="glass-container2">
-            <div className="left-glass"></div>
+          <div className='glass-container2'>
+            <div className='left-glass'></div>
             <p>Login Now ! Your mission awaits,Respond with Purpose</p>
           </div>
         </div>
-        <div className="left-bottom">
-          <div className="up">
+        <div className='left-bottom'>
+          <div className='up'>
             <div
-              className="upLeft"
+              className='upLeft'
               style={{
                 backgroundImage: `url(${upleft})`,
                 backgroundSize: "contain",
@@ -98,7 +105,7 @@ const RescueLogin = ({ setUser }) => {
             ></div>
 
             <div
-              className="upRight"
+              className='upRight'
               style={{
                 backgroundImage: `url(${upright})`,
                 backgroundSize: "cover",
@@ -109,7 +116,7 @@ const RescueLogin = ({ setUser }) => {
           </div>
 
           <div
-            className="down"
+            className='down'
             style={{
               backgroundImage: `url(${r1})`,
               backgroundSize: "cover",
@@ -128,27 +135,27 @@ const RescueLogin = ({ setUser }) => {
               Enter your email and password to login in
             </p>
           </div>
-          <div className="input-container">
-            <label htmlFor="email" className="right-container__label">
+          <div className='input-container'>
+            <label htmlFor='email' className='right-container__label'>
               Email
             </label>
 
             <input
-              type="text"
-              className="right-container__input glass-input"
-              name="email"
-              placeholder="Your email address"
+              type='text'
+              className='right-container__input glass-input'
+              name='email'
+              placeholder='Your email address'
               value={formData.email}
               onChange={handleInputChange}
             />
-            <label htmlFor="password" className="right-container__label">
+            <label htmlFor='password' className='right-container__label'>
               Password
             </label>
             <input
-              type="password"
-              className="right-container__input glass-input"
-              name="password"
-              placeholder="Your password"
+              type='password'
+              className='right-container__input glass-input'
+              name='password'
+              placeholder='Your password'
               value={formData.password}
               onChange={handleInputChange}
             />
@@ -156,12 +163,12 @@ const RescueLogin = ({ setUser }) => {
           <br />
           <br />
 
-          <div className="box">
-            <button className="btn" onClick={handleSubmit}>
+          <div className='box'>
+            <button className='btn' onClick={handleSubmit}>
               LOGIN
             </button>
-            <p className="right-container__bottom-text">
-              Don't have an account? <Link to="/signup">Sign Up</Link>
+            <p className='right-container__bottom-text'>
+              Don't have an account? <Link to='/signup'>Sign Up</Link>
             </p>
           </div>
         </div>

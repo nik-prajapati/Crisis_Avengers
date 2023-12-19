@@ -6,38 +6,41 @@ const router = Router();
 
 router.get('/', isAuthenticated, async (req, res) => {
   if (!req.user) return;
-
-  let requests;
-  if (req.user.role === 1) {
-    requests = await Request.aggregate([
-      {
-        $match: { rescue_requester_id: req.user.id },
-      },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'requestee_id',
-          foreignField: '_id',
-          as: 'requestee_id',
-        },
-      },
-    ]);
-  } else {
-    requests = await Request.aggregate([
-      {
-        $match: { govt_requester_id: req.user.id },
-      },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'requestee_id',
-          foreignField: '_id',
-          as: 'requestee_id',
-        },
-      },
-    ]);
-  }
-  console.log(requests);
+  const requests =
+    req.user.role === 0
+      ? await Request.find({ govt_requester_id: req.user.id })
+      : await Request.find({ rescue_requester_id: req.user.id });
+  // let requests;
+  // if (req.user.role === 1) {
+  //   requests = await Request.aggregate([
+  //     {
+  //       $match: { rescue_requester_id: req.user.id },
+  //     },
+  //     {
+  //       $lookup: {
+  //         from: 'users',
+  //         localField: 'requestee_id',
+  //         foreignField: '_id',
+  //         as: 'requestee_id',
+  //       },
+  //     },
+  //   ]);
+  // } else {
+  //   requests = await Request.aggregate([
+  //     {
+  //       $match: { govt_requester_id: req.user.id },
+  //     },
+  //     {
+  //       $lookup: {
+  //         from: 'users',
+  //         localField: 'requestee_id',
+  //         foreignField: '_id',
+  //         as: 'requestee_id',
+  //       },
+  //     },
+  //   ]);
+  // }
+  // console.log(requests);
   res.json({ requests: requests });
 });
 

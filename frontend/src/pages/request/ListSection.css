@@ -33,13 +33,16 @@
   
   .request-card .body{
   display:flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: row;
+
   }
 
   .request-card .body .agency-info{
+
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: flex-start;
     flex-direction: column;
   }

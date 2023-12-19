@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import User from '../models/user';
 import * as argon2 from 'argon2';
 import { SignJWT, EncryptJWT } from 'jose';
+import RescueAgency from '../models/rescue_agency';
+import GovtAgency from '../models/govt_agency';
 
 // JWT config
 const fallbackSigningSecret =
@@ -34,6 +36,12 @@ export default async function LoginController(req: Request, res: Response) {
     if (verified) {
       if (user.role === role) {
         // sign and encrpyt a JWT and send it to the client
+        let agencyDetails;
+        if (role === 1) {
+          agencyDetails = await RescueAgency.findById(user._id);
+        } else {
+          agencyDetails = await GovtAgency.findById(user._id);
+        }
         const payload = {
           id: user._id,
           email: user.email,
@@ -48,13 +56,16 @@ export default async function LoginController(req: Request, res: Response) {
           .setExpirationTime(tokenLifetime)
           .encrypt(encryptionKey);
         res.cookie('token', encryptedToken, {
-          httpOnly: true,
           signed: true,
           maxAge: 24 * 60 * 60 * 1000,
           sameSite: 'none',
-          secure: true
+          secure: true,
         });
-        res.json({ error: false, message: 'Logged in successfully', user });
+        res.json({
+          error: false,
+          message: 'Logged in successfully',
+          user: { ...payload, agencyDetails },
+        });
       } else {
         res.status(403).json({ error: false, message: 'Not authorized' });
       }
