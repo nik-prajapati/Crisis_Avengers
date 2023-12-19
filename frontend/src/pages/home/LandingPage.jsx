@@ -1,10 +1,12 @@
-import React from "react";
+import React ,{ useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-
+import $ from 'jquery';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // import images
 import disasterManagementImage from "../../image/Disaster-Management.jpg";
@@ -67,6 +69,8 @@ export default function Landingpage({ user }) {
       content: 'Maintain a detailed record of all past activities in a blog or timeline format, helping agencies keep track of their contributions and achievements over time.',
     },
   ];
+
+  
 
 
   return (
@@ -150,7 +154,7 @@ export default function Landingpage({ user }) {
         </div>
       </div>
 
-      <div className="info">
+      <div className="info" id="outline">
         <div className="left-info">
           <img className="info-img" src={map}></img>
           <img className="info-img" src={rescueImage}></img>
@@ -159,7 +163,7 @@ export default function Landingpage({ user }) {
 
         <div className="right-info">
           <div className="outline">
-            <h1 style={{ color: "#F04D1A", fontSize: "2.2em" }}>ABOUT US</h1>
+            <h1 className="aboutusTag" style={{ color: "#F04D1A", fontSize: "2.2em" }}>ABOUT US</h1>
 
             <div className="hrline">_</div>
 
@@ -197,7 +201,8 @@ export default function Landingpage({ user }) {
       </div>
 
       <div className="scroll">
-
+      <h1 className="services" style={{ color: "#F04D1A", fontSize: "2.2em",paddingTop:'-10px' }}>SERVICES</h1>
+      <div className="hrline" style={{marginBottom:'32px'}}>_</div>
       <div className="card-grid">
       {cards.map((card) => (
         <div key={card.id} className="card">
@@ -214,137 +219,11 @@ export default function Landingpage({ user }) {
 
       </div>
 
-      {/* <div className="aboutUs">
-        <div id="cont2" className="govtcontainer ">
-          <div className="leftSide">
-            <div className="govTitle">
-              <h3>GOVERNMENT AGENCY</h3>
-            </div>
-
-            <div className="points">
-              <ul>
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Connect with Local Heroes:
-                </li>
-                <span className="subpoint">
-                  Easily connect with registered rescue agencies through our
-                  platform
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Tailored Requests:
-                </li>
-                <span className="subpoint">
-                  {" "}
-                  Send specific requests based on the calamity's location,
-                  required resources, and urgent needs.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Map-Based Interface:
-                </li>
-                <span className="subpoint">
-                  Visualize rescue agency locations on a dynamic map for quick
-                  decision-making.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Resource Collaboration:
-                </li>
-                <span className="subpoint">
-                  Collaborate with multiple agencies for medical, transport, and
-                  other vital resources.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Efficient Communication
-                </li>
-                <span className="subpoint">
-                  Utilize our integrated chat application for real-time
-                  communication.
-                </span>
-              </ul>
-            </div>
-          </div>
-          <div className="rightSide">
-            <img src={indiaMapImage}></img>
-          </div>
-        </div>
-      </div>
-
-      <div className="aboutUs">
-        <div className="govtcontainer ">
-          <div className="rightSide">
-            <img className="rescueimg" src={rescueImage}></img>
-          </div>
-
-          <div className="leftSide">
-            <div className="govTitle">
-              <h3>RESCUE AGENCY</h3>
-            </div>
-
-            <div className="points">
-              <ul>
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Register and Showcase:{" "}
-                </li>
-                <span className="subpoint">
-                  {" "}
-                  Register your agency with detailed information about your
-                  expertise, resources, and contact details.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Accept or Reject:
-                </li>
-                <span className="subpoint">
-                  {" "}
-                  Choose to accept or reject government agency requests based on
-                  your capacity and availability.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Resource Sharing:
-                </li>
-                <span className="subpoint">
-                  Request resources from other agencies or offer your assistance
-                  to fulfill critical needs.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Operational Updates:
-                </li>
-                <span className="subpoint">
-                  Share your rescue operations and experiences through
-                  blog-style posts.
-                </span>
-
-                <li className="listPoint">
-                  <CheckCircleOutlineIcon />
-                  Collaboration Hub:
-                </li>
-                <span className="subpoint">
-                  Collaborate with other agencies for seamless disaster
-                  response.
-                </span>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      <div id="cont1">
+      <div className="last" id="cont1">
         <Footer />
       </div>
+
+      
     </>
   );
 }
