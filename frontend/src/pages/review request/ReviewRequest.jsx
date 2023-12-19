@@ -11,7 +11,9 @@ import { useEffect } from "react";
 const ReviewRequest = () => {
   const [sentSection, setSentSection] = useState(true);
   const { reviewData, setReviewData } = useContext(reviewContext);
-  const [dummyD, setDummyD] = useState({});
+  // const [dummyD, setDummyD] = useState({});
+  const [sentRequests, setSentRequests] = useState([]);
+  const [rcvdRequests, setRcvdRequests] = useState([]);
 
   useEffect(() => {
     const fetchReviewRequest = async () => {
@@ -27,24 +29,47 @@ const ReviewRequest = () => {
       // if(sentResp.status==200){
       // setDummyD({ ...dummyD, sentRequests: sentResp.data.requests })
 
-      const allData = {
-        sentRequests: sentResp.data.requests,
-        receivedRequests: receivedResp.data.requests,
-      };
-      setDummyD(allData);
+      // const allData = {
+      //   sentRequests: sentResp.data.requests,
+      //   rcvdRequests: receivedResp.data.requests,
+      // };
+      // setDummyD(allData);
+      setSentRequests(sentResp.data.requests);
+      setRcvdRequests(receivedResp.data.requests);
     };
 
     fetchReviewRequest();
   }, []);
 
-  console.log(dummyD);
+  const handleAccept = (e, reqId) => {
+    try {
+      e.preventDefault();
+      const ind = rcvdRequests.find((x) => x._id === reqId);
+      setRcvdRequests((prev) => {
+        console.log(prev);
+        prev[ind] = { ...prev[ind], status: "Accepted" };
+        return prev;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleReject = (e, reqId) => {
+    try {
+      e.preventDefault();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
       <MapPageHeader />
       <div className="review-request-container">
-        <SideBar />
-
+        <div className="siderectangle">
+           <SideBar />
+        </div>
         
         <div className="section">
           <div className="btn-section">
@@ -64,7 +89,7 @@ const ReviewRequest = () => {
             >
               Recived
             </button>
-        </div>
+          </div>
 
           <div className="review-section">
             <div
@@ -75,8 +100,8 @@ const ReviewRequest = () => {
               }
             >
               <ul>
-                {dummyD.sentRequests &&
-                  dummyD.sentRequests.map((recieve, idx) => {
+                {sentRequests &&
+                  sentRequests.map((recieve, idx) => {
                     return (
                       <div className="request-card">
                         <div className="agency-info">
@@ -94,8 +119,7 @@ const ReviewRequest = () => {
                         {
                           <div className="time-info">
                             <p>
-                              Created At:{" "}
-                              {new Date(recieve.createdAt).toLocaleString()}
+                              On: {new Date(recieve.createdAt).toLocaleString()}
                             </p>
                             {recieve.updatedAt != recieve.createdAt && (
                               <p>
@@ -128,12 +152,11 @@ const ReviewRequest = () => {
             >
               {
                 <ul>
-                  {dummyD.receivedRequests &&
-                    dummyD.receivedRequests.map((recieve, idx) => (
+                  {rcvdRequests &&
+                    rcvdRequests.map((recieve, idx) => (
                       <div className="request-card">
                         <p>
-                          Created At:{" "}
-                          {new Date(recieve.createdAt).toLocaleString()}
+                          On: {new Date(recieve.createdAt).toLocaleString()}
                         </p>
                         {/* <p>
           Updated At:{" "}
@@ -162,10 +185,16 @@ const ReviewRequest = () => {
                           </div>
                         ) : (
                           <div className="flex gap-4">
-                            <button className="status-info completed">
+                            <button
+                              className="status-btn completed"
+                              onClick={(e) => handleAccept(e, recieve._id)}
+                            >
                               Accept
                             </button>
-                            <button className="status-info rejected">
+                            <button
+                              className="status-btn rejected"
+                              onClick={(e) => handleReject(e, recieve._id)}
+                            >
                               Reject
                             </button>
                           </div>
