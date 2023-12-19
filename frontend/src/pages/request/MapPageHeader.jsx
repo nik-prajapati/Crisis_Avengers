@@ -5,11 +5,23 @@ import './MapPageHeader.scss'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { useCookies } from 'react-cookie';
 
 const MapPageHeader = ({user}) => {
 
+  const [Cookies,setCookies,removeCookies]=useCookies(['apadaRelief'])
+
+  const navigate=useNavigate()
   const handleLogOut=async ()=>{
-    // const resp=await axios.post('http://localhost:3000') 
+    const resp=await axios.get('http://localhost:3000/logout')
+    // console.log(Cookies)
+    
+
+    if(resp.status==200){
+      
+    }
+      navigate('/rescue')
+    
   }
   return (
     <div className='header-section'>
