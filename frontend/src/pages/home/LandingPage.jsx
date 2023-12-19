@@ -4,12 +4,7 @@ import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-<<<<<<< HEAD
-import $ from 'jquery';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-=======
->>>>>>> c2acd9d51193a0d26da47e3fdf69f374e4a78a96
+
 
 // import images
 import disasterManagementImage from "../../image/Disaster-Management.jpg";
@@ -78,12 +73,9 @@ export default function Landingpage({ user }) {
     },
   ];
 
-<<<<<<< HEAD
   
 
 
-=======
->>>>>>> c2acd9d51193a0d26da47e3fdf69f374e4a78a96
   return (
     <>
       <div className="navbar">
@@ -219,20 +211,6 @@ export default function Landingpage({ user }) {
       </div>
 
       <div className="scroll">
-<<<<<<< HEAD
-      <h1 className="services" style={{ color: "#F04D1A", fontSize: "2.2em",paddingTop:'-10px' }}>SERVICES</h1>
-      <div className="hrline" style={{marginBottom:'32px'}}>_</div>
-      <div className="card-grid">
-      {cards.map((card) => (
-        <div key={card.id} className="card">
-          <div className="card-image">
-            <img src={card.icon} alt={`Icon for ${card.title}`} />
-          </div>
-          <div className="card-info">
-            <h2 style={{color:'#F04D1A'}}>{card.title}</h2>
-            <p style={{color:'white'}}>{card.content}</p>
-          </div>
-=======
         <div className="card-grid">
           {cards.map((card) => (
             <div key={card.id} className="card">
@@ -245,7 +223,6 @@ export default function Landingpage({ user }) {
               </div>
             </div>
           ))}
->>>>>>> c2acd9d51193a0d26da47e3fdf69f374e4a78a96
         </div>
       </div>
 
