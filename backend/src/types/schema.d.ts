@@ -54,7 +54,7 @@ export type Resource = {
   type: string;
   name: string;
   quantity: number;
-  unit: string;
+  unit?: string;
   created_at: Date;
   updated_at: Date;
 };
