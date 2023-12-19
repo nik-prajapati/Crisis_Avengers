@@ -151,76 +151,66 @@ function Map({ user }) {
 
   return (
     <div className="Map-section-columns">
-      <MapRequestForm />
 
-      <div className="Map-container">
-        {recieveRequest &&
-          recieveRequest.map((body, idx) => {
-            return (
-              <div className="receive-request-card">
-                <div className="cardbody" key={idx}>
-                  <h5 className="card-title">
-                    From : {body.rescue_requester_id.name}
-                  </h5>
-                  <p className="card-text">
-                    Address : {body.rescue_requester_id.address}
-                  </p>
-                  <p className="card-text">
-                    Distance : {Math.floor(Math.random() * 50 + 1)}km
-                  </p>
-                </div>
+    <MapRequestForm />
+    
+    <div className="Map-container">
+
+    
+    {recieveRequest &&
+      recieveRequest.map((body, idx) => {
+        return (
+          <div className='receive-request-card'>
+          <div className='cardbody' key={idx}>
+
+                <h5 className='card-title' >
+                  From : {body.rescue_requester_id.name}
+                </h5>
+                <p className='card-text' >
+                  Address : {body.rescue_requester_id.address}
+                </p>
+                <p className='card-text' >
+                  Distance : {body.distance} km
+                </p>
               </div>
-            );
-          })}
-
-        <div className="option-btn">
-          <button
-            className={
-              mapClass
-                ? "section-option-btn active"
-                : "section-option-btn disable"
-            }
-            onClick={() => {
-              setMapClass(true);
-            }}
-          >
-            MAP
-          </button>
-          <button
-            className={
-              mapClass
-                ? "section-option-btn disable"
-                : "section-option-btn active"
-            }
-            onClick={(e) => {
-              setMapClass(false);
-            }}
-          >
-            {" "}
-            LIST
-          </button>
-        </div>
-        {requestBody && (
-          <Request
-            user={user}
-            payload={requestBody}
-            socket={socket}
-            setPayLoad={setRequestBody}
-          />
-        )}
+              </div>
+        );
+      }
+      
+      )
+    }
+  
+    
+    
+    <div className="option-btn">
+    <button className={mapClass ? 'section-option-btn active':'section-option-btn disable'} onClick={
+      ()=>{
+      setMapClass(true)
+     
+      }
+    }>MAP</button>
+    <button className={mapClass ? 'section-option-btn disable':'section-option-btn active'} 
+    onClick={(e)=>{
+      setMapClass(false)
+      
+    }}> LIST</button>
+    </div>
+    {requestBody && (
+      <Request
+        user={user}
+        payload={requestBody}
+        socket={socket}
+        setPayLoad={setRequestBody}
         
-          <ListSection
-            agencies={agencies}
-            mapClass={mapClass}
-            handleMarker={handleMarker}
-          />
-        
-        <div className={mapClass ? "active-section" : "disable-section"}>
-          <MapContainer center={location ? [location.latitude,location.longitude] : duser.geocode} zoom={12}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+      />
+    )}
+      <ListSection agencies={agencies} mapClass={mapClass} handleMarker={handleMarker}/>
+      <div className={mapClass ? "active-section":"disable-section"}>
+      <MapContainer center={duser.geocode} zoom={12} >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
 
             {user && location && (
               <Marker

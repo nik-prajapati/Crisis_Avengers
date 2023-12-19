@@ -9,21 +9,23 @@ const Chat = ({ email }) => {
   console.log(email);
 
   return (
-    <div className="chat grid overlay">
-      <ChatList
-        setChat={setChat}
-        setMessages={setMessages}
-        chats={chats}
-        setChats={setChats}
-        email={email}
-      />
-      <ChatBox
-        chat={chat}
-        messages={messages}
-        setMessages={setMessages}
-        email={email}
-      />
-    </div>
+    email && (
+      <div className="chat grid overlay">
+        <ChatList
+          setChat={setChat}
+          setMessages={setMessages}
+          chats={chats}
+          setChats={setChats}
+          email={email}
+        />
+        <ChatBox
+          chat={chat}
+          messages={messages}
+          setMessages={setMessages}
+          email={email}
+        />
+      </div>
+    )
   );
 };
 

@@ -67,7 +67,7 @@ const io = new Server(server, {
   },
 });
 
-// nodemailer
+nodemailer;
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -120,7 +120,8 @@ io.on('connection', (socket) => {
     const email = (await User.findOne({ _id: req_data.requestee_id }))?.email.trim();
     if (email) {
       sendMail(
-        email,
+        // email,
+        'nikhilprajapati6509@gmail.com',
         `Request from ${request_data.rescue_requester_id.name}`,
         `Rescue agency ${request_data.rescue_requester_id.name} has sent a request:\n\n\nRequested resources:\n${itemString}`
       );
