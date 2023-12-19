@@ -18,19 +18,24 @@ import { createContext } from "react";
 import AuthContext from "./context/AuthContext";
 import reviewContext from "./context/ReviewRequestContext";
 import Chat from "./pages/chat/Chat";
+import { useCookies } from "react-cookie";
+
 
 function App() {
   const [user, setUser] = useState(null);
-  console.log(user);
+  // console.log(user);
   const [reviewData, setReviewData] = useState([1, 2]);
+  const [Cookies, setCookies, removeCookies] = useCookies(["apadarelief"]);
+
+  useEffect(()=>{
+  if(Cookies)
+  {
+  setUser(Cookies['apadarelief'])
+
+  }
+  },[])
 
 
-
-
-
-
-
-  
   return (
     <BrowserRouter>
       <div className="App">

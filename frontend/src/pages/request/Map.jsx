@@ -34,6 +34,7 @@ const duserCustomIcon = new Icon({
 });
 
 function Map({ user }) {
+  console.log(user);
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
