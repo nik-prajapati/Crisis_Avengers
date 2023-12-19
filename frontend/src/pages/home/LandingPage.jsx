@@ -1,11 +1,10 @@
-import React ,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-
-
+import axios from "axios";
 // import images
 import disasterManagementImage from "../../image/Disaster-Management.jpg";
 import indiaMapImage from "../../image/indiamap.png";
@@ -20,9 +19,13 @@ import card3 from "../../image/card3.jpeg";
 import card4 from "../../image/card4.png";
 import card5 from "../../image/card5.jpeg";
 import card6 from "../../image/card6.jpg";
+import { useCookies } from "react-cookie";
+
 
 export default function Landingpage({ user }) {
   console.log(user);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   const cards = [
     {
@@ -72,18 +75,29 @@ export default function Landingpage({ user }) {
         "Maintain a detailed record of all past activities in a blog or timeline format, helping agencies keep track of their contributions and achievements over time.",
     },
   ];
-
   
+  const handleLogOut = async () => {
+    const resp = await axios.get("http://localhost:3000/logout", {
+      withCredentials: true,
+    });
+    // console.log(Cookies)
 
-
+    if (resp.status == 200) {
+    }
+    navigate("/");
+  };
+  
+  // const handleLogOut=async ()=>{
+  //   removeCookie(user);
+  // }
   return (
     <>
       <div className="navbar">
         <div className="logo">
           <div className="logoLeft">
-          <Link to='/'>
-            <img src={apadaLogo} alt="APADA Logo" />
-          </Link>
+            <Link to="/">
+              <img src={apadaLogo} alt="APADA Logo" />
+            </Link>
           </div>
 
           <div className="line"></div>
@@ -94,17 +108,17 @@ export default function Landingpage({ user }) {
         </div>
 
         <div className="midnav">
-          <p className="navopt ">
+          {/* <p className="navopt ">
             <Link to="/" style={{ textDecoration: "none" }}>
               Home
             </Link>
-          </p>
-          <p className="navopt ">
+          </p> */}
+          {/* <p className="navopt ">
             <Link to="/" style={{ textDecoration: "none" }}>
               Contact Us
             </Link>
-          </p>
-          <p className="navopt ">
+          </p> */}
+          {/* <p className="navopt ">
             <Link to="/chat-page" style={{ textDecoration: "none" }}>
               Chats
             </Link>
@@ -113,28 +127,63 @@ export default function Landingpage({ user }) {
             <Link to="/" style={{ textDecoration: "none" }}>
               Services
             </Link>
-          </p>
-          <p className="navopt">
+          </p> */}
+
+          {/* <p className="navopt">
             <Link to="/request" style={{ textDecoration: "none" }}>
               Request
-            </Link>
-          </p>
+            </Link> 
+          </p> */}
         </div>
-
-        <div className="buttons">
+          
+        {/* old login logout */}
+        {/* <div className="buttons">
           {user && (
             <h2 className="navopt agencyname">{user.agencyDetails.name}</h2>
           )}
+
+          {!user && (
+            <>
+              <Link to="/signup">
+                <button className="gov-button" href="#">
+                  Signup
+                </button>
+              </Link>
+
+              <Link to="/rescue">
+                <button className="rescue-button">Login</button>
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <div className="log-out-btn" onClick={() => handleLogOut()}>
+              Logout
+            </div>
+          )}
+        </div> */}
+
+       <div className="buttons">
+      {cookies['apadarelief'] ? (
+        <>
+          <h2 className="navopt agencyname">{cookies['apadarelief'].agencyDetails.name}</h2>
+          <div className="log-out-btn" onClick={handleLogOut}>
+            Logout
+          </div>
+        </>
+      ) : (
+        <>
           <Link to="/signup">
-            <button className="gov-button" href="#">
-              Signup
-            </button>
+            <button className="gov-button">Signup</button>
           </Link>
 
           <Link to="/rescue">
             <button className="rescue-button">Login</button>
           </Link>
-        </div>
+        </>
+      )}
+    </div>
+
       </div>
 
       <div className="heroContainer">
@@ -173,7 +222,12 @@ export default function Landingpage({ user }) {
 
         <div className="right-info">
           <div className="outline">
-            <h1 className="aboutusTag" style={{ color: "#F04D1A", fontSize: "2.2em" }}>ABOUT US</h1>
+            <h1
+              className="aboutusTag"
+              style={{ color: "#F04D1A", fontSize: "2.2em" }}
+            >
+              ABOUT US
+            </h1>
 
             <div className="hrline">_</div>
 
@@ -229,8 +283,6 @@ export default function Landingpage({ user }) {
       <div className="last" id="cont1">
         <Footer />
       </div>
-
-      
     </>
   );
 }
