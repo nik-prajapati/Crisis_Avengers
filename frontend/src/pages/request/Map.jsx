@@ -141,7 +141,7 @@ function Map({ user }) {
     <div className='Map-section-columns'>
       <MapRequestForm subtypearray={subtypearray} setsubtypearray={setsubtypearray} agencies={agencies}/>
 
-      <div className='Map-container'>
+      <div className='Map-container' style={{'marginTop':'20px'}}>
         {recieveRequest &&
           recieveRequest.map((body, idx) => {
             return (

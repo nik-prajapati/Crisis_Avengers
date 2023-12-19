@@ -84,7 +84,7 @@ const Map = ({ onLocationSelected, showMap, setFormData, formData }) => {
     <MapContainer
       center={[12, 80]}
       zoom={7}
-      style={{ width: "600px", height: "600px" }}
+      style={{ width: "850px", height: "650px",boxShadow: "5px 0px 5px 0px rgba(255, 255, 255, 0.4)"}}
     >
       <MapClickHandler />
       <TileLayer
