@@ -70,3 +70,35 @@
         }
     }
 }
+.submit_data {
+    width: 200px;
+    height: 30px;
+    color: #fff;
+    background-color: #f04d1a;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .req_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    box-shadow: 0 4px 8px rgb(255, 255, 255);
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  .req_form {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    gap: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.829),
+                0 0 8px rgba(255, 255, 255, 0.433);
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  
