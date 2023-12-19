@@ -68,6 +68,8 @@ const ReviewRequest = () => {
       <MapPageHeader />
       <div className="review-request-container">
         <SideBar />
+
+        
         <div className="section">
           <div className="btn-section">
             <button
@@ -86,7 +88,7 @@ const ReviewRequest = () => {
             >
               Recived
             </button>
-          </div>
+        </div>
 
           <div className="review-section">
             <div

@@ -17,38 +17,7 @@ const UpdateData = () => {
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  // const DeleteRecord=async(id)=>{
-  //   try {
-  //     console.log("id of object",id);
-  //     const resourceData = resources.find(resource => resource._id === id);
-  //     //  console.log(resourceData)
-  //     setFormData({
-  //       // _id: resourceData._id,
-  //       type: resourceData.type,
-  //       name: resourceData.name,
-  //       quantity: resourceData.quantity,
-  //       unit: resourceData.unit,
-  //       del: true
-  //     });
-
-  //     setIsLoading(true);
-
-  //     const response = await axios.post(
-  //       "http://localhost:3000/updateresources",
-  //       formData,
-  //       {
-  //         withCredentials: true
-  //       }
-  //     );
-
-  //     console.log(response);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
+  
   const commitChanges = async (id) => {
     try {
       console.log("Identity", id);

@@ -1,18 +1,18 @@
 import { Request } from 'express';
-import { Coordinate } from './Coordinates';
 import { Types } from 'mongoose';
 
-export type Coordinate = {
-  latitude: number;
-  longitude: number;
+export type Location = {
+  type: string;
+  coordinates: number[];
 };
 
 export type GovtAgency = {
+  _id: Types.ObjectId;
   name: string;
   description?: string;
   email: string;
   phone: string[];
-  location: Coordinate;
+  location: Location;
   address: string;
 };
 
@@ -20,9 +20,8 @@ export type RescueAgency = {
   _id: Types.ObjectId;
   name: string;
   description?: string;
-  email: string;
   phone: string[];
-  location: Coordinate;
+  location: Location;
   address: string;
   type: string;
   created_at: Date;
