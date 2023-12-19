@@ -5,7 +5,7 @@
 }
 
 .outermainc{
-    background: #f1f9ff;
+    background: #7d95a7;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,6 +21,7 @@
     margin: auto;
     background: linear-gradient(to bottom, #0f123b, #000);
     color: #fff;
+    
 }
 
 .main:hover {
@@ -89,6 +90,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    border: 2px solid red;
 }
 
 .btn {

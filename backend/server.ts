@@ -121,7 +121,8 @@ io.on('connection', (socket) => {
     )?.email.trim();
     if (email) {
       sendMail(
-        email,
+        // email,
+        'nikhilprajapati6509@gmail.com',
         //@ts-ignore
         `Request from ${request_data.rescue_requester_id.name}`,
         //@ts-ignore

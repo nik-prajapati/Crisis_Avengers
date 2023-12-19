@@ -16,7 +16,41 @@ const UpdateData = () => {
   });
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // loader state
+  const [isLoading, setIsLoading] = useState(true);
+
+  // const DeleteRecord=async(id)=>{
+  //   try {
+  //     console.log("id of object",id);
+  //     const resourceData = resources.find(resource => resource._id === id);
+  //     //  console.log(resourceData)
+  //     setFormData({
+  //       // _id: resourceData._id,
+  //       type: resourceData.type,
+  //       name: resourceData.name,
+  //       quantity: resourceData.quantity,
+  //       unit: resourceData.unit,
+  //       del: true
+  //     });
+
+  //     setIsLoading(true);
+
+  //     const response = await axios.post(
+  //       "http://localhost:3000/updateresources",
+  //       formData,
+  //       {
+  //         withCredentials: true
+  //       }
+  //     );
+
+  //     console.log(response);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+
+
   const commitChanges = async (id) => {
     try {
       console.log("Identity", id);
@@ -64,10 +98,10 @@ const UpdateData = () => {
         console.log("All Object IDs:", allObjectIds);
 
         setResources(response.data.resources);
-        setIsLoading(false); // Set loading to false when the data is fetched
+        setIsLoading(false);
       } catch (error) {
         console.error("Error:", error);
-        setIsLoading(false); // Set loading to false in case of an error
+        setIsLoading(false);
       }
     };
 
@@ -78,6 +112,37 @@ const UpdateData = () => {
     setIsModalOpen(true);
     setSelectedObjectId(objectId);
   };
+
+  const delrec = async (objectId) => {
+    console.log(objectId);
+    try 
+    {
+      setFormData({
+        _id: objectId,
+        type: ' ',
+        name: ' ',
+        quantity:0,
+        unit: ' ',
+        del: true
+      });
+      console.log(formData)
+      setIsLoading(true);
+      const response = await axios.post(
+        "http://localhost:3000/updateresources",
+        formData,
+        {
+          withCredentials:true
+        }
+      );
+
+      console.log(response);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
   const addData = () => {
     setIsModalOpen(true);
   };
@@ -91,8 +156,8 @@ const UpdateData = () => {
       <div className={isModalOpen || isLoading ? "page_blur" : "page"}>
         <SideBar />
         <main>
-          {isLoading && <Loader />} {/* Render loader when isLoading is true */}
-          <div className="tab" style={{ overflowX: "auto" }}>
+          {isLoading && <Loader />}
+          <div className="tab" style={{ overflowX: 'auto' }}>
             <table>
               <thead>
                 <tr>
@@ -101,6 +166,7 @@ const UpdateData = () => {
                   <th>QUANTITY</th>
                   <th>UNITS</th>
                   <th>STATUS</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -118,9 +184,18 @@ const UpdateData = () => {
                         Update
                       </button>
                     </td>
+                    <td>
+                      <button
+                        className="res"
+                        onClick={() => delrec(resource._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
                 <tr>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
