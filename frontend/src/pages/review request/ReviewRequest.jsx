@@ -67,7 +67,10 @@ const ReviewRequest = () => {
     <div>
       <MapPageHeader />
       <div className="review-request-container">
-        <SideBar />
+        <div className="siderectangle">
+           <SideBar />
+        </div>
+        
         <div className="section">
           <div className="btn-section">
             <button
