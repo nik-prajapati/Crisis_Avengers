@@ -127,13 +127,11 @@ const RescueLogin = ({ setUser }) => {
         </div>
       </div>
 
-      {/* <div className="main"> */}
-
-      <div className='right-container'>
-        <div className='right-container__box'>
-          <div className='right-container-box'>
-            <h2 className='right-container__h2'>WELCOME BACK!</h2>
-            <p className='right-container__p'>
+      <div className="right-container">
+        <div className="right-container__box">
+          <div className="right-container-box">
+            <h2 className="right-container__h2">WELCOME BACK!</h2>
+            <p className="right-container__p">
               Enter your email and password to login in
             </p>
           </div>
@@ -175,7 +173,6 @@ const RescueLogin = ({ setUser }) => {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </div>
   );
 };

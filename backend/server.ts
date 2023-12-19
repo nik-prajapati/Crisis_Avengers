@@ -73,7 +73,6 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: 'crisis.avengers.spit@gmail.com',
     pass: 'lsqycualzbdtpxlv',
-
   },
 });
 
@@ -117,12 +116,16 @@ io.on('connection', (socket) => {
         request_data.requested_items[i].qty
       }\nUnit: ${request_data.requested_items[i].unit}\n`;
     }
-    const email = (await User.findOne({ _id: req_data.requestee_id }))?.email.trim();
+    const email = (
+      await User.findOne({ _id: req_data.requestee_id })
+    )?.email.trim();
     if (email) {
       sendMail(
         // email,
         'nikhilprajapati6509@gmail.com',
+        //@ts-ignore
         `Request from ${request_data.rescue_requester_id.name}`,
+        //@ts-ignore
         `Rescue agency ${request_data.rescue_requester_id.name} has sent a request:\n\n\nRequested resources:\n${itemString}`
       );
     }
