@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
-import SignupController from '../controllers/SignupController';
+import SignupController, { sendOtp } from '../controllers/SignupController';
 
 const router = Router();
 
@@ -77,5 +77,7 @@ router.post(
   },
   SignupController
 );
+
+router.post('/otp', sendOtp);
 
 export default router;

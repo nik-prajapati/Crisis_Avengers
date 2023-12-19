@@ -8,6 +8,7 @@ import rescueimg from "../../image/Rsignup.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [sentOtp, setSentOtp] = useState(false);
   const [loginError, setLoginError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
@@ -51,6 +52,19 @@ const SignUp = () => {
     getCurrentLocation();
   }, []);
 
+  const handleOTP = async (e) => {
+    try {
+      e.preventDefault();
+      await axios.post("http://localhost:3000/signup/otp", {
+        email: formData.email,
+      });
+      setSentOtp(true);
+    } catch (error) {
+      console.log(error);
+      setSentOtp(false);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data:", formData);
@@ -72,6 +86,9 @@ const SignUp = () => {
         }, 3000);
       }
     } catch (error) {
+      if (error) {
+        setSentOtp(false);
+      }
       window.alert("Login Error: " + error.message);
       window.location.reload(true);
       console.error("Error during signup:", error);
@@ -155,9 +172,20 @@ const SignUp = () => {
                 />
               </p>
               <p>
+                <label htmlFor="otp">OTP</label>
+                <input
+                  type="number"
+                  name="otp"
+                  id="otp"
+                  value={formData.otp}
+                  onChange={handleInputChange}
+                  placeholder="Enter OTP here"
+                />
+              </p>
+              <p>
                 <label>Password </label>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
@@ -231,9 +259,15 @@ const SignUp = () => {
               ></textarea>
             </p>
             <p>
-              <button className="registerbtn" onClick={handleSubmit}>
-                REGISTER
-              </button>
+              {!sentOtp ? (
+                <button className="registerbtn" onClick={handleOTP}>
+                  Receive OTP
+                </button>
+              ) : (
+                <button className="registerbtn" onClick={handleSubmit}>
+                  REGISTER
+                </button>
+              )}
             </p>
           </form>
         </div>
