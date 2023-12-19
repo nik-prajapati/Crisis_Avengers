@@ -10,7 +10,6 @@
         position: relative;
         color: white;
         min-width: 400px;
-        margin: 10px;
         font-size: 1.5rem;
         .input-Title{
         margin-bottom: 5px;
@@ -73,11 +72,13 @@
 }
 .submit_data {
     width: 200px;
-    height: 30px;
+    height: 50px;
+    margin: 5px;
     color: #fff;
     background-color: #f04d1a;
     border-radius: 10px;
     cursor: pointer;
+    font-size: 1.2rem;
   }
 
   .req_form {
@@ -112,14 +113,9 @@
     padding: 20px;
   }
 
-  .req_form_box select{
-    margin: 10px;
-  }
+  
 
   .input-section {
     white-space: pre-line;
   }
 
-.req_form_box h4{
-    padding: 10px;
-}
