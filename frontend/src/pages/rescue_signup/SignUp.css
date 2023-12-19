@@ -24,7 +24,7 @@
 }
 
 .right {
-  flex: 1;
+  flex: 1.5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,11 +100,13 @@
 }
 
 .contact {
-  flex: 1;
+  flex: 1.5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-left: -10px;
+  
 }
 
 .head {
@@ -216,9 +218,9 @@ input[type="password"],
 input[type="number"],
 textarea {
   border: none;
-  padding: 10px; /* Adjust padding */
+  padding: 5px; /* Adjust padding */
   margin-bottom: 10px;
-  width: calc(100% - 20px); /* Adjust width to consider padding */
+  width: 100%; /* Adjust width to consider padding */
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0.3),
@@ -247,7 +249,42 @@ textarea {
 
 .registerbtn:hover,
 .registerbtn:active {
-  transform: scale(1.1); /* Scale up on hover or click */
+  transform: scale(1.1); 
+}
+
+.left-bottom {
+  flex: 2.5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.up {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  background-image: url(${r2});
+  background-size: cover; /* Adjust the image size */
+  background-position: center;
+}
+
+.upLeft{
+  flex: 1;
+}
+
+.upRight{
+  flex: 1;
+}
+
+.down {
+  flex: 1;
+  width: 100%;
+  background-image: url(${r1});
+  background-size: cover; /* Adjust the image size */
+  background-position: center;
 }
 
 /* Media query for mobile devices */
