@@ -120,8 +120,6 @@ const RescueLogin = ({ setUser }) => {
         </div>
       </div>
 
-      {/* <div className="main"> */}
-
       <div className="right-container">
         <div className="right-container__box">
           <div className="right-container-box">
@@ -168,7 +166,6 @@ const RescueLogin = ({ setUser }) => {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </div>
   );
 };

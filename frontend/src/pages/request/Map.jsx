@@ -190,10 +190,6 @@ function Map({ user }) {
           </Marker>
         )}
 
-        {
-          // currentUser &&
-        }
-
         {agencies.map((agency, idx)=>(
           <Marker
             position={[
@@ -221,13 +217,7 @@ function Map({ user }) {
         ))}
       </MapContainer>
       </div>
-      {
 
-        // <button onClick={() => handleRequest()} className='body-submit-btn'>
-        //   Add To Request Body
-        // </button>
-
-      }
 
       
 
