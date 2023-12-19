@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import MapPointSelect from './MapPointSelect';
 
-const FillLocationOption = ({showMap,setShowMap}) => {
+const FillLocationOption = ({showMap,setShowMap,setFormData,formData}) => {
   
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -30,7 +30,7 @@ const FillLocationOption = ({showMap,setShowMap}) => {
     
     }}>Cancel</button>
       <form onSubmit={()=>handleSubmit()}>
-        <MapPointSelect onLocationSelected={handleLocationSelected} />
+        <MapPointSelect onLocationSelected={handleLocationSelected} formData={formData} setFormData={setFormData}/>
         <br />
         <button type="submit">Register</button>
       </form>

@@ -131,69 +131,73 @@ const SignUp = () => {
       phonesNumbers: updatedPhones,
     });
   };
+
+  console.log(addressValue)
   return (
     <div className="main-box">
       <ToastContainer />
-    <FillLocationOption showMap={showMap} setShowMap={setShowmap}/>
-      <div className="left">
+    <FillLocationOption showMap={showMap} setShowMap={setShowmap} formData={formData} setFormData={setFormData}/>
+     {
+      // <div className="left">
       
-        <div className="left-head">
-          <div className="glass-container">
-            <div className="left-glass">
-              <img
-                src={apadalogo}
-                style={{ width: "50px", height: "40px" }}
-              ></img>
-            </div>
-            <p>
-              <strong>apadaRelief</strong>
-            </p>
-          </div>
+      //   <div className="left-head">
+      //     <div className="glass-container">
+      //       <div className="left-glass">
+      //         <img
+      //           src={apadalogo}
+      //           style={{ width: "50px", height: "40px" }}
+      //         ></img>
+      //       </div>
+      //       <p>
+      //         <strong>apadaRelief</strong>
+      //       </p>
+      //     </div>
 
-          <div className="tagline">ONE NETWORK,COUNTLESS HEROES</div>
+      //     <div className="tagline">ONE NETWORK,COUNTLESS HEROES</div>
 
-          <div className="glass-container2">
-            <div className="left-glass"></div>
-            <p>
-              <strong>Register and Connect with our community</strong>
-            </p>
-          </div>
+      //     <div className="glass-container2">
+      //       <div className="left-glass"></div>
+      //       <p>
+      //         <strong>Register and Connect with our community</strong>
+      //       </p>
+      //     </div>
 
-          <div className="left-bottom">
-            <div className="up">
-              <div
-                className="upLeft"
-                style={{
-                  backgroundImage: `url(${signupleft})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></div>
+      //     <div className="left-bottom">
+      //       <div className="up">
+      //         <div
+      //           className="upLeft"
+      //           style={{
+      //             backgroundImage: `url(${signupleft})`,
+      //             backgroundSize: "cover",
+      //             backgroundPosition: "center",
+      //             backgroundRepeat: "no-repeat",
+      //           }}
+      //         ></div>
 
-              <div
-                className="upRight"
-                style={{
-                  backgroundImage: `url(${signupright})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></div>
-            </div>
+      //         <div
+      //           className="upRight"
+      //           style={{
+      //             backgroundImage: `url(${signupright})`,
+      //             backgroundSize: "cover",
+      //             backgroundPosition: "center",
+      //             backgroundRepeat: "no-repeat",
+      //           }}
+      //         ></div>
+      //       </div>
 
-            <div
-              className="down"
-              style={{
-                backgroundImage: `url(${signup})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
+      //       <div
+      //         className="down"
+      //         style={{
+      //           backgroundImage: `url(${signup})`,
+      //           backgroundSize: "cover",
+      //           backgroundPosition: "center",
+      //           backgroundRepeat: "no-repeat",
+      //         }}
+      //       ></div>
+      //     </div>
+      //   </div>
+      // </div>
+      }
 
       <div className="right">
         <div className="contact">
@@ -268,6 +272,7 @@ const SignUp = () => {
                 >
                   <option value="NDRF">NDRF</option>
                   <option value="SDRF">SDRF</option>
+                  <option value="DDRF">DDRF</option>
                   <option value="NGO">NGO</option>
                 </select>
               </p>
