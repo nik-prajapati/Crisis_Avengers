@@ -74,7 +74,7 @@ router.post('/', async (req: Request, res: Response) => {
         sameSite: 'none',
       }
     );
-    res.send('Sos sent successfully');
+    res.json({ error: false, message: 'Sos sent successfully' });
   }
 });
 

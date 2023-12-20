@@ -42,7 +42,6 @@ const MapRequestForm = ({
             name='type'
             onChange={(e) => {
               setSelectedResource(e.target.value);
-              console.log(e.target.value);
             }}
             value={selectedResource}
           >
@@ -61,6 +60,7 @@ const MapRequestForm = ({
             onChange={(e) => handlesubtype(e.target.value)}
             value={subtype}
           >
+            <option value=''>Select sub type</option>
             {selectedResource &&
               resourceOptions[selectedResource].map((val, idx) => {
                 return (
