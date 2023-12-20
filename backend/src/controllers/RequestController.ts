@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import Request from '../models/request';
+// import Resource from '../models/resource';
 
 type req = {
   govt_requester_id?: Types.ObjectId;
@@ -26,6 +27,8 @@ const addRequest = async (req_data: req) => {
 };
 
 const updateRequest = async (reqId: Types.ObjectId, newStatus: string) => {
+  // const req = await Request.findById(reqId);
+  // const x = await Resource.find({ agency_id: reqId });
   const res = await Request.findByIdAndUpdate(reqId, { status: newStatus });
   return res;
 };

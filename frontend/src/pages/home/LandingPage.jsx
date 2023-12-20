@@ -86,7 +86,7 @@ export default function Landingpage({ user }) {
       window.location.reload(false);
 
     }
-    navigate("/");
+    window.location.reload();
   };
 
   const handleSOS = async () => {
