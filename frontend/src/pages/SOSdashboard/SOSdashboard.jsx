@@ -11,7 +11,7 @@ const SOSDashboard = () => {
       try {
         const response = await axios.get('http://localhost:3000/getsos',{withCredentials:true});
         setSOSRequests(response.data);
-        console.log(response.data)
+        console.log(response)
       } catch (error) {
         console.error('Error fetching SOS requests:', error);
       }
@@ -22,8 +22,17 @@ const SOSDashboard = () => {
 
   return (
     <div className="dashboard-container">
+    <div>SOS count : {sosRequests.length}</div>
+    <br />
     {
-      sosRequests.location
+      sosRequests && sosRequests.map((sos,idx)=>{
+        return <div>
+        <p>
+        </p>
+        <p>{sos.sos_id.createdAt}</p>
+        <p>{sos.sos_id.typeOfDisaster}</p>
+        </div>
+      })
     }
     </div>
   );
