@@ -78,7 +78,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
               setsubtypearray([...subtypearray, {
                 type: selectedResource,
                 name: subtype,
-                quantity: quantity
+                qty: quantity
               }])
             }
             setSelectedResource('');

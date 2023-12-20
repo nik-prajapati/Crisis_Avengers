@@ -32,6 +32,7 @@ const RescueAgencySchema = new Schema<RescueAgency>(
       type: String,
       enum: ['NDRF', 'SDRF', 'DDRF', 'NGO'],
     },
+    
   },
   {
     timestamps: true,
