@@ -171,13 +171,18 @@ export default function Landingpage({ user }) {
         </div> */}
         <button className="status-btn1 rejected" onClick={handleSOS}>
             SOS
-          </button>
+        </button>
 
 
         <div className="buttons">
           {cookies["apadarelief"] ? (
             <>
-            
+            <Link
+                  to="/sosdash" className="navopt"
+                  style={{ textDecoration: "none", color: "white","margin-left":'5px' }}
+                >
+                  sosdashboard
+            </Link>
               <p
                 className="navopt"
                 style={{ textDecoration: "none", color: "white" }}
