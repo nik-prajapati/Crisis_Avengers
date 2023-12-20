@@ -12,8 +12,8 @@ router.post('/sos', async (req: Request, res: Response) => {
     longitude,
   }: {
     typeOfDisaster: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
   } = req.body;
   //   const ipAddress = req.header('x-forwarded-for') || req.socket.remoteAddress;
   const sos = await Sos.create({

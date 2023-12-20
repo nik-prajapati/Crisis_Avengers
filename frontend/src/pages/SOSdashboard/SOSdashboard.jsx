@@ -22,7 +22,9 @@ const SOSDashboard = () => {
 
   return (
     <div className="dashboard-container">
-
+    {
+      sosRequests.location
+    }
     </div>
   );
 
