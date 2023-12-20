@@ -6,13 +6,15 @@
   display: flex;
   justify-content: space-between;
   font-size: 2rem;
+  box-shadow: 0 0 10px 0 rgb(255, 255, 255,0.3);
 
   .header-logo {
+    margin: 10px 0 0 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     img {
-      width: 100px;
+      width: 80px;
     }
     .header-logo-text {
       margin: 0 10px;
@@ -34,6 +36,7 @@
       padding: 0;
       margin: 0 10px;
     }
+
     .log-out-btn {
       display: inline-block;
       padding: 8px 16px;

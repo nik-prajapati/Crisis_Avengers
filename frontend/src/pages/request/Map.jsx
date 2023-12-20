@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Request from "../../components/Request/Request";
 import socket from "../../helpers/socket";
-// import Request from "./Request";
 import ReqBlock from "../ReqBlock.jsx";
 import { Link } from "react-router-dom";
 import MapRequestForm from "./MapRequestForm.jsx";
@@ -44,6 +43,7 @@ function Map({ user }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass, setMapClass] = useState(true);
   const [location, setLocation] = useState(null);
+  const [subtypearray, setsubtypearray] = useState([]); //
 
   useEffect(() => {
     // console.log(user);
@@ -82,7 +82,7 @@ function Map({ user }) {
           const { latitude, longitude } = position.coords;
           console.log(latitude, longitude);
           const resp = await axios.get(
-            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=3000000`,
+            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
             { withCredentials: true }
           );
           console.log(resp.data);
@@ -136,12 +136,12 @@ function Map({ user }) {
 
   // console.log(agencies);
   // console.log(user);
-
+  console.log(subtypearray)
   return (
     <div className='Map-section-columns'>
-      <MapRequestForm />
+      <MapRequestForm subtypearray={subtypearray} setsubtypearray={setsubtypearray} agencies={agencies}/>
 
-      <div className='Map-container'>
+      <div className='Map-container' style={{'marginTop':'20px'}}>
         {recieveRequest &&
           recieveRequest.map((body, idx) => {
             return (
@@ -188,6 +188,7 @@ function Map({ user }) {
         </div>
         {requestBody && (
           <Request
+          subtypearray={subtypearray} setsubtypearray={setsubtypearray}
             user={user}
             payload={requestBody}
             socket={socket}

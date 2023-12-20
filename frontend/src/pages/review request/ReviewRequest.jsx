@@ -7,14 +7,15 @@ import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 import { useEffect } from "react";
 import socket from "../../helpers/socket.js";
-// import chatIcon from "../../image/chat.svg";
 
 const ReviewRequest = () => {
   const [sentSection, setSentSection] = useState(true);
   const { reviewData, setReviewData } = useContext(reviewContext);
-  // const [dummyD, setDummyD] = useState({});
   const [sentRequests, setSentRequests] = useState([]);
   const [rcvdRequests, setRcvdRequests] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
+
 
   useEffect(() => {
     console.log(sentRequests);
@@ -46,20 +47,17 @@ const ReviewRequest = () => {
         }),
       ]);
       console.log(sentResp.data.requests);
-      // if(sentResp.status==200){
-      // setDummyD({ ...dummyD, sentRequests: sentResp.data.requests })
-
-      // const allData = {
-      //   sentRequests: sentResp.data.requests,
-      //   rcvdRequests: receivedResp.data.requests,
-      // };
-      // setDummyD(allData);
       setSentRequests(sentResp.data.requests);
       setRcvdRequests(receivedResp.data.requests);
     };
 
     fetchReviewRequest();
   }, []);
+
+  const handleViewRequest = (requestId) => {
+    setSelectedRequestId(requestId);
+    setIsModalOpen(true);
+  };
 
   const handleStatusChange = (e, reqId, requesterId, status) => {
     try {
@@ -81,32 +79,15 @@ const ReviewRequest = () => {
   };
 
 
-  // const handleReject = (e, reqId, requesterId) => {
-  //   try {
-  //     e.preventDefault();
-  //     const ind = rcvdRequests.findIndex((x) => x._id === reqId);
-  //     setRcvdRequests((prev) => {
-  //       const newarray = prev.map((p, i) => {
-  //         if (i === ind) return { ...p, status: "Rejected" };
-  //         return p;
-  //       });
-  //       console.log(newarray);
-  //       return newarray;
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
 
   return (
     <div>
       <MapPageHeader />
       <div className="review-request-container">
         <div className="siderectangle">
-           <SideBar />
+          <SideBar />
         </div>
-        
+
         <div className="section">
           <div className="btn-section">
             <button
@@ -172,6 +153,38 @@ const ReviewRequest = () => {
                           >
                             {recieve.status}
                           </button>
+                          <button
+                            className={`status-btn ${recieve.status.toLowerCase()}`}
+                            onClick={() => handleViewRequest(recieve._id)}>
+                            View Request
+                          </button>
+                          {isModalOpen && selectedRequestId === recieve._id && (
+                            <div className="modal-req">
+                              <div className="modal-req-box">
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th>Type</th>
+                                      <th>Subtype</th>
+                                      <th>Quantity</th>
+                                    </tr>
+                                  </thead>
+                                  {recieve.requested_items.map((item, idx) => (
+                                    <tr>
+                                      <th>{item.type}</th>
+                                      <th>{item.name}</th>
+                                      <th>{item.qty}</th>
+                                    </tr>
+                                  ))}
+                                </table>
+
+
+                                <button className="close" onClick={() => setIsModalOpen(false)}>Close</button>
+
+                              </div>
+                            </div>
+                          )}
+
                         </div>
                       </div>
                     );
@@ -194,10 +207,6 @@ const ReviewRequest = () => {
                         <p>
                           On: {new Date(recieve.createdAt).toLocaleString()}
                         </p>
-                        {/* <p>
-          Updated At:{" "}
-          {new Date(recieve.updatedAt).toLocaleString()}
-        </p> */}
                         <div className="flex flex-col">
                           <p>
                             To:{" "}
@@ -234,6 +243,7 @@ const ReviewRequest = () => {
                             >
                               Accept
                             </button>
+
                             <button
                               className="status-btn rejected"
                               onClick={(e) =>
@@ -247,12 +257,46 @@ const ReviewRequest = () => {
                             >
                               Reject
                             </button>
+
+                          </div>
+                        )}
+                        <button
+                          className={`status-btn ${recieve.status.toLowerCase()}`}
+                          onClick={() => handleViewRequest(recieve._id)}
+                        >
+                          View Request
+                        </button>
+                        <br />
+                        {isModalOpen && selectedRequestId === recieve._id && (
+                          <div className="modal-req">
+                            <div className="modal-req-box">
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>Type</th>
+                                    <th>Subtype</th>
+                                    <th>Quantity</th>
+                                  </tr>
+                                </thead>
+                                {recieve.requested_items.map((item, idx) => (
+                                  <tr>
+                                    <th>{item.type}</th>
+                                    <th>{item.name}</th>
+                                    <th>{item.qty}</th>
+                                  </tr>
+                                ))}
+                              </table>
+
+                            </div>
+
+                              <button className="close" onClick={() => setIsModalOpen(false)}>Close</button>
                           </div>
                         )}
                       </div>
                     ))}
                 </ul>
               }
+
             </div>
           </div>
         </div>

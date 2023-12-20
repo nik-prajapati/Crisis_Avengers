@@ -1,94 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import './MapRequestForm.scss';
+import React, { useState, useEffect } from "react";
+import "./MapRequestForm.scss";
+import axios from "axios";
 
-const MapRequestForm = () => {
-  const [selectedResource, setSelectedResource] = useState('');
-  const [addedResources, setAddedResources] = useState([]);
-  const [subtypearray, setsubtypearray] = useState([]);
-  const [subtype, handlesubtype] = useState('');
+
+const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
+
+  const [selectedResource, setSelectedResource] = useState("");
+  const [subtype, handlesubtype] = useState("");
+  const [quantity, getquant] = useState(0);
 
   const resourceOptions = {
-    Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],
-    'Rescue tolls': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
-    Shelter: ['Tents', 'Beds'],
-    Medical: ['First aid kits', 'Pain relievers', 'Ambulances', 'Medical personnel', 'Stretchers'],
+    "Food": ["Food packets", "Bottled water", "Ready-to-eat meals"],
+    "Rescue tools": ["Rescue personnel", "Ropes", "Ladders", "Cutting tools"],
+    "Shelter": ["Tents", "Beds"],
+    "Medical": [
+      "First aid kits",
+      "Pain relievers",
+      "Ambulances",
+      "Medical personnel",
+      "Stretchers",
+    ],
   };
 
-  const handletypeSelect = (e) => {
-    setSelectedResource(e.target.value);
-  };
-
-
-  const handlesubtypechange = (e) => {
-    const val = e.target.value;
-    handlesubtype(val);
-    console.log(subtype);
-    setsubtypearray([...subtypearray, val]);
-  }
 
   useEffect(() => {
-    console.log('subtypearray:', subtypearray);
+    console.log("subtypearray:", subtypearray);
   }, [subtypearray]);
-
 
   return (
     <div className='req_form'>
-      <h2>Filters</h2>
-      <div className="req_form_box">
-        <h3>Your request</h3>
+      <h2>Your Request</h2>
+      <div className='req_form_box'>
         <div className='input-section'>
-          <div className="input-title">
-            <h4>Select resource</h4>
+          <div className='input-title'>
+            <h4>Select resource type</h4>
           </div>
-          <select name='type' onChange={handletypeSelect} value={selectedResource}>
+          <select
+            name='type'
+            onChange={e=>setSelectedResource(e.target.value)}
+            value={selectedResource}
+          >
             <option value=''>Select Resource</option>
-            <option>Food</option>
-            <option>Rescue tolls</option>
-            <option>Shelter</option>
-            <option>Medical</option>
+            <option value='Food'>Food</option>
+            <option value='Rescue tools'>Rescue tools</option>
+            <option value='Shelter'>Shelter</option>
+            <option value='Medical'>Medical</option>
           </select>
         </div>
 
         <div className='input-section'>
+          <h4>Select resource Subtype:</h4>
           <select
             name='additionalSelect'
-            onChange={handlesubtypechange}
+            onChange={e=>handlesubtype(e.target.value)}
             value={subtype}
           >
-            <option value=''>Select Additional Option</option>
-            {selectedResource && Object.keys(resourceOptions).map((type) => (
-              selectedResource === type && (
-                <optgroup key={type} label={type}>
-                  {resourceOptions[type].map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </optgroup>
-              )
-            ))}
+          {
+            selectedResource && resourceOptions[selectedResource].map((val,idx)=>{
+              return <option value={val} key={idx}>{val}</option>
+            })
+          }
           </select>
           <br />
 
-          <div className="input-section">
-            Distance
-            <input type="number" />
-          </div>
-          <div className="input-section">
+          <div className='input-section' value={quantity} onChange={(e)=>getquant(e.target.value)}>
             Quantity
-            <input type="number" />
+            <input type='number' />
           </div>
         </div>
-
-        <button className='submit_data' onClick={() => alert('Please select from dropdown list')}>Add Resource</button>
+        <br />
+        <button
+          className='submit_data'
+          onClick={() => {
+            if (selectedResource === '' || subtype === '' || quantity === 0) {
+              alert('Please enter a valid request')
+            } else {
+              setsubtypearray([...subtypearray, {
+                type: selectedResource,
+                name: subtype,
+                qty: quantity
+              }])
+            }
+            setSelectedResource('');
+            handlesubtype('');
+            getquant(0);
+          }}
+        >
+          Add Resource
+        </button>
 
         <div className='input-section'>
           <h4>Requested resources</h4>
-          <p>{subtypearray.join('\n')}</p>
+          <p>{subtypearray && subtypearray.map((arr)=>{
+            return <div style={{'display':'flex','justifyContent':'space-around'}}>
+              <p>{arr.type}</p>
+              <p>{arr.name}</p>
+              <p>{arr.qty}</p>
+
+            </div>
+          })}</p>
         </div>
-
       </div>
-
     </div>
   );
 };

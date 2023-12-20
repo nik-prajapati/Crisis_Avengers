@@ -19,10 +19,10 @@ const MapPageHeader = ({ user }) => {
 
     if (resp.status == 200) {
     }
-    navigate("/rescue");
+    navigate("/");
   };
   return (
-    <div className='header-section'>
+    <div className='header-section' style={{'box-shadow': '0 0 10px 0 rgb(255, 255, 255,0.3)'}}>
       <div className='header-logo'>
         <Link to='/'>
           <img src={icon} alt='' className='header-logo-image' />
