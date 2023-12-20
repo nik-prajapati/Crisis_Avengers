@@ -24,13 +24,18 @@ const SOSDashboard = () => {
     <div className="dashboard-container">
     <div>SOS count : {sosRequests.length}</div>
     <br />
+
+    {
+      <h6>last Request { sosRequests[sosRequests.length-1] && new Date(sosRequests[sosRequests.length-1].createdAt).toLocaleString()}</h6>
+    }
     {
       sosRequests && sosRequests.map((sos,idx)=>{
-        return <div>
-        <p>
-        </p>
-        <p>{sos.sos_id.createdAt}</p>
+        return <div style={{'display':'flex', 'justifyContent':'space-between'}}> 
+
+        <p>{new Date(sos.sos_id.createdAt).toLocaleString()}</p>
         <p>{sos.sos_id.typeOfDisaster}</p>
+        <p>{sos.sos_id.location.coordinates[1]}</p>
+        <p>{sos.sos_id.location.coordinates[0]}</p>
         </div>
       })
     }
