@@ -5,7 +5,7 @@ import RescueSos from '../models/rescue_sos';
 
 const router = Router();
 
-router.post('/sos', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   const {
     typeOfDisaster,
     latitude,
@@ -30,7 +30,7 @@ router.post('/sos', async (req: Request, res: Response) => {
           type: 'Point',
           coordinates: [longitude, latitude],
         },
-        $maxDistance: 100000,
+        $maxDistance: 3000000,
       },
     },
   });
