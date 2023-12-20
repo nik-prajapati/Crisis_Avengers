@@ -1,5 +1,5 @@
 // Map.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -14,10 +14,43 @@ import axios from "axios";
 
 let MAPQUEST_API_KEY = "nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm";
 
-const Map = ({ onLocationSelected, showMap, setFormData, formData }) => {
+const Map = ({  showMap, setFormData, formData }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
   const [geocodedAdd, setGeoCodeAdd] = useState("");
+  const [defaultAdd,setDefalutAdd]=useState({});
+
+  useEffect(()=>{
+    const handledefaultCoord=()=>{
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            // const {lat,lng}={ latitude, longitude}
+            let lat=latitude
+            let lng=longitude
+            console.log({lat,lng})
+            setSelectedLocation({lat,lng})
+            let x = await getAddress(lat, lng);
+            let location=`${latitude},${longitude}`
+            setFormData({ ...formData, address: x , location:location});
+            setDefalutAdd({location:{lat,lng},address:x})
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+            // toast.error(`Error getting location ${error}`)
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+        // toast.error('Geolocation is not supported in this browser')
+      }
+    }
+    handledefaultCoord()
+  },[])
+  
+
 
   async function getAddress(latitude, longitude) {
     const uri = `https://www.mapquestapi.com/geocoding/v1/reverse?key=${MAPQUEST_API_KEY}&location=${latitude},${longitude}`;
@@ -63,12 +96,11 @@ const Map = ({ onLocationSelected, showMap, setFormData, formData }) => {
   const handleMapClick = async (event) => {
     const { lat, lng } = event.latlng;
 
-    // console.log({ lat, lng })
     let x = await getAddress(lat, lng);
-    setFormData({ ...formData, address: x });
+    setFormData({ ...formData, address: x,location:`${lat},${lng}`});
     // setAddressValue(await getAddress(lat,lng))
     setSelectedLocation({ lat, lng });
-    onLocationSelected({ lat, lng });
+    // onLocationSelected({ lat, lng });
   };
 
   const MapClickHandler = () => {
@@ -79,29 +111,43 @@ const Map = ({ onLocationSelected, showMap, setFormData, formData }) => {
     return null;
   };
 
-  console.log(selectedLocation);
+
+
+  const resetToDefault= async (e)=>{
+    console.log(defaultAdd)
+    const {lat,lng}=defaultAdd.location
+    const address=defaultAdd.address
+    setSelectedLocation({lat,lng})
+    setFormData({ ...formData, address: address,location:`${lat},${lng}`})
+  }
+
+
+  
   return (
+    <div style={{'position':'relative'}}>
+    <div onClick={(e)=>resetToDefault(e)} style={{'backgroundColor':'red'}}>RESET</div>
     <MapContainer
-      center={[12, 80]}
+      center={[13,79]}
       zoom={7}
-      style={{ width: "850px", height: "650px",boxShadow: "5px 0px 5px 0px rgba(255, 255, 255, 0.4)"}}
+      style={{ width: "850px", height: "600px",boxShadow: "5px 0px 5px 0px rgba(255, 255, 255, 0.4)"}}
     >
-      <MapClickHandler />
+    <MapClickHandler />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
+
       {selectedLocation && (
         <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
           <Popup>
             <div>
-              <p>Selected Location</p>
-              <p>{selectedAddress}</p>
+              <h6>{formData.address}</h6>
             </div>
           </Popup>
         </Marker>
       )}
     </MapContainer>
+    </div>
   );
 };
 

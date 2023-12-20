@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
         },
       },
     ]);
-    console.log(agencies);
+    // console.log(agencies);
     res.send(agencies);
   }
 });

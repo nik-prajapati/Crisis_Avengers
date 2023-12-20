@@ -20,6 +20,7 @@ import card4 from "../../image/card4.png";
 import card5 from "../../image/card5.jpeg";
 import card6 from "../../image/card6.jpg";
 import { useCookies } from "react-cookie";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Landingpage({ user }) {
   console.log(user);
@@ -82,8 +83,9 @@ export default function Landingpage({ user }) {
     // console.log(Cookies)
 
     if (resp.status == 200) {
+      window.location.reload(false);
     }
-    navigate("/");
+    window.location.reload();
   };
 
   const handleSOS = async () => {
@@ -118,6 +120,7 @@ export default function Landingpage({ user }) {
   // }
   return (
     <>
+      <ToastContainer />
       <div className="navbar">
         <div className="logo">
           <div className="logoLeft">
@@ -161,13 +164,24 @@ export default function Landingpage({ user }) {
             </div>
           )}
         </div> */}
+        <button className="status-btn1 rejected" onClick={handleSOS}>
+          SOS
+        </button>
 
         <div className="buttons">
           {cookies["apadarelief"] ? (
             <>
-              <button className="status-btn1 rejected" onClick={handleSOS}>
-                SOS
-              </button>
+              <Link
+                to="/sosdash"
+                className="navopt"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  "margin-left": "5px",
+                }}
+              >
+                sosdashboard
+              </Link>
               <p
                 className="navopt"
                 style={{ textDecoration: "none", color: "white" }}

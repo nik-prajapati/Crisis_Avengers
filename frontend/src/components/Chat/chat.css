@@ -163,11 +163,7 @@
   display: inline-block; /* Ensure message takes only the necessary width */
   max-width: 40%; /* Adjust the maximum width of the message */
   margin: 0.5rem; /* Add margin around the message */
-  background-color: rgb(
-    75,
-    74,
-    102
-  ); /* Default background color for the message */
+  background-color: rgb(75, 74, 102); /* Default background color for the message */
   transition: 0.1s;
   position: relative;
   border-radius: 8px; /* Add border radius for a rounded look */
@@ -179,6 +175,7 @@
 
 .msg > :is(div, form) {
   padding-left: 3.5;
+  
 }
 
 .sent {
@@ -192,6 +189,16 @@
   background-color: #ddd; /* Color for received messages */
   color: black; /* Text color for received messages */
 }
+
+/* .msg:hover {
+  /* background-color: rgb(45, 45, 45); */
+  background: linear-gradient(
+    270deg,
+    rgba(83, 82, 82, 0.76),
+    rgba(52, 52, 52, 0.26),
+    rgba(62, 61, 61, 0.28)
+  );
+} */
 
 .msg:has(.sender) {
   margin-top: 1.2rem;
@@ -240,7 +247,7 @@
 
 .msg:hover .icon {
   display: block;
-}
+} 
 
 .msg input {
   margin: 0.5rem 0;

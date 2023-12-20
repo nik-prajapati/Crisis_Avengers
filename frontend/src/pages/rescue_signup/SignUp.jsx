@@ -26,7 +26,9 @@ const SignUp = () => {
   });
   const [error, setError] = useState(null);
   const [showMap, setShowmap] = useState(true);
-  const [addressValue,setAddressValue]=useState('')
+  // const [currentLocation, setShowmap] = useState(true);
+  // const []
+ 
   
 
   const handleInputChange = (event) => {
@@ -47,15 +49,21 @@ const SignUp = () => {
             ...formData,
             location: location,
           });
+
+          
+
         },
         (error) => {
           console.error("Error getting location:", error);
+          toast.error(`Error getting location ${error}`)
         }
       );
     } else {
       console.error("Geolocation is not supported in this browser.");
+      toast.error('Geolocation is not supported in this browser')
     }
   };
+  
   useEffect(() => {
     getCurrentLocation();
   }, []);
@@ -132,7 +140,7 @@ const SignUp = () => {
     });
   };
 
-  console.log(addressValue)
+  // console.log(addressValue)
   return (
     <div className="main-box">
       <ToastContainer />
@@ -256,7 +264,7 @@ const SignUp = () => {
                 placeholder="Enter your postal address"
                 className="Address-input"
               />
-              <div className="choose-from-map" onClick={e=>setShowmap(true)}>MAP</div>
+              <div className="choose-from-map" onClick={e=>setShowmap(true)}>RESET</div>
               </div>
               </p>
             </div>

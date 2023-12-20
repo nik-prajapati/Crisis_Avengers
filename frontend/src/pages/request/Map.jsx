@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Request from "../../components/Request/Request";
 import socket from "../../helpers/socket";
+// import Request from "./Request";
 import ReqBlock from "../ReqBlock.jsx";
 import { Link } from "react-router-dom";
 import MapRequestForm from "./MapRequestForm.jsx";
@@ -42,7 +43,8 @@ function Map({ user }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass, setMapClass] = useState(true);
   const [location, setLocation] = useState(null);
-  const [subtypearray, setsubtypearray] = useState([]); //
+  const [subtypearray, setsubtypearray] = useState([]);
+  const [filteredAgencies, setFilteredAgencies] = useState([]);
 
   useEffect(() => {
     // console.log(user);
@@ -185,7 +187,7 @@ function Map({ user }) {
         userId={user ? user.id : null}
       />
 
-      <div className="Map-container" style={{ marginTop: "20px" }}>
+      <div className="Map-container">
         {recieveRequest &&
           recieveRequest.map((body, idx) => {
             return (
@@ -232,12 +234,12 @@ function Map({ user }) {
         </div>
         {requestBody && (
           <Request
-            subtypearray={subtypearray}
-            setsubtypearray={setsubtypearray}
             user={user}
             payload={requestBody}
             socket={socket}
             setPayLoad={setRequestBody}
+            subtypearray={subtypearray}
+            setsubtypearray={setsubtypearray}
           />
         )}
         <ListSection

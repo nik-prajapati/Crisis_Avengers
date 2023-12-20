@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Types } from 'mongoose';
+import { Date, Types } from 'mongoose';
 
 export type Location = {
   type: string;
@@ -81,3 +81,9 @@ type Chat = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+type Sos = {
+  typeOfDisaster: string;
+  location: Location;
+  createdAt: Date;
+}
