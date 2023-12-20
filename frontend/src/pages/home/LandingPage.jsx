@@ -167,7 +167,10 @@ export default function Landingpage({ user }) {
             </div>
           )}
         </div> */}
-        
+        <button className='status-btn1 rejected' onClick={handleSOS}>
+          SOS
+        </button>
+
         <div className='buttons'>
           {cookies["apadarelief"] ? (
             <>
