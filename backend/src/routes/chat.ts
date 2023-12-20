@@ -7,6 +7,7 @@ import {
   chatList,
   getMessages,
   getChat,
+  findChat,
 } from '../controllers/ChatController';
 
 const router = Router();
@@ -17,6 +18,7 @@ router.post('/:chatId', isAuthenticated, sendMessage);
 router.get('/chats', isAuthenticated, chatList);
 router.get('/:chatId', isAuthenticated, getChat);
 router.get('/:chatId/messages', isAuthenticated, getMessages);
+router.get('/findchat', isAuthenticated, findChat);
 
 // router.post('/', createChat);
 // router.put('/', addToChat);

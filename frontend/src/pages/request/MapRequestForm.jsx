@@ -57,7 +57,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
           >
           {
             selectedResource && resourceOptions[selectedResource].map((val,idx)=>{
-              return <option value={val} >{val}</option>
+              return <option value={val} key={idx}>{val}</option>
             })
           }
           </select>

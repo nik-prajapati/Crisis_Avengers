@@ -5,27 +5,26 @@ import "react-toastify/dist/ReactToastify.css";
 import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 
-
-const Request = ({ user, payload, socket, setPayLoad,subtypearray }) => {
- 
-  console.log(user,payload);
+const Request = ({ user, payload, socket, setPayLoad, subtypearray }) => {
+  // console.log(user,payload);
   const [requestSend, setRequestSend] = useState(null);
   const { reviewData, setReviewData } = useContext(reviewContext);
 
-
   const handlerequestSend = () => {
+    console.log("i am called");
     const dummyReq = {
       rescue_requester_id: user.id,
       requestee_id: payload.reqAgency.id,
       distance: payload.reqAgency.distance,
-      
-      requested_items:subtypearray,
+
+      requested_items: subtypearray,
       location: {
         latitude: 18.914042,
         longitude: 72.821693,
       },
     };
-    console.log(dummyReq)
+    // setRequestSend(dummyReq)
+    console.log(payload.reqAgency.id + " : id");
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast.success("Request Sent Successfully");
     // sendMail("nikhilprajapati6509@gmail.com","New Request Arrived","Please Review the review Page for further info")
@@ -52,7 +51,6 @@ const Request = ({ user, payload, socket, setPayLoad,subtypearray }) => {
       />
       {/* Same as */}
       <ToastContainer />
-
       {
         // card component
         payload && user && (
