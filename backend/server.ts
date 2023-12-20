@@ -151,6 +151,11 @@ io.on('connection', (socket) => {
   socket.on('stop-typing', (username, chatId) => {
     socket.to(chatId).emit('isnt-typing', username, chatId);
   });
+
+  socket.on('update-location', (userId, newLocation) => {
+    console.log('hi');
+    io.emit('receive-locations', userId, newLocation);
+  });
 });
 
 instrument(io, {

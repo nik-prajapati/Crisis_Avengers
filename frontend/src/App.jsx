@@ -27,6 +27,10 @@ function App() {
   const [reviewData, setReviewData] = useState([1, 2]);
   const [Cookies, setCookies, removeCookies] = useCookies(["apadarelief"]);
 
+  const [chat, setChat] = useState({});
+  const [chats, setChats] = useState([]);
+  const [messages, setMessages] = useState([]);
+
   useEffect(() => {
     if (user) socket.emit("join-room", user.id);
   }, [user]);
@@ -37,35 +41,37 @@ function App() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   const getCurrentLocation = () => {
+  //     if (navigator.geolocation) {
+  //       if (user) {
+  //         navigator.geolocation.getCurrentPosition(
+  //           (position) => {
+  //             const { latitude, longitude } = position.coords;
+  //             const location = `${latitude},${longitude}`;
+  //             setInterval(() => {
+  //               console.log(latitude);
+  //               socket.emit("update-location", user.id, location);
+  //             }, 3000);
+  //           },
+  //           (error) => {
+  //             console.error("Error getting location:", error);
+  //           }
+  //         );
+  //       }
+  //     } else {
+  //       console.error("Geolocation is not supported in this browser.");
+  //     }
+  //   };
+
+  //   getCurrentLocation();
+  // }, []);
+
   useEffect(() => {
-    const getCurrentLocation = () => {
-      if (navigator.geolocation ) {
-        
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            const location = `${latitude},${longitude}`;
-            setInterval(() => {
-              // console.log(latitude);
-              // console.log("emitted")
-              socket.emit("update-location", user.id, location);
-            }, 10000000);
-          },
-          (error) => {
-            console.error("Error getting location:", error);
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported in this browser.");
-      }
-    };
+    socket.on("update-location");
+  });
 
-    getCurrentLocation();
-  }, []);
-
-
-
-  // console.log(user);
+  console.log(user);
 
   return (
     <BrowserRouter>
@@ -87,7 +93,17 @@ function App() {
             <Route path="/alert" element={<SendAlert user={user} />} />
             <Route
               path="/chat-page"
-              element={<Chat name={user ? user.agencyDetails.name : ""} />}
+              element={
+                <Chat
+                  name={user ? user.agencyDetails.name : ""}
+                  chat={chat}
+                  setChat={setChat}
+                  chats={chats}
+                  setChats={setChats}
+                  messages={messages}
+                  setMessages={setMessages}
+                />
+              }
             />
           </Routes>
         </reviewContext.Provider>

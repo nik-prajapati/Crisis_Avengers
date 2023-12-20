@@ -7,15 +7,25 @@ import { useContext } from "react";
 import reviewContext from "../../context/ReviewRequestContext.jsx";
 import { useEffect } from "react";
 import socket from "../../helpers/socket.js";
+// import chatIcon from "../../image/chat.svg";
+import { Link } from "react-router-dom";
 
-const ReviewRequest = () => {
+const ENDPOINT = "http://localhost:3000";
+
+const ReviewRequest = ({
+  setChat,
+  setChats,
+  chats,
+  chat,
+  setMessages,
+  messages,
+}) => {
   const [sentSection, setSentSection] = useState(true);
   const { reviewData, setReviewData } = useContext(reviewContext);
   const [sentRequests, setSentRequests] = useState([]);
   const [rcvdRequests, setRcvdRequests] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
-
 
   useEffect(() => {
     console.log(sentRequests);
@@ -78,7 +88,23 @@ const ReviewRequest = () => {
     }
   };
 
-
+  const goToChat = async (rescue_id1, rescue_id2) => {
+    const res = await axios.get(ENDPOINT + "/findchat", {
+      rescue_id1,
+      rescue_id2,
+    });
+    if (!res.data) {
+      const res = await axios.post(ENDPOINT + "/chat", {
+        rescue_id1,
+        rescue_id2,
+      });
+      setChat(res.data);
+      setMessages([]);
+    } else {
+      setChat(res.data.chat);
+      setChats((prev) => [...prev, res.data.chat]);
+    }
+  };
 
   return (
     <div>
@@ -148,6 +174,19 @@ const ReviewRequest = () => {
                         }
 
                         <div className="status-info">
+                          {(recieve.status === "Accepted" ||
+                            recieve.status === "Completed") && (
+                            <button
+                              onClick={() =>
+                                goToChat(
+                                  recieve.rescue_requester_id,
+                                  recieve.requestee_id
+                                )
+                              }
+                            >
+                              Chat
+                            </button>
+                          )}
                           <button
                             className={`status-btn ${recieve.status.toLowerCase()}`}
                           >
@@ -155,7 +194,8 @@ const ReviewRequest = () => {
                           </button>
                           <button
                             className={`status-btn ${recieve.status.toLowerCase()}`}
-                            onClick={() => handleViewRequest(recieve._id)}>
+                            onClick={() => handleViewRequest(recieve._id)}
+                          >
                             View Request
                           </button>
                           {isModalOpen && selectedRequestId === recieve._id && (
@@ -178,13 +218,15 @@ const ReviewRequest = () => {
                                   ))}
                                 </table>
 
-
-                                <button className="close" onClick={() => setIsModalOpen(false)}>Close</button>
-
+                                <button
+                                  className="close"
+                                  onClick={() => setIsModalOpen(false)}
+                                >
+                                  Close
+                                </button>
                               </div>
                             </div>
                           )}
-
                         </div>
                       </div>
                     );
@@ -222,6 +264,19 @@ const ReviewRequest = () => {
                         </div>
                         {recieve.status !== "Pending" ? (
                           <div className="status-info">
+                            {(recieve.status === "Accepted" ||
+                              recieve.status === "Completed") && (
+                              <button
+                                onClick={() =>
+                                  goToChat(
+                                    recieve.rescue_requester_id,
+                                    recieve.requestee_id
+                                  )
+                                }
+                              >
+                                Chat
+                              </button>
+                            )}
                             <button
                               className={`status-btn ${recieve.status.toLowerCase()}`}
                             >
@@ -257,7 +312,6 @@ const ReviewRequest = () => {
                             >
                               Reject
                             </button>
-
                           </div>
                         )}
                         <button
@@ -286,17 +340,20 @@ const ReviewRequest = () => {
                                   </tr>
                                 ))}
                               </table>
-
                             </div>
 
-                              <button className="close" onClick={() => setIsModalOpen(false)}>Close</button>
+                            <button
+                              className="close"
+                              onClick={() => setIsModalOpen(false)}
+                            >
+                              Close
+                            </button>
                           </div>
                         )}
                       </div>
                     ))}
                 </ul>
               }
-
             </div>
           </div>
         </div>
