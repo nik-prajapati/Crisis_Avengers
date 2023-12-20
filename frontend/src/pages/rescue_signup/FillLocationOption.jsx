@@ -19,7 +19,7 @@ const FillLocationOption = ({showMap,setShowMap,setFormData,formData}) => {
   return (
     <div>
     
-    <div style={showMap ? {'display':'block'}:{'display':'none'}} className='map-for-location-choice'>
+    <div style={showMap ? {'display':'block','marginLeft':'26px','marginTop':'26px'}:{'display':'none'}} className='map-for-location-choice'>
     <button onClick={e=>{
         
             // e.preventDefault
@@ -28,7 +28,7 @@ const FillLocationOption = ({showMap,setShowMap,setFormData,formData}) => {
             setShowMap(false)
         
     
-    }}>Cancel</button>
+    }} style={{'marginLeft':'800px'}}>Cancel</button>
       <form onSubmit={()=>handleSubmit()}>
         <MapPointSelect onLocationSelected={handleLocationSelected} formData={formData} setFormData={setFormData}/>
         <br />

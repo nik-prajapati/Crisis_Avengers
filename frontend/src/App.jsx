@@ -20,7 +20,7 @@ import reviewContext from "./context/ReviewRequestContext";
 import Chat from "./pages/chat/Chat";
 import { useCookies } from "react-cookie";
 import socket from "./helpers/socket";
-
+import SendAlert from "./pages/sendalert/SendAlert";
 function App() {
   const [user, setUser] = useState(null);
   // console.log(user);
@@ -90,6 +90,7 @@ function App() {
             <Route path="/request" element={<MapPage user={user} />} />
             <Route path="/review" element={<ReviewRequest user={user} />} />
             <Route path="/resource" element={<UpdateData user={user} />} />
+            <Route path="/alert" element={<SendAlert user={user} />} />
             <Route
               path="/chat-page"
               element={
