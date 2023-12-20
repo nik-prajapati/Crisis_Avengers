@@ -20,7 +20,7 @@ import card4 from "../../image/card4.png";
 import card5 from "../../image/card5.jpeg";
 import card6 from "../../image/card6.jpg";
 import { useCookies } from "react-cookie";
-
+import { ToastContainer,toast } from "react-toastify";
 
 export default function Landingpage({ user }) {
   console.log(user);
@@ -75,7 +75,7 @@ export default function Landingpage({ user }) {
         "Maintain a detailed record of all past activities in a blog or timeline format, helping agencies keep track of their contributions and achievements over time.",
     },
   ];
-  
+
   const handleLogOut = async () => {
     const resp = await axios.get("http://localhost:3000/logout", {
       withCredentials: true,
@@ -83,15 +83,49 @@ export default function Landingpage({ user }) {
     // console.log(Cookies)
 
     if (resp.status == 200) {
+      window.location.reload(false);
+
     }
     window.location.reload();
   };
-  
+
+  const handleSOS = async () => {
+    console.log("called")
+    try {
+      if (navigator.geolocation) {
+        
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              const location = [longitude, latitude];
+              const res = await axios.post("http://localhost:3000/sos", {
+                typeOfDisaster: "Landslide",
+                latitude,
+                longitude,
+              });
+              if(res.status===200)
+                toast.success("SOS Sent Successfully")
+              
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            }
+          );
+        
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // const handleLogOut=async ()=>{
   //   removeCookie(user);
   // }
   return (
     <>
+    <ToastContainer />
       <div className="navbar">
         <div className="logo">
           <div className="logoLeft">
@@ -107,12 +141,8 @@ export default function Landingpage({ user }) {
           </div>
         </div>
 
-        <div className="midnav">
+        <div className="midnav"></div>
 
-
-          
-        </div>
-          
         {/* old login logout */}
         {/* <div className="buttons">
           {user && (
@@ -139,37 +169,46 @@ export default function Landingpage({ user }) {
             </div>
           )}
         </div> */}
+        <button className="status-btn1 rejected" onClick={handleSOS}>
+            SOS
+          </button>
 
-       <div className="buttons">
-      {cookies['apadarelief'] ? (
-        <>
-            <p className="navopt" style={{'textDecoration':'none',color:'white'}}>
-            <Link to="/request" style={{ 'textDecoration': "none",color:'white' }}>
-              Request
-            </Link> 
-          </p>
-          <h2 className="navopt agencyname">{cookies['apadarelief'].agencyDetails.name}</h2>
-          
-          <div className="log-out-btn" onClick={handleLogOut}>
-            Logout
-          </div>
 
-          
-          
-        </>
-      ) : (
-        <>
-          <Link to="/signup">
-            <button className="gov-button">Signup</button>
-          </Link>
+        <div className="buttons">
+          {cookies["apadarelief"] ? (
+            <>
+            
+              <p
+                className="navopt"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Link
+                  to="/request"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Request
+                </Link>
+              </p>
+              <h2 className="navopt agencyname">
+                {cookies["apadarelief"].agencyDetails.name}
+              </h2>
 
-          <Link to="/rescue">
-            <button className="rescue-button">Login</button>
-          </Link>
-        </>
-      )}
-    </div>
+              <div className="log-out-btn" onClick={handleLogOut}>
+                Logout
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/signup">
+                <button className="gov-button">Signup</button>
+              </Link>
 
+              <Link to="/rescue">
+                <button className="rescue-button">Login</button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="heroContainer">
@@ -272,3 +311,4 @@ export default function Landingpage({ user }) {
     </>
   );
 }
+

@@ -5,7 +5,7 @@ import RescueSos from '../models/rescue_sos';
 
 const router = Router();
 
-router.post('/sos', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   const {
     typeOfDisaster,
     latitude,

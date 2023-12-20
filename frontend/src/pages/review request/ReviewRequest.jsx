@@ -57,8 +57,8 @@ const ReviewRequest = ({
         }),
       ]);
       console.log(sentResp.data.requests);
-      setSentRequests(sentResp.data.requests);
-      setRcvdRequests(receivedResp.data.requests);
+      setSentRequests(sentResp.data.requests.reverse());
+      setRcvdRequests(receivedResp.data.requests.reverse());
     };
 
     fetchReviewRequest();
