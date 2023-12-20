@@ -153,7 +153,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('update-location', (userId, newLocation) => {
-    console.log('hi');
     io.emit('receive-locations', userId, newLocation);
   });
 });

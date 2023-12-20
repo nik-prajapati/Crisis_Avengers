@@ -89,28 +89,24 @@ export default function Landingpage({ user }) {
   };
 
   const handleSOS = async () => {
-    console.log("called");
     try {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            const location = [longitude, latitude];
-            const res = await axios.post(
-              "http://localhost:3000/sos",
-              {
-                typeOfDisaster: "Landslide",
+        if (user) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              const location = [longitude, latitude];
+              const res = await axios.post("http://localhost:3000/sos", {
+                typeOfDisaster: "Earthquake",
                 latitude,
                 longitude,
-              },
-              { withCredentials: true }
-            );
-            if (res.status === 200) toast.success("SOS Sent Successfully");
-          },
-          (error) => {
-            console.error("Error getting location:", error);
-          }
-        );
+              });
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            }
+          );
+        }
       } else {
         console.error("Geolocation is not supported in this browser.");
       }
@@ -125,22 +121,22 @@ export default function Landingpage({ user }) {
   return (
     <>
       <ToastContainer />
-      <div className='navbar'>
-        <div className='logo'>
-          <div className='logoLeft'>
-            <Link to='/'>
-              <img src={apadaLogo} alt='APADA Logo' />
+      <div className="navbar">
+        <div className="logo">
+          <div className="logoLeft">
+            <Link to="/">
+              <img src={apadaLogo} alt="APADA Logo" />
             </Link>
           </div>
 
-          <div className='line'></div>
-          <div className='logoRight'>
-            <p className='logoName leftText'>apadaRelief</p>
-            <p className='tag-line leftText'>ONE NETWORK,COUNTLESS HEROES</p>
+          <div className="line"></div>
+          <div className="logoRight">
+            <p className="logoName leftText">apadaRelief</p>
+            <p className="tag-line leftText">ONE NETWORK,COUNTLESS HEROES</p>
           </div>
         </div>
 
-        <div className='midnav'></div>
+        <div className="midnav"></div>
 
         {/* old login logout */}
         {/* <div className="buttons">
@@ -168,16 +164,16 @@ export default function Landingpage({ user }) {
             </div>
           )}
         </div> */}
-        <button className='status-btn1 rejected' onClick={handleSOS}>
+        <button className="status-btn1 rejected" onClick={handleSOS}>
           SOS
         </button>
 
-        <div className='buttons'>
+        <div className="buttons">
           {cookies["apadarelief"] ? (
             <>
               <Link
-                to='/sosdash'
-                className='navopt'
+                to="/sosdash"
+                className="navopt"
                 style={{
                   textDecoration: "none",
                   color: "white",
@@ -187,47 +183,47 @@ export default function Landingpage({ user }) {
                 sosdashboard
               </Link>
               <p
-                className='navopt'
+                className="navopt"
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Link
-                  to='/request'
+                  to="/request"
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   Request
                 </Link>
               </p>
-              <h2 className='navopt agencyname'>
+              <h2 className="navopt agencyname">
                 {cookies["apadarelief"].agencyDetails.name}
               </h2>
 
-              <div className='log-out-btn' onClick={handleLogOut}>
+              <div className="log-out-btn" onClick={handleLogOut}>
                 Logout
               </div>
             </>
           ) : (
             <>
-              <Link to='/signup'>
-                <button className='gov-button'>Signup</button>
+              <Link to="/signup">
+                <button className="gov-button">Signup</button>
               </Link>
 
-              <Link to='/rescue'>
-                <button className='rescue-button'>Login</button>
+              <Link to="/rescue">
+                <button className="rescue-button">Login</button>
               </Link>
             </>
           )}
         </div>
       </div>
 
-      <div className='heroContainer'>
+      <div className="heroContainer">
         <div
-          className='hero'
+          className="hero"
           style={{
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(${disasterManagementImage})`,
             backgroundColor: "131418",
           }}
         >
-          <div className='heroText'>
+          <div className="heroText">
             <Typewriter
               options={{
                 strings: [
@@ -239,36 +235,36 @@ export default function Landingpage({ user }) {
                 delay: 200, // Delay between strings (milliseconds)
                 deleteSpeed: "natural", // Speed of deleting characters ('natural' provides a realistic typing effect)
               }}
-              className='textColor'
+              className="textColor"
             />
           </div>
           {/* <div className="textbottom">"Together we stand united for relief"</div> */}
         </div>
       </div>
 
-      <div className='info' id='outline'>
-        <div className='left-info'>
-          <img className='info-img' src={map}></img>
-          <img className='info-img' src={rescueImage}></img>
-          <img className='info-img' src={communicate}></img>
+      <div className="info" id="outline">
+        <div className="left-info">
+          <img className="info-img" src={map}></img>
+          <img className="info-img" src={rescueImage}></img>
+          <img className="info-img" src={communicate}></img>
         </div>
 
-        <div className='right-info'>
-          <div className='outline'>
+        <div className="right-info">
+          <div className="outline">
             <h1
-              className='aboutusTag'
+              className="aboutusTag"
               style={{ color: "#F04D1A", fontSize: "2.2em" }}
             >
               ABOUT US
             </h1>
 
-            <div className='hrline'>_</div>
+            <div className="hrline">_</div>
 
-            <div className='description'>
+            <div className="description">
               <h2 style={{ fontSize: "1.9em", fontWeight: "bold" }}>
                 "Together we stand united for Relief."
               </h2>
-              <div className='points'>
+              <div className="points">
                 <ul>
                   <li>Efficient Disaster Response</li>
                   <p>
@@ -297,14 +293,14 @@ export default function Landingpage({ user }) {
         </div>
       </div>
 
-      <div className='scroll'>
-        <div className='card-grid'>
+      <div className="scroll">
+        <div className="card-grid">
           {cards.map((card) => (
-            <div key={card.id} className='card'>
-              <div className='card-image'>
+            <div key={card.id} className="card">
+              <div className="card-image">
                 <img src={card.icon} alt={`Icon for ${card.title}`} />
               </div>
-              <div className='card-info'>
+              <div className="card-info">
                 <h2 style={{ color: "#F04D1A" }}>{card.title}</h2>
                 <p style={{ color: "white" }}>{card.content}</p>
               </div>
@@ -313,7 +309,7 @@ export default function Landingpage({ user }) {
         </div>
       </div>
 
-      <div className='last' id='cont1'>
+      <div className="last" id="cont1">
         <Footer />
       </div>
     </>

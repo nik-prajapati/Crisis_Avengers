@@ -34,7 +34,6 @@ const duserCustomIcon = new Icon({
 });
 
 function Map({ user }) {
-  console.log(user);
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
@@ -50,6 +49,52 @@ function Map({ user }) {
   useEffect(() => {
     // console.log(user);
     if (user) socket.emit("join-room", user._id);
+  }, []);
+
+  useEffect(() => {
+    let x;
+    const getCurrentLocation = () => {
+      if (navigator.geolocation) {
+        if (user) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              const location = `${latitude},${longitude}`;
+              x = setInterval(() => {
+                socket.emit("update-location", user.id, location);
+              }, 3000);
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            }
+          );
+        }
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+      }
+    };
+
+    getCurrentLocation();
+  }, []);
+
+  useEffect(() => {
+    socket.on("receive-locations", (userId, newLocation) => {
+      setAgencies((prev) => {
+        const newAgencies = prev.map((x) => {
+          if (x._id === userId)
+            return {
+              ...x,
+              location: { type: "Point", coordinates: newLocation },
+            };
+          return x;
+        });
+        return newAgencies;
+      });
+    });
+
+    return () => {
+      socket.off("update-location");
+    };
   }, []);
 
   useEffect(() => {
@@ -79,28 +124,23 @@ function Map({ user }) {
     // Check if the Geolocation API is available in the browser
     if ("geolocation" in navigator) {
       // Get the current location
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          console.log(latitude, longitude);
-          const resp = await axios.get(
-            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=3000000`,
-            { withCredentials: true }
-          );
-          console.log(resp.data);
-          const d = resp.data;
-          console.log(d);
-          let myself = {
-            user: user,
-            location: location,
-          };
-          setAgencies(d);
-          setLocation({ latitude, longitude });
-        },
-        (error) => {
-          console.error("Error getting location:", error.message);
-        }
-      );
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const resp = await axios.get(
+          `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
+          { withCredentials: true }
+        );
+        const d = resp.data;
+        let myself = {
+          user: user,
+          location: location,
+        };
+        setAgencies(d);
+        setLocation({ latitude, longitude });
+      });
+      (error) => {
+        console.error("Error getting location:", error.message);
+      };
     } else {
       console.error("Geolocation is not supported in this browser.");
     }
@@ -138,35 +178,34 @@ function Map({ user }) {
 
   // console.log(agencies);
   // console.log(user);
-
   return (
-    <div className='Map-section-columns'>
+    <div className="Map-section-columns">
       <MapRequestForm
         subtypearray={subtypearray}
         setsubtypearray={setsubtypearray}
-        filteredAgencies={filteredAgencies}
-        setFilteredAgencies={setFilteredAgencies}
+        agencies={agencies}
+        userId={user ? user.id : null}
       />
 
-      <div className='Map-container'>
+      <div className="Map-container">
         {recieveRequest &&
           recieveRequest.map((body, idx) => {
             return (
-              <div className='receive-request-card'>
-                <div className='cardbody' key={idx}>
-                  <h5 className='card-title'>
+              <div className="receive-request-card">
+                <div className="cardbody" key={idx}>
+                  <h5 className="card-title">
                     From : {body.rescue_requester_id.name}
                   </h5>
-                  <p className='card-text'>
+                  <p className="card-text">
                     Address : {body.rescue_requester_id.address}
                   </p>
-                  <p className='card-text'>Distance : {body.distance} km</p>
+                  <p className="card-text">Distance : {body.distance} km</p>
                 </div>
               </div>
             );
           })}
 
-        <div className='option-btn'>
+        <div className="option-btn">
           <button
             className={
               mapClass
@@ -217,7 +256,7 @@ function Map({ user }) {
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
               {user && location && (
@@ -262,7 +301,7 @@ function Map({ user }) {
                       <h6>{agency.type}</h6>
                       <h4>{agency.distance / 1000} km</h4>
                       <button
-                        className='marker-btn'
+                        className="marker-btn"
                         onClick={() => handleMarker(agency)}
                       >
                         Collaborate
