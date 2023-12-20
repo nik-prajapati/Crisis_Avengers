@@ -75,8 +75,6 @@ function App() {
     socket.on("update-location");
   });
 
-  console.log(user);
-
   return (
     <BrowserRouter>
       <div className="App">

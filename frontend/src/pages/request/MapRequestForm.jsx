@@ -6,12 +6,14 @@ const MapRequestForm = ({
   subtypearray,
   setsubtypearray,
   agencies,
-  filteredAgencies,
-  setFilteredAgencies,
+  userId,
 }) => {
   const [selectedResource, setSelectedResource] = useState("");
   const [subtype, handlesubtype] = useState("");
   const [quantity, getquant] = useState(0);
+
+  const [resources, setResources] = useState([]);
+  const [bestAgencies, setBestAgencies] = useState([]);
 
   const resourceOptions = {
     Food: ["Food packets", "Bottled water", "Ready-to-eat meals"],
@@ -26,9 +28,9 @@ const MapRequestForm = ({
     ],
   };
 
-  useEffect(() => {
-    console.log("subtypearray:", subtypearray);
-  }, [subtypearray]);
+  // useEffect(() => {
+  //   console.log("subtypearray:", subtypearray);
+  // }, [subtypearray]);
 
   return (
     <div className="req_form">
@@ -42,10 +44,14 @@ const MapRequestForm = ({
             name='type'
             onChange={(e) => {
               setSelectedResource(e.target.value);
-              console.log(e.target.value);
             }}
             value={selectedResource}
           >
+            <option value="">Select Resource</option>
+            <option value="Food">Food</option>
+            <option value="Rescue tools">Rescue tools</option>
+            <option value="Shelter">Shelter</option>
+            <option value="Medical">Medical</option>
             <option value="">Select Resource</option>
             <option value="Food">Food</option>
             <option value="Rescue tools">Rescue tools</option>
@@ -61,6 +67,7 @@ const MapRequestForm = ({
             onChange={(e) => handlesubtype(e.target.value)}
             value={subtype}
           >
+            <option value=''>Select sub type</option>
             {selectedResource &&
               resourceOptions[selectedResource].map((val, idx) => {
                 return (
@@ -72,19 +79,19 @@ const MapRequestForm = ({
           </select>
           <br />
 
-          <div
-            className="input-section"
-            value={quantity}
-            onChange={(e) => getquant(e.target.value)}
-          >
+          <div className="input-section">
             Quantity
-            <input type="number" style={{ height: '35px' }} />
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => getquant(e.target.value)}
+            />
           </div>
         </div>
         <br />
         <button
           className="submit_data"
-          onClick={() => {
+          onClick={async () => {
             if (selectedResource === "" || subtype === "" || quantity === 0) {
               alert("Please enter a valid request");
             } else {
@@ -97,9 +104,29 @@ const MapRequestForm = ({
                 },
               ]);
             }
+
+            const matchingAgencies = agencies.filter((agency) => {
+              return subtypearray.every((requiredResource) => {
+                return agency.resources.some((agencyResource) => {
+                  return (
+                    agencyResource.type === requiredResource.name &&
+                    agencyResource.name === requiredResource.type &&
+                    agencyResource.quantity >= requiredResource.qty
+                  );
+                });
+              });
+            });
+
+            console.log(matchingAgencies);
+
+            // const bestAgencies = await axios.get(
+            //   "http://localhost:3000/getagencies/best",
+            //   subtypearray
+            // );
+
             setSelectedResource("");
             handlesubtype("");
-            getquant(0);
+            getquant("");
           }}
         >
           Add Resource
