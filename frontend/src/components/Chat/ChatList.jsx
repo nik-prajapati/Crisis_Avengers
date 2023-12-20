@@ -5,6 +5,7 @@ import socket from "../../helpers/socket";
 import Icon from "../Icon/Icon";
 import userSettingsIcon from "../../image/settings-filled.svg";
 // import closeIcon from "../assets/images/close.svg";
+import { getChatList, getChat } from "../../helpers/chat";
 
 const ENDPOINT = "http://localhost:3000";
 
@@ -34,66 +35,13 @@ export default function ChatList({
   //   if (window.innerWidth <= 600) setIsMobile(true);
   // }, []);
 
-  const getChatList = async () => {
-    try {
-      if (name) {
-        const res = await axios.get(ENDPOINT + "/chat/chats", {
-          withCredentials: true,
-        });
-
-        // const chats = res.data.map((chat) => {
-        //   if (!chat.isGroup) {
-        //     const chatName = chat.members.find(
-        //       (mem) => mem.username !== username
-        //     ).username;
-        //     return { chatName, ...chat };
-        //   } else {
-        //     return chat;
-        //   }
-        // });
-
-        setChats(res.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getChatList();
+    getChatList(name, setChats);
   }, [name]);
 
   useEffect(() => {
     console.log(chats);
   }, [chats]);
-
-  const getChat = async (chatId) => {
-    try {
-      const messages = await axios.get(ENDPOINT + `/chat/${chatId}/messages`, {
-        withCredentials: true,
-      });
-
-      let chat = await axios.get(ENDPOINT + `/chat/${chatId}`, {
-        withCredentials: true,
-      });
-
-      // if (!chat.data.isGroup) {
-      //   const chatName = chat.data.members.find(
-      //     (mem) => mem.username !== username
-      //   ).username;
-      //   chat = { chatName, ...chat.data };
-      // } else {
-      //   chat = chat.data;
-      // }
-      console.log(chatId);
-
-      setChat(chat.data);
-      socket.emit("join-room", chatId);
-      setMessages(messages.data.messages);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const createNewChat = async (e) => {
     try {
@@ -318,7 +266,7 @@ export default function ChatList({
                   key={ch._id}
                   type="submit"
                   onClick={(e) => {
-                    getChat(ch._id);
+                    getChat(ch._id, setChat, setMessages);
                     e.target.classList.remove("unread");
                   }}
                   className="flex align-start gap-8"
@@ -358,3 +306,5 @@ ChatList.propTypes = {
   showSidebar: PropTypes.bool,
   setShowSideBar: PropTypes.func,
 };
+
+export { getChat, getChatList };

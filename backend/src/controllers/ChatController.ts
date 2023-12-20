@@ -174,4 +174,36 @@ const addToChat = async (req: Request, res: Response) => {
   }
 };
 
-export { chatList, createChat, addToChat, getMessages, sendMessage, getChat };
+const findChat = async (req: Request, res: Response) => {
+  try {
+    const { rescue_id1, rescue_id2 } = req.body;
+    console.log(rescue_id1);
+    console.log(rescue_id2);
+    const chat = await Chat.aggregate([
+      {
+        $match: {
+          members: {
+            $all: [
+              new Types.ObjectId(rescue_id1),
+              new Types.ObjectId(rescue_id2),
+            ],
+          },
+        },
+      },
+    ]);
+    return res.status(200).json({ chat });
+  } catch (error) {
+    // console.log(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export {
+  chatList,
+  createChat,
+  addToChat,
+  getMessages,
+  sendMessage,
+  getChat,
+  findChat,
+};

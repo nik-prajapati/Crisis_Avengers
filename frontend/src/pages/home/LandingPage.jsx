@@ -108,32 +108,9 @@ export default function Landingpage({ user }) {
         </div>
 
         <div className="midnav">
-          {/* <p className="navopt ">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              Home
-            </Link>
-          </p> */}
-          {/* <p className="navopt ">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              Contact Us
-            </Link>
-          </p> */}
-          {/* <p className="navopt ">
-            <Link to="/chat-page" style={{ textDecoration: "none" }}>
-              Chats
-            </Link>
-          </p>
-          <p className="navopt">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              Services
-            </Link>
-          </p> */}
 
-          {/* <p className="navopt">
-            <Link to="/request" style={{ textDecoration: "none" }}>
-              Request
-            </Link> 
-          </p> */}
+
+          
         </div>
           
         {/* old login logout */}
@@ -166,10 +143,19 @@ export default function Landingpage({ user }) {
        <div className="buttons">
       {cookies['apadarelief'] ? (
         <>
+            <p className="navopt" style={{'textDecoration':'none',color:'white'}}>
+            <Link to="/request" style={{ 'textDecoration': "none",color:'white' }}>
+              Request
+            </Link> 
+          </p>
           <h2 className="navopt agencyname">{cookies['apadarelief'].agencyDetails.name}</h2>
+          
           <div className="log-out-btn" onClick={handleLogOut}>
             Logout
           </div>
+
+          
+          
         </>
       ) : (
         <>

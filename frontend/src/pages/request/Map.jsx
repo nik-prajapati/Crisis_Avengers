@@ -45,9 +45,58 @@ function Map({ user }) {
   const [location, setLocation] = useState(null);
   const [subtypearray, setsubtypearray] = useState([]); //
 
+  console.log(agencies);
+
   useEffect(() => {
     // console.log(user);
     if (user) socket.emit("join-room", user._id);
+  }, []);
+
+  useEffect(() => {
+    let x;
+    const getCurrentLocation = () => {
+      if (navigator.geolocation) {
+        if (user) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              const location = `${latitude},${longitude}`;
+              x = setInterval(() => {
+                socket.emit("update-location", user.id, location);
+              }, 3000);
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            }
+          );
+        }
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+      }
+    };
+
+    getCurrentLocation();
+  }, []);
+
+  useEffect(() => {
+    socket.on("receive-locations", (userId, newLocation) => {
+      setAgencies((prev) => {
+        const newAgencies = prev.map((x) => {
+          if (x._id === userId)
+            return {
+              ...x,
+              location: { type: "Point", coordinates: newLocation },
+            };
+          return x;
+        });
+        console.log(newAgencies);
+        return newAgencies;
+      });
+    });
+
+    return () => {
+      socket.off("update-location");
+    };
   }, []);
 
   useEffect(() => {
@@ -70,7 +119,7 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-  });
+  }, []);
 
   useEffect(() => {
     let location;
@@ -136,30 +185,34 @@ function Map({ user }) {
 
   // console.log(agencies);
   // console.log(user);
-  console.log(subtypearray)
+  console.log(subtypearray);
   return (
-    <div className='Map-section-columns'>
-      <MapRequestForm subtypearray={subtypearray} setsubtypearray={setsubtypearray} agencies={agencies}/>
+    <div className="Map-section-columns">
+      <MapRequestForm
+        subtypearray={subtypearray}
+        setsubtypearray={setsubtypearray}
+        agencies={agencies}
+      />
 
-      <div className='Map-container' style={{'marginTop':'20px'}}>
+      <div className="Map-container" style={{ marginTop: "20px" }}>
         {recieveRequest &&
           recieveRequest.map((body, idx) => {
             return (
-              <div className='receive-request-card'>
-                <div className='cardbody' key={idx}>
-                  <h5 className='card-title'>
+              <div className="receive-request-card">
+                <div className="cardbody" key={idx}>
+                  <h5 className="card-title">
                     From : {body.rescue_requester_id.name}
                   </h5>
-                  <p className='card-text'>
+                  <p className="card-text">
                     Address : {body.rescue_requester_id.address}
                   </p>
-                  <p className='card-text'>Distance : {body.distance} km</p>
+                  <p className="card-text">Distance : {body.distance} km</p>
                 </div>
               </div>
             );
           })}
 
-        <div className='option-btn'>
+        <div className="option-btn">
           <button
             className={
               mapClass
@@ -188,7 +241,8 @@ function Map({ user }) {
         </div>
         {requestBody && (
           <Request
-          subtypearray={subtypearray} setsubtypearray={setsubtypearray}
+            subtypearray={subtypearray}
+            setsubtypearray={setsubtypearray}
             user={user}
             payload={requestBody}
             socket={socket}
@@ -201,67 +255,69 @@ function Map({ user }) {
           handleMarker={handleMarker}
         />
         <div className={mapClass ? "active-section" : "disable-section"}>
-        
-        { location && 
-        <MapContainer center={[location.latitude,location.longitude]} zoom={7} onClick={(e)=>console.log(e)}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-            />
-  
-            {user && location && (
-              <Marker
-                position={[
-                  Number(location.latitude),
-                  Number(location.longitude),
-                ]}
-                key={112}
-                icon={duserCustomIcon}
-              >
-                <Popup>
-                  <h3>{user.email}</h3>
-                  {
-                    // <h5>{user.address}</h5>
-                    // <h5>{user.description}</h5>
-                    // <h5>{user.type}</h5>
-                  }
-                </Popup>
-              </Marker>
-            )}
-  
-            {
-              // currentUser &&
-            }
-  
-            {agencies &&
-              agencies.map((agency, idx) => (
+          {location && (
+            <MapContainer
+              center={[location.latitude, location.longitude]}
+              zoom={7}
+              onClick={(e) => console.log(e)}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              {user && location && (
                 <Marker
                   position={[
-                    Number(agency.location.coordinates[1]),
-                    Number(agency.location.coordinates[0]),
+                    Number(location.latitude),
+                    Number(location.longitude),
                   ]}
-                  key={idx}
-                  icon={customIcon}
+                  key={112}
+                  icon={duserCustomIcon}
                 >
                   <Popup>
-                    <h3>{agency.name}</h3>
-                    <h3>{agency.email}</h3>
-                    <h5>{agency.address}</h5>
-                    <h6>{agency.description}</h6>
-                    <h6>{agency.type}</h6>
-                    <h4>{agency.distance / 1000} km</h4>
-                    <button
-                      className='marker-btn'
-                      onClick={() => handleMarker(agency)}
-                    >
-                      Collaborate
-                    </button>
+                    <h3>{user.email}</h3>
+                    {
+                      // <h5>{user.address}</h5>
+                      // <h5>{user.description}</h5>
+                      // <h5>{user.type}</h5>
+                    }
                   </Popup>
                 </Marker>
-              ))}
-          </MapContainer>
-                }
-          
+              )}
+
+              {
+                // currentUser &&
+              }
+
+              {agencies &&
+                agencies.map((agency, idx) => (
+                  <Marker
+                    position={[
+                      Number(agency.location.coordinates[1]),
+                      Number(agency.location.coordinates[0]),
+                    ]}
+                    key={idx}
+                    icon={customIcon}
+                  >
+                    <Popup>
+                      <h3>{agency.name}</h3>
+                      <h3>{agency.email}</h3>
+                      <h5>{agency.address}</h5>
+                      <h6>{agency.description}</h6>
+                      <h6>{agency.type}</h6>
+                      <h4>{agency.distance / 1000} km</h4>
+                      <button
+                        className="marker-btn"
+                        onClick={() => handleMarker(agency)}
+                      >
+                        Collaborate
+                      </button>
+                    </Popup>
+                  </Marker>
+                ))}
+            </MapContainer>
+          )}
         </div>
         {
           // <button onClick={() => handleRequest()} className='body-submit-btn'>

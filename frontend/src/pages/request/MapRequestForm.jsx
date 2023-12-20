@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./MapRequestForm.scss";
 import axios from "axios";
-// import { useStyleRegistry } from "styled-jsx";
+
 
 const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
 
@@ -57,7 +57,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
           >
           {
             selectedResource && resourceOptions[selectedResource].map((val,idx)=>{
-              return <option value={val} >{val}</option>
+              return <option value={val} key={idx}>{val}</option>
             })
           }
           </select>
@@ -95,7 +95,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
             return <div style={{'display':'flex','justifyContent':'space-around'}}>
               <p>{arr.type}</p>
               <p>{arr.name}</p>
-              <p>{arr.quantity}</p>
+              <p>{arr.qty}</p>
 
             </div>
           })}</p>
