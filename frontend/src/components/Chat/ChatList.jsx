@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import socket from "../../helpers/socket";
 import Icon from "../Icon/Icon";
 import userSettingsIcon from "../../image/settings-filled.svg";
+
 // import closeIcon from "../assets/images/close.svg";
 import { getChatList, getChat } from "../../helpers/chat";
 

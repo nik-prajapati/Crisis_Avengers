@@ -4,7 +4,9 @@ import "./UpdateData.css";
 import SideBar from "../request/SideBar";
 import MapPageHeader from "../request/MapPageHeader";
 import Loader from "../Loader";
-const UpdateData = () => {
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
+const UpdateData = ({user}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);
   const [selectedResource, setSelectedResource] = useState('');
@@ -155,21 +157,29 @@ const UpdateData = () => {
 
   return (
     <div>
-      <MapPageHeader />
+      <MapPageHeader user={user}/>
       <div className={isModalOpen || isLoading ? "page_blur" : "page"}>
         <SideBar />
         <main>
           {isLoading && <Loader />}
           <div className='tab' style={{ overflowX: "auto" }}>
-            <table>
+            <table style={{borderRadius:'16px'}}>
               <thead>
                 <tr>
                   <th>TYPE</th>
                   <th>NAME</th>
                   <th>QUANTITY</th>
-                  <th>UNITS</th>
                   <th>STATUS</th>
-                  <th></th>
+                  <th>
+                   
+                  
+                  <AddCircleOutlineIcon onClick={addData} style={{ fontSize: 30 }}/>
+                  
+
+                  {/* <button className='res' onClick={() => addData()}>
+                      Add
+                    </button> */}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -178,7 +188,7 @@ const UpdateData = () => {
                     <td>{resource.type}</td>
                     <td>{resource.name}</td>
                     <td>{resource.quantity}</td>
-                    <td>{resource.unit}</td>
+                    
                     <td>
                       <button
                         className='res'
@@ -197,18 +207,7 @@ const UpdateData = () => {
                     </td>
                   </tr>
                 ))}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <button className='res' onClick={() => addData()}>
-                      Add
-                    </button>
-                  </td>
-                </tr>
+               
               </tbody>
             </table>
           </div>

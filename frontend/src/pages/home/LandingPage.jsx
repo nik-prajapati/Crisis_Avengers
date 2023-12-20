@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import axios from "axios";
 // import images
@@ -24,7 +24,7 @@ import { useCookies } from "react-cookie";
 
 export default function Landingpage({ user }) {
   console.log(user);
-
+  const navigate=useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   const cards = [

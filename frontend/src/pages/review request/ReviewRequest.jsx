@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 const ENDPOINT = "http://localhost:3000";
 
 const ReviewRequest = ({
+  user,
   setChat,
   setChats,
   chats,
@@ -56,7 +57,7 @@ const ReviewRequest = ({
           withCredentials: true,
         }),
       ]);
-      console.log(sentResp.data.requests);
+      // console.log(sentResp.data.requests);
       setSentRequests(sentResp.data.requests);
       setRcvdRequests(receivedResp.data.requests);
     };
@@ -105,10 +106,10 @@ const ReviewRequest = ({
       setChats((prev) => [...prev, res.data.chat]);
     }
   };
-
+  console.log(user)
   return (
     <div>
-      <MapPageHeader />
+      <MapPageHeader user={user}/>
       <div className="review-request-container">
         <div className="siderectangle">
           <SideBar />
@@ -130,7 +131,7 @@ const ReviewRequest = ({
               }
               onClick={() => setSentSection(false)}
             >
-              Recived
+              Received
             </button>
           </div>
 
@@ -142,7 +143,7 @@ const ReviewRequest = ({
                   : "sent-section disable-section"
               }
             >
-              <ul>
+              <div>
                 {sentRequests &&
                   sentRequests.map((recieve, idx) => {
                     return (
@@ -176,7 +177,7 @@ const ReviewRequest = ({
                         <div className="status-info">
                           {(recieve.status === "Accepted" ||
                             recieve.status === "Completed") && (
-                            <button
+                            {/* <button
                               onClick={() =>
                                 goToChat(
                                   recieve.rescue_requester_id,
@@ -185,7 +186,7 @@ const ReviewRequest = ({
                               }
                             >
                               Chat
-                            </button>
+                            </button> */}
                           )}
                           <button
                             className={`status-btn ${recieve.status.toLowerCase()}`}
@@ -231,7 +232,7 @@ const ReviewRequest = ({
                       </div>
                     );
                   })}
-              </ul>
+              </div>
             </div>
 
             <div
@@ -242,7 +243,7 @@ const ReviewRequest = ({
               }
             >
               {
-                <ul>
+                <div>
                   {rcvdRequests &&
                     rcvdRequests.map((recieve, idx) => (
                       <div className="request-card">
@@ -352,7 +353,7 @@ const ReviewRequest = ({
                         )}
                       </div>
                     ))}
-                </ul>
+                </div>
               }
             </div>
           </div>
