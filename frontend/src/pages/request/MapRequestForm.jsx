@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./MapRequestForm.scss";
 import axios from "axios";
 
-const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
+const MapRequestForm = ({
+  subtypearray,
+  setsubtypearray,
+  agencies,
+  filteredAgencies,
+  setFilteredAgencies,
+}) => {
   const [selectedResource, setSelectedResource] = useState("");
   const [subtype, handlesubtype] = useState("");
   const [quantity, getquant] = useState(0);
@@ -33,8 +39,11 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
             <h4>Select resource type</h4>
           </div>
           <select
-            name="type"
-            onChange={(e) => setSelectedResource(e.target.value)}
+            name='type'
+            onChange={(e) => {
+              setSelectedResource(e.target.value);
+              console.log(e.target.value);
+            }}
             value={selectedResource}
           >
             <option value="">Select Resource</option>

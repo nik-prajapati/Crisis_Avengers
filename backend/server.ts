@@ -72,7 +72,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'crisis.avengers.spit@gmail.com',
-    pass: 'lsqycualzbdtpxlv',
+    pass: 'ewbnaxxozlgkwyub ',
   },
 });
 
@@ -122,7 +122,7 @@ io.on('connection', (socket) => {
     if (email) {
       sendMail(
         // email,
-        'nikhilprajapati6509@gmail.com',
+        'bhushansjadhav007@gmail.com',
         //@ts-ignore
         `Request from ${request_data.rescue_requester_id.name}`,
         //@ts-ignore
