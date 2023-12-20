@@ -12,8 +12,8 @@ router.post('/sos', async (req: Request, res: Response) => {
     longitude,
   }: {
     typeOfDisaster: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
   } = req.body;
   //   const ipAddress = req.header('x-forwarded-for') || req.socket.remoteAddress;
   const sos = await Sos.create({
@@ -30,7 +30,7 @@ router.post('/sos', async (req: Request, res: Response) => {
           type: 'Point',
           coordinates: [longitude, latitude],
         },
-        $maxDistance: 100000,
+        $maxDistance: 3000000,
       },
     },
   });
