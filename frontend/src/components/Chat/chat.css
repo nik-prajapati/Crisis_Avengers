@@ -3,10 +3,11 @@
 }
 
 .chat-list {
+  width: 350px;
   padding: 0.5rem;
-  /* background-color: rgb(50, 50, 50); */
   background: linear-gradient(to bottom, #121228, #000);
-  border-right: 4px solid rgba(40, 40, 40, 0.3);
+  /* border-right: 4px solid white; */
+  box-shadow: 3px 10px 10px 0px rgba(255, 255, 255, 0.4);
 }
 
 .chat-list * {
@@ -66,11 +67,17 @@
   content: "";
   height: 1px;
   width: 97%;
-  background-color: var(--grey-transparent);
+  /* background-color: var(--grey-transparent); */
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.05)
+  );
   position: absolute;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
+  cursor: pointer;
 }
 
 .people button:hover {
@@ -82,6 +89,7 @@
   padding: 0.5rem;
   padding-left: 2.5rem;
   border-radius: 6px;
+  margin-bottom: 20px;
 }
 
 .user-settings .icon {
@@ -128,10 +136,11 @@
 
 .message-box {
   /* background-color: rgb(55, 55, 55); */
-  background: linear-gradient(to bottom, #121228, #000);
+  /* background: linear-gradient(to bottom, #121228, #000); */
   /* padding-bottom: 2rem;
   border-bottom: 4px solid rgba(40, 40, 40, 0.3);
   overflow-y: scroll; */
+  background-color: rgb(21, 19, 72);
 
   overflow-anchor: auto;
 
@@ -139,27 +148,49 @@
 }
 
 .messages {
+  color: #121228;
   overflow-y: scroll;
 }
 
-.msg {
-  width: 100%;
+/* .msg {
+  background-color: rgb(75, 74, 102); 
+  width: auto;
   transition: 0.1s;
   position: relative;
+} */
+
+.msg {
+  display: inline-block; /* Ensure message takes only the necessary width */
+  max-width: 40%; /* Adjust the maximum width of the message */
+  margin: 0.5rem; /* Add margin around the message */
+  background-color: rgb(
+    75,
+    74,
+    102
+  ); /* Default background color for the message */
+  transition: 0.1s;
+  position: relative;
+  border-radius: 8px; /* Add border radius for a rounded look */
+  padding: 0.5rem 1rem; /* Add padding for content inside the message */
+  word-wrap: break-word; /* Allow long words to break and wrap */
+  overflow-wrap: break-word; /* Ensure long words are handled properly */
+  margin-right: 10px;
 }
 
 .msg > :is(div, form) {
-  padding-left: 3.5rem;
+  padding-left: 3.5;
 }
 
-.msg:hover {
-  /* background-color: rgb(45, 45, 45); */
-  background: linear-gradient(
-    270deg,
-    rgba(83, 82, 82, 0.76),
-    rgba(52, 52, 52, 0.26),
-    rgba(62, 61, 61, 0.28)
-  );
+.sent {
+  align-self: flex-end;
+  background-color: #2b8a3e; /* Color for messages sent by the user */
+  color: white; /* Text color for messages sent by the user */
+}
+
+.received {
+  align-self: flex-start;
+  background-color: #ddd; /* Color for received messages */
+  color: black; /* Text color for received messages */
 }
 
 .msg:has(.sender) {

@@ -49,4 +49,27 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/best', async (req, res) => {
+  try {
+    const { resources } = req.body;
+    const bestAgencies = await Resource.find({
+      $and: resources.map(
+        (resource: { type: string; name: string; qty: number }) => ({
+          // resources: {
+          $elemMatch: {
+            type: resource.type,
+            name: resource.name,
+            quantity: { $gte: resource.qty },
+          },
+          // },
+        })
+      ),
+    });
+    return res.status(200).json(bestAgencies);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error' });
+  }
+});
+
 export default router;

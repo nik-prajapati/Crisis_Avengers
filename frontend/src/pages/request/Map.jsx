@@ -33,7 +33,6 @@ const duserCustomIcon = new Icon({
 });
 
 function Map({ user }) {
-  console.log(user);
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
@@ -44,8 +43,6 @@ function Map({ user }) {
   const [mapClass, setMapClass] = useState(true);
   const [location, setLocation] = useState(null);
   const [subtypearray, setsubtypearray] = useState([]); //
-
-  console.log(agencies);
 
   useEffect(() => {
     // console.log(user);
@@ -89,7 +86,6 @@ function Map({ user }) {
             };
           return x;
         });
-        console.log(newAgencies);
         return newAgencies;
       });
     });
@@ -126,28 +122,23 @@ function Map({ user }) {
     // Check if the Geolocation API is available in the browser
     if ("geolocation" in navigator) {
       // Get the current location
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          console.log(latitude, longitude);
-          const resp = await axios.get(
-            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
-            { withCredentials: true }
-          );
-          console.log(resp.data);
-          const d = resp.data;
-          console.log(d);
-          let myself = {
-            user: user,
-            location: location,
-          };
-          setAgencies(d);
-          setLocation({ latitude, longitude });
-        },
-        (error) => {
-          console.error("Error getting location:", error.message);
-        }
-      );
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const resp = await axios.get(
+          `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
+          { withCredentials: true }
+        );
+        const d = resp.data;
+        let myself = {
+          user: user,
+          location: location,
+        };
+        setAgencies(d);
+        setLocation({ latitude, longitude });
+      });
+      (error) => {
+        console.error("Error getting location:", error.message);
+      };
     } else {
       console.error("Geolocation is not supported in this browser.");
     }
@@ -185,13 +176,13 @@ function Map({ user }) {
 
   // console.log(agencies);
   // console.log(user);
-  console.log(subtypearray);
   return (
     <div className="Map-section-columns">
       <MapRequestForm
         subtypearray={subtypearray}
         setsubtypearray={setsubtypearray}
         agencies={agencies}
+        userId={user ? user.id : null}
       />
 
       <div className="Map-container" style={{ marginTop: "20px" }}>
