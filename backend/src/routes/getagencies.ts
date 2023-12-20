@@ -37,9 +37,8 @@ router.get('/', async (req, res) => {
           spherical: true,
           distanceField: 'distance',
         },
-      }
+      },
     ]);
-    console.log(agencies);
     res.send(agencies);
     // console.log(agencies)
     // console.log(agencies);
@@ -83,7 +82,6 @@ router.get('/', async (req, res) => {
     //     console.error(e);
     //   }
     // }
-
 
     // const resources: any[] = [];
     // for (let i = 0; i < agencies.length; i++) {

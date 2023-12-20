@@ -8,8 +8,18 @@ import reviewContext from "../../context/ReviewRequestContext.jsx";
 import { useEffect } from "react";
 import socket from "../../helpers/socket.js";
 // import chatIcon from "../../image/chat.svg";
+import { Link } from "react-router-dom";
 
-const ReviewRequest = () => {
+const ENDPOINT = "http://localhost:3000";
+
+const ReviewRequest = ({
+  setChat,
+  setChats,
+  chats,
+  chat,
+  setMessages,
+  messages,
+}) => {
   const [sentSection, setSentSection] = useState(true);
   const { reviewData, setReviewData } = useContext(reviewContext);
   // const [dummyD, setDummyD] = useState({});
@@ -97,14 +107,32 @@ const ReviewRequest = () => {
   //   }
   // };
 
+  const goToChat = async (rescue_id1, rescue_id2) => {
+    const res = await axios.get(ENDPOINT + "/findchat", {
+      rescue_id1,
+      rescue_id2,
+    });
+    if (!res.data) {
+      const res = await axios.post(ENDPOINT + "/chat", {
+        rescue_id1,
+        rescue_id2,
+      });
+      setChat(res.data);
+      setMessages([]);
+    } else {
+      setChat(res.data.chat);
+      setChats((prev) => [...prev, res.data.chat]);
+    }
+  };
+
   return (
     <div>
       <MapPageHeader />
       <div className="review-request-container">
         <div className="siderectangle">
-           <SideBar />
+          <SideBar />
         </div>
-        
+
         <div className="section">
           <div className="btn-section">
             <button
@@ -165,6 +193,19 @@ const ReviewRequest = () => {
                         }
 
                         <div className="status-info">
+                          {(recieve.status === "Accepted" ||
+                            recieve.status === "Completed") && (
+                            <button
+                              onClick={() =>
+                                goToChat(
+                                  recieve.rescue_requester_id,
+                                  recieve.requestee_id
+                                )
+                              }
+                            >
+                              Chat
+                            </button>
+                          )}
                           <button
                             className={`status-btn ${recieve.status.toLowerCase()}`}
                           >
@@ -211,6 +252,19 @@ const ReviewRequest = () => {
                         </div>
                         {recieve.status !== "Pending" ? (
                           <div className="status-info">
+                            {(recieve.status === "Accepted" ||
+                              recieve.status === "Completed") && (
+                              <button
+                                onClick={() =>
+                                  goToChat(
+                                    recieve.rescue_requester_id,
+                                    recieve.requestee_id
+                                  )
+                                }
+                              >
+                                Chat
+                              </button>
+                            )}
                             <button
                               className={`status-btn ${recieve.status.toLowerCase()}`}
                             >

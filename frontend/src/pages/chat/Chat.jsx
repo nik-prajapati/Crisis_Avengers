@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import ChatBox from "../../components/Chat/ChatBox";
 import ChatList from "../../components/Chat/ChatList";
 
-const Chat = ({ name }) => {
-  const [chat, setChat] = useState({});
-  const [chats, setChats] = useState([]);
-  const [messages, setMessages] = useState([]);
+const Chat = ({
+  name,
+  chat,
+  setChat,
+  chats,
+  setChats,
+  messages,
+  setMessages,
+}) => {
+  // const [chat, setChat] = useState({});
+  // const [chats, setChats] = useState([]);
+  // const [messages, setMessages] = useState([]);
   console.log(name);
 
   return (
