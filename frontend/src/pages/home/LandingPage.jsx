@@ -84,7 +84,7 @@ export default function Landingpage({ user }) {
 
     if (resp.status == 200) {
     }
-    navigate("/");
+    window.location.reload();
   };
   
   // const handleLogOut=async ()=>{

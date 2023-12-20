@@ -175,18 +175,20 @@ const ReviewRequest = ({
 
                         <div className="status-info">
                           {(recieve.status === "Accepted" ||
-                            recieve.status === "Completed") && (
-                            <button
-                              onClick={() =>
-                                goToChat(
-                                  recieve.rescue_requester_id,
-                                  recieve.requestee_id
-                                )
-                              }
-                            >
-                              Chat
-                            </button>
-                          )}
+                            recieve.status === "Completed") 
+                          //   && (
+                          //   <button
+                          //     onClick={() =>
+                          //       goToChat(
+                          //         recieve.rescue_requester_id,
+                          //         recieve.requestee_id
+                          //       )
+                          //     }
+                          //   >
+                          //     Chat
+                          //   </button>
+                          // )
+                          }
                           <button
                             className={`status-btn ${recieve.status.toLowerCase()}`}
                           >
@@ -257,26 +259,28 @@ const ReviewRequest = ({
                           </p>
                           <p>
                             From:{" "}
-                            {recieve.rescue_requester_id
-                              ? recieve.rescue_requester_id.name
-                              : recieve.govt_requester_id.name}
+                            {recieve.rescue_requester_id &&
+                             recieve.rescue_requester_id.name
+                              }
                           </p>
                         </div>
                         {recieve.status !== "Pending" ? (
                           <div className="status-info">
                             {(recieve.status === "Accepted" ||
-                              recieve.status === "Completed") && (
-                              <button
-                                onClick={() =>
-                                  goToChat(
-                                    recieve.rescue_requester_id,
-                                    recieve.requestee_id
-                                  )
-                                }
-                              >
-                                Chat
-                              </button>
-                            )}
+                              recieve.status === "Completed") 
+                              // && (
+                              // <button
+                              //   onClick={() =>
+                              //     goToChat(
+                              //       recieve.rescue_requester_id,
+                              //       recieve.requestee_id
+                              //     )
+                              //   }
+                              // >
+                              //   Chat
+                              // </button>
+                            // )
+                            }
                             <button
                               className={`status-btn ${recieve.status.toLowerCase()}`}
                             >
