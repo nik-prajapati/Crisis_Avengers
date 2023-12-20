@@ -57,7 +57,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
           >
           {
             selectedResource && resourceOptions[selectedResource].map((val,idx)=>{
-              return <option value={val} >{val}</option>
+              return <option value={val} key={idx}>{val}</option>
             })
           }
           </select>
@@ -78,7 +78,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
               setsubtypearray([...subtypearray, {
                 type: selectedResource,
                 name: subtype,
-                quantity: quantity
+                qty: quantity
               }])
             }
             setSelectedResource('');
@@ -95,7 +95,7 @@ const MapRequestForm = ({ subtypearray, setsubtypearray, agencies }) => {
             return <div style={{'display':'flex','justifyContent':'space-around'}}>
               <p>{arr.type}</p>
               <p>{arr.name}</p>
-              <p>{arr.quantity}</p>
+              <p>{arr.qty}</p>
 
             </div>
           })}</p>

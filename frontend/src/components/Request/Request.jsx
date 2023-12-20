@@ -8,12 +8,13 @@ import reviewContext from "../../context/ReviewRequestContext.jsx";
 
 const Request = ({ user, payload, socket, setPayLoad,subtypearray }) => {
  
-  console.log(user,payload);
+  // console.log(user,payload);
   const [requestSend, setRequestSend] = useState(null);
   const { reviewData, setReviewData } = useContext(reviewContext);
 
 
   const handlerequestSend = () => {
+    console.log("i am called")
     const dummyReq = {
       rescue_requester_id: user.id,
       requestee_id: payload.reqAgency.id,
@@ -52,7 +53,6 @@ const Request = ({ user, payload, socket, setPayLoad,subtypearray }) => {
       />
       {/* Same as */}
       <ToastContainer />
-
       {
         // card component
         payload && user && (
