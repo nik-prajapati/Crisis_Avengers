@@ -44,6 +44,7 @@ function Map({ user }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass, setMapClass] = useState(true);
   const [location, setLocation] = useState(null);
+  const [subtypearray,setsubtypearray]=useState([])
 
   useEffect(() => {
     // console.log(user);
@@ -140,7 +141,7 @@ function Map({ user }) {
 
   return (
     <div className='Map-section-columns'>
-      <MapRequestForm />
+      <MapRequestForm subtypearray={subtypearray} setsubtypearray={setsubtypearray}/>
 
       <div className='Map-container'>
         {recieveRequest &&
@@ -193,6 +194,8 @@ function Map({ user }) {
             payload={requestBody}
             socket={socket}
             setPayLoad={setRequestBody}
+            setsubtypearray={subtypearray}
+
           />
         )}
         <ListSection
