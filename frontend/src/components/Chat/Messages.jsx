@@ -19,6 +19,8 @@ export default function Messages({
     messages && (
       <div className="message-box relative grid">
         <div className="messages">
+
+      
           {messages.map((m, ind) => (
             <Msg
               chatId={chatId}
