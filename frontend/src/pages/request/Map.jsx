@@ -70,7 +70,7 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-  });
+  },[]);
 
   useEffect(() => {
     let location;

@@ -20,7 +20,7 @@ import reviewContext from "./context/ReviewRequestContext";
 import Chat from "./pages/chat/Chat";
 import { useCookies } from "react-cookie";
 import socket from "./helpers/socket";
-
+import SendAlert from "./pages/sendalert/SendAlert";
 function App() {
   const [user, setUser] = useState(null);
   // console.log(user);
@@ -36,6 +36,34 @@ function App() {
       setUser(Cookies["apadarelief"]);
     }
   }, []);
+
+  useEffect(() => {
+    const getCurrentLocation = () => {
+      if (navigator.geolocation ) {
+        
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const location = `${latitude},${longitude}`;
+            setInterval(() => {
+              // console.log(latitude);
+              // console.log("emitted")
+              socket.emit("update-location", user.id, location);
+            }, 10000000);
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+      }
+    };
+
+    getCurrentLocation();
+  }, []);
+
+
 
   console.log(user);
 
@@ -56,6 +84,7 @@ function App() {
             <Route path="/request" element={<MapPage user={user} />} />
             <Route path="/review" element={<ReviewRequest user={user} />} />
             <Route path="/resource" element={<UpdateData user={user} />} />
+            <Route path="/alert" element={<SendAlert user={user} />} />
             <Route
               path="/chat-page"
               element={<Chat name={user ? user.agencyDetails.name : ""} />}

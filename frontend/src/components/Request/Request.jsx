@@ -35,10 +35,10 @@ const Request = ({ user, payload, socket, setPayLoad }) => {
       },
     };
     // setRequestSend(dummyReq)
-    console.log(dummyReq)
+    console.log(payload.reqAgency.id+" : id")
     socket.emit("send-request", payload.reqAgency.id, dummyReq);
     toast.success("Request Sent Successfully");
-    sendMail("nikhilprajapati6509@gmail.com","New Request Arrived","Please Review the review Page for further info")
+    // sendMail("nikhilprajapati6509@gmail.com","New Request Arrived","Please Review the review Page for further info")
 
     setReviewData([...reviewData, dummyReq]);
     setTimeout(() => {
