@@ -7,8 +7,8 @@ import Loader from "../Loader";
 const UpdateData = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);
-  const [selectedResource, setSelectedResource] = useState('');
-  const [subtype, handlesubtype] = useState('');
+  const [selectedResource, setSelectedResource] = useState("");
+  const [subtype, handlesubtype] = useState("");
   const [formData, setFormData] = useState({
     _id: "",
     type: "",
@@ -17,12 +17,17 @@ const UpdateData = () => {
     unit: "",
   });
   const resourceOptions = {
-    Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],
-    'Rescue tools': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
-    Shelter: ['Tents', 'Beds'],
-    Medical: ['First aid kits', 'Pain relievers', 'Ambulances', 'Medical personnel', 'Stretchers'],
+    Food: ["Food packets", "Bottled water", "Ready-to-eat meals"],
+    "Rescue tools": ["Rescue personnel", "Ropes", "Ladders", "Cutting tools"],
+    Shelter: ["Tents", "Beds"],
+    Medical: [
+      "First aid kits",
+      "Pain relievers",
+      "Ambulances",
+      "Medical personnel",
+      "Stretchers",
+    ],
   };
-
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,9 +38,8 @@ const UpdateData = () => {
       const updatedFormData = {
         ...formData,
         _id: id,
-        name: selectedResource,
-        type: subtype
-
+        name: subtype,
+        type: selectedResource,
       };
       console.log(formData);
       setIsLoading(true);
@@ -55,7 +59,7 @@ const UpdateData = () => {
       setIsLoading(false);
     }
   };
- 
+
   const handletypeSelect = (e) => {
     setSelectedResource(e.target.value);
   };
@@ -63,8 +67,7 @@ const UpdateData = () => {
   const handlesubtypechange = (e) => {
     const val = e.target.value;
     handlesubtype(val);
-  }
-
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -224,7 +227,7 @@ const UpdateData = () => {
 
             <select
               name='type'
-              onChange={handletypeSelect}
+              onChange={(e) => setSelectedResource(e.target.value)}
               value={selectedResource}
             >
               <option value=''>Select Resource</option>
@@ -237,25 +240,26 @@ const UpdateData = () => {
             <div className='input-section'>
               <select
                 name='additionalSelect'
-                onChange={handlesubtypechange}
+                onChange={(e) => handlesubtype(e.target.value)}
                 value={subtype}
               >
                 <option value=''>Select Additional Option</option>
-                {selectedResource && Object.keys(resourceOptions).map((type) => {
-                  console.log(selectedResource)
-                  if (selectedResource === type) {
-                    return (
-                      <optgroup key={type} label={type}>
-                        {resourceOptions[type].map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </optgroup>
-                    );
-                  }
-                  return null;
-                })}
+                {selectedResource &&
+                  Object.keys(resourceOptions).map((type) => {
+                    console.log(selectedResource);
+                    if (selectedResource === type) {
+                      return (
+                        <optgroup key={type} label={type}>
+                          {resourceOptions[type].map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </optgroup>
+                      );
+                    }
+                    return null;
+                  })}
               </select>
 
               <input
@@ -291,4 +295,3 @@ const UpdateData = () => {
 };
 
 export default UpdateData;
-
