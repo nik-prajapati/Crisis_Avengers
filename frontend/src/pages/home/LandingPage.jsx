@@ -146,9 +146,6 @@ export default function Landingpage({ user }) {
             <p className='tag-line leftText'>ONE NETWORK,COUNTLESS HEROES</p>
           </div>
         </div>
-        <button className='status-btn1 rejected' onClick={handleSOS}>
-          SOS
-        </button>
 
         <div className='midnav'>
           <button className='status-btn1 rejected' onClick={handleSOS}>
