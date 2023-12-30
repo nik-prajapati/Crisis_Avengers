@@ -56,10 +56,10 @@ export default function Msg({
     }
   };
 
-  const isSentByCurrentUser = name === sender;
   
+
   return (
-    <div className="msg flex-col">
+    <div className="msg flex-col ${name === sender ? 'sent' : 'received'}">
       {isEditing ? (
         <form
           onSubmit={handleEdit}
@@ -89,7 +89,7 @@ export default function Msg({
               new Date(lastMessage.createdAt).getTime() >=
               300000) && (
             <div className="flex gap-8 justify-start align-center sender relative">
-              <div className="sender">{isSentByCurrentUser ? "You" : sender}</div>
+              <div className="sender">{name===sender ? "You" : sender}</div>
               <span className="timestamp">{timeString}</span>
             </div>
           )}

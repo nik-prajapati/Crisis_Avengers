@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 const ENDPOINT = "http://localhost:3000";
 
 const ReviewRequest = ({
+  user,
   setChat,
   setChats,
   chats,
@@ -59,6 +60,9 @@ const ReviewRequest = ({
       console.log(sentResp.data.requests);
       setSentRequests(sentResp.data.requests.reverse());
       setRcvdRequests(receivedResp.data.requests.reverse());
+      // console.log(sentResp.data.requests);
+      setSentRequests(sentResp.data.requests);
+      setRcvdRequests(receivedResp.data.requests);
     };
 
     fetchReviewRequest();
@@ -105,10 +109,10 @@ const ReviewRequest = ({
       setChats((prev) => [...prev, res.data.chat]);
     }
   };
-
+  console.log(user)
   return (
     <div>
-      <MapPageHeader />
+      <MapPageHeader user={user}/>
       <div className="review-request-container">
         <div className="siderectangle">
           <SideBar />
@@ -130,7 +134,7 @@ const ReviewRequest = ({
               }
               onClick={() => setSentSection(false)}
             >
-              Recived
+              Received
             </button>
           </div>
 
@@ -142,7 +146,7 @@ const ReviewRequest = ({
                   : "sent-section disable-section"
               }
             >
-              <ul>
+              <div>
                 {sentRequests &&
                   sentRequests.map((recieve, idx) => {
                     return (
@@ -233,7 +237,7 @@ const ReviewRequest = ({
                       </div>
                     );
                   })}
-              </ul>
+              </div>
             </div>
 
             <div
@@ -244,7 +248,7 @@ const ReviewRequest = ({
               }
             >
               {
-                <ul>
+                <div>
                   {rcvdRequests &&
                     rcvdRequests.map((recieve, idx) => (
                       <div className="request-card">
@@ -356,7 +360,7 @@ const ReviewRequest = ({
                         )}
                       </div>
                     ))}
-                </ul>
+                </div>
               }
             </div>
           </div>

@@ -6,6 +6,9 @@ import MapPageHeader from "./MapPageHeader";
 import MobileHeader from "./Mobileheader";
 
 const MapPage = ({ user }) => {
+
+  console.log(user)
+  
   return (
     <div className="map-page-container">
       <MapPageHeader user={user} />

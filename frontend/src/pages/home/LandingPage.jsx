@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import axios from "axios";
 // import images
@@ -24,7 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function Landingpage({ user }) {
   console.log(user);
-
+  const navigate=useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   const cards = [
@@ -146,6 +146,9 @@ export default function Landingpage({ user }) {
             <p className='tag-line leftText'>ONE NETWORK,COUNTLESS HEROES</p>
           </div>
         </div>
+        <button className='status-btn1 rejected' onClick={handleSOS}>
+          SOS
+        </button>
 
         <div className='midnav'>
           <button className='status-btn1 rejected' onClick={handleSOS}>

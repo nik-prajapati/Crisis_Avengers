@@ -6,6 +6,7 @@
 .tab {
   background-color: #121029;
   font-size: 1.5rem;
+  
 }
 table {
   margin: auto;
@@ -13,6 +14,7 @@ table {
   max-width: 800px;
   margin-top: 40px;
   border-collapse: collapse;
+  border-radius: 16px;
 }
 
 table,
@@ -176,3 +178,4 @@ option:first {
   border-radius: 10px;
   cursor: pointer;
 }
+
