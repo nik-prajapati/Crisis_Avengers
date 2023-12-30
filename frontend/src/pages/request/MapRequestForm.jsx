@@ -7,6 +7,8 @@ const MapRequestForm = ({
   setsubtypearray,
   agencies,
   userId,
+  filteredAgencies,
+  setFilteredAgencies,
 }) => {
   const [selectedResource, setSelectedResource] = useState("");
   const [subtype, handlesubtype] = useState("");
@@ -33,11 +35,11 @@ const MapRequestForm = ({
   // }, [subtypearray]);
 
   return (
-    <div className="req_form">
+    <div className='req_form'>
       <h2>Your Request</h2>
-      <div className="req_form_box">
-        <div className="input-section">
-          <div className="input-title">
+      <div className='req_form_box'>
+        <div className='input-section'>
+          <div className='input-title'>
             <h4>Select resource type</h4>
           </div>
           <select
@@ -47,18 +49,18 @@ const MapRequestForm = ({
             }}
             value={selectedResource}
           >
-            <option value="">Select Resource</option>
-            <option value="Food">Food</option>
-            <option value="Rescue tools">Rescue tools</option>
-            <option value="Shelter">Shelter</option>
-            <option value="Medical">Medical</option>
+            <option value=''>Select Resource</option>
+            <option value='Food'>Food</option>
+            <option value='Rescue tools'>Rescue tools</option>
+            <option value='Shelter'>Shelter</option>
+            <option value='Medical'>Medical</option>
           </select>
         </div>
 
-        <div className="input-section">
+        <div className='input-section'>
           <h4>Select resource Subtype:</h4>
           <select
-            name="additionalSelect"
+            name='additionalSelect'
             onChange={(e) => handlesubtype(e.target.value)}
             value={subtype}
           >
@@ -74,10 +76,10 @@ const MapRequestForm = ({
           </select>
           <br />
 
-          <div className="input-section">
+          <div className='input-section'>
             Quantity
             <input
-              type="number"
+              type='number'
               value={quantity}
               onChange={(e) => getquant(e.target.value)}
             />
@@ -85,7 +87,7 @@ const MapRequestForm = ({
         </div>
         <br />
         <button
-          className="submit_data"
+          className='submit_data'
           onClick={async () => {
             if (selectedResource === "" || subtype === "" || quantity === 0) {
               alert("Please enter a valid request");
@@ -99,20 +101,27 @@ const MapRequestForm = ({
                 },
               ]);
             }
+            const currentSubtypearray = [
+              ...subtypearray,
+              {
+                type: selectedResource,
+                name: subtype,
+                qty: quantity,
+              },
+            ];
+            // const matchingAgencies = agencies.filter((agency) => {
+            //   return subtypearray.every((requiredResource) => {
+            //     return agency.resources.some((agencyResource) => {
+            //       return (
+            //         agencyResource.type === requiredResource.name &&
+            //         agencyResource.name === requiredResource.type &&
+            //         agencyResource.quantity >= requiredResource.qty
+            //       );
+            //     });
+            //   });
+            // });
 
-            const matchingAgencies = agencies.filter((agency) => {
-              return subtypearray.every((requiredResource) => {
-                return agency.resources.some((agencyResource) => {
-                  return (
-                    agencyResource.type === requiredResource.name &&
-                    agencyResource.name === requiredResource.type &&
-                    agencyResource.quantity >= requiredResource.qty
-                  );
-                });
-              });
-            });
-
-            console.log(matchingAgencies);
+            // console.log(matchingAgencies);
 
             // const bestAgencies = await axios.get(
             //   "http://localhost:3000/getagencies/best",
@@ -122,26 +131,68 @@ const MapRequestForm = ({
             setSelectedResource("");
             handlesubtype("");
             getquant("");
+
+            // filtering agencies
+            console.log(agencies[0].resources)
+            const temp2 = agencies.filter((agency, idx) => {
+              console.log("subtype array length", currentSubtypearray.length);
+              const temp = { ...(agency.resources) };
+              console.log(agency);
+              const tempKeys = new Set(Object.keys(temp));
+              for (let i = 0; i < currentSubtypearray.length; i++) {
+                for (let j in currentSubtypearray[i]) {
+                  if (!(j in temp)) {
+                    return false;
+                  } else {
+                    if (temp[j] < currentSubtypearray[i][j]) {
+                      return false;
+                    } else {
+                      temp[j] -= currentSubtypearray[i][j];
+                    }
+                  }
+                }
+              }
+              return true;
+            });
+
+            setFilteredAgencies(temp2);
+            console.log("filtered agencies");
+            console.log(temp2);
           }}
         >
           Add Resource
         </button>
 
-        <div className="input-section">
+        <div className='input-section'>
           <h4>Requested resources</h4>
           <p>
-            {subtypearray &&
-              subtypearray.map((arr) => {
-                return (
-                  <div
-                    style={{ display: "flex", justifyContent: "space-around" }}
-                  >
-                    <p>{arr.type}</p>
-                    <p>{arr.name}</p>
-                    <p>{arr.qty}</p>
-                  </div>
-                );
-              })}
+            <table>
+              <thead>
+                <td>Type</td>
+                <td>Name</td>
+                <td>Quantity</td>
+              </thead>
+              {subtypearray &&
+                subtypearray.map((arr) => {
+                  return (
+                    <tbody>
+                      <tr>
+                        <td>{arr.type}</td>
+                        <td>{arr.name}</td>
+                        <td>{arr.qty}</td>
+                      </tr>
+                    </tbody>
+                  );
+
+                  // <div
+                  //   style={{ display: "flex", justifyContent: "space-around" }}
+                  // >
+                  //   <p>{arr.type}</p>
+                  //   <p>{arr.name}</p>
+                  //   <p>{arr.qty}</p>
+                  // </div>
+                })}
+            </table>
           </p>
         </div>
       </div>

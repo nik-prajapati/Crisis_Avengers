@@ -1,4 +1,3 @@
-// Map.js
 import React, { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -14,11 +13,11 @@ import axios from "axios";
 
 let MAPQUEST_API_KEY = "nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm";
 
-const Map = ({  showMap, setFormData, formData }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+const Map = ({  showMap, setFormData, formData,selectedLocation,setSelectedLocation,setDefalutAdd,defaultAdd }) => {
+ 
   const [selectedAddress, setSelectedAddress] = useState("");
   const [geocodedAdd, setGeoCodeAdd] = useState("");
-  const [defaultAdd,setDefalutAdd]=useState({});
+
 
   useEffect(()=>{
     const handledefaultCoord=()=>{
@@ -49,7 +48,7 @@ const Map = ({  showMap, setFormData, formData }) => {
     }
     handledefaultCoord()
   },[])
-  
+ 
 
 
   async function getAddress(latitude, longitude) {
@@ -113,19 +112,12 @@ const Map = ({  showMap, setFormData, formData }) => {
 
 
 
-  const resetToDefault= async (e)=>{
-    console.log(defaultAdd)
-    const {lat,lng}=defaultAdd.location
-    const address=defaultAdd.address
-    setSelectedLocation({lat,lng})
-    setFormData({ ...formData, address: address,location:`${lat},${lng}`})
-  }
+ 
 
 
-  
+ 
   return (
     <div style={{'position':'relative'}}>
-    <div onClick={(e)=>resetToDefault(e)} style={{'backgroundColor':'red'}}>RESET</div>
     <MapContainer
       center={[13,79]}
       zoom={7}
@@ -152,3 +144,4 @@ const Map = ({  showMap, setFormData, formData }) => {
 };
 
 export default Map;
+

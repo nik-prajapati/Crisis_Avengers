@@ -179,33 +179,35 @@ function Map({ user }) {
   // console.log(agencies);
   // console.log(user);
   return (
-    <div className="Map-section-columns">
+    <div className='Map-section-columns'>
       <MapRequestForm
         subtypearray={subtypearray}
         setsubtypearray={setsubtypearray}
         agencies={agencies}
         userId={user ? user.id : null}
+        filteredAgencies={filteredAgencies}
+        setFilteredAgencies={setFilteredAgencies}
       />
 
-      <div className="Map-container">
+      <div className='Map-container'>
         {recieveRequest &&
           recieveRequest.map((body, idx) => {
             return (
-              <div className="receive-request-card">
-                <div className="cardbody" key={idx}>
-                  <h5 className="card-title">
+              <div className='receive-request-card'>
+                <div className='cardbody' key={idx}>
+                  <h5 className='card-title'>
                     From : {body.rescue_requester_id.name}
                   </h5>
-                  <p className="card-text">
+                  <p className='card-text'>
                     Address : {body.rescue_requester_id.address}
                   </p>
-                  <p className="card-text">Distance : {body.distance} km</p>
+                  <p className='card-text'>Distance : {body.distance} km</p>
                 </div>
               </div>
             );
           })}
 
-        <div className="option-btn">
+        <div className='option-btn'>
           <button
             className={
               mapClass
@@ -256,7 +258,7 @@ function Map({ user }) {
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
               />
 
               {user && location && (
@@ -301,7 +303,7 @@ function Map({ user }) {
                       <h6>{agency.type}</h6>
                       <h4>{agency.distance / 1000} km</h4>
                       <button
-                        className="marker-btn"
+                        className='marker-btn'
                         onClick={() => handleMarker(agency)}
                       >
                         Collaborate

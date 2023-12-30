@@ -1,38 +1,19 @@
-// RegistrationForm.js
 import React, { useState } from 'react';
 import MapPointSelect from './MapPointSelect';
 
-const FillLocationOption = ({showMap,setShowMap,setFormData,formData}) => {
-  
-  const [selectedLocation, setSelectedLocation] = useState(null);
-
-  const handleLocationSelected = (location) => {
-    setSelectedLocation(location);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Send registration data (name, id, selectedLocation) to the server
-    console.log(selectedLocation);
-  };
-
+const FillLocationOption = ({showMap,setShowMap,setFormData,formData,selectedLocation,setSelectedLocation,setDefalutAdd,defaultAdd}) => {
+ 
+ 
   return (
     <div>
-    
-    <div style={showMap ? {'display':'block'}:{'display':'none'}} className='map-for-location-choice'>
-    <button onClick={e=>{
-        
-            // e.preventDefault
-            console.log("called")
-            console.log(showMap)
-            setShowMap(false)
-        
-    
-    }}>Cancel</button>
-      <form onSubmit={()=>handleSubmit()}>
-        <MapPointSelect  formData={formData} setFormData={setFormData}/>
-        <br />
-      </form>
+   
+    <div className='map-for-location-choice'>
+
+        <MapPointSelect  formData={formData} setFormData={setFormData}
+        setDefalutAdd={setDefalutAdd} defaultAdd={defaultAdd}
+        selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation}
+        />
+
     </div>
     </div>
   );
