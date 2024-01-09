@@ -4,11 +4,13 @@ import "./UpdateData.css";
 import SideBar from "../request/SideBar";
 import MapPageHeader from "../request/MapPageHeader";
 import Loader from "../Loader";
-const UpdateData = () => {
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
+const UpdateData = ({user}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);
-  const [selectedResource, setSelectedResource] = useState('');
-  const [subtype, handlesubtype] = useState('');
+  const [selectedResource, setSelectedResource] = useState("");
+  const [subtype, handlesubtype] = useState("");
   const [formData, setFormData] = useState({
     _id: "",
     type: "",
@@ -18,12 +20,17 @@ const UpdateData = () => {
   });
 
   const resourceOptions = {
-    Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],
-    'Rescue tools': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
-    Shelter: ['Tents', 'Beds'],
-    Medical: ['First aid kits', 'Pain relievers', 'Ambulances', 'Medical personnel', 'Stretchers'],
+    Food: ["Food packets", "Bottled water", "Ready-to-eat meals"],
+    "Rescue tools": ["Rescue personnel", "Ropes", "Ladders", "Cutting tools"],
+    Shelter: ["Tents", "Beds"],
+    Medical: [
+      "First aid kits",
+      "Pain relievers",
+      "Ambulances",
+      "Medical personnel",
+      "Stretchers",
+    ],
   };
-
 
   const [selectedObjectId, setSelectedObjectId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,9 +41,8 @@ const UpdateData = () => {
       const updatedFormData = {
         ...formData,
         _id: id,
-        name: selectedResource,
-        type: subtype
-
+        name: subtype,
+        type: selectedResource,
       };
       console.log(formData);
       setIsLoading(true);
@@ -56,7 +62,7 @@ const UpdateData = () => {
       setIsLoading(false);
     }
   };
- 
+
   const handletypeSelect = (e) => {
     setSelectedResource(e.target.value);
   };
@@ -64,8 +70,7 @@ const UpdateData = () => {
   const handlesubtypechange = (e) => {
     const val = e.target.value;
     handlesubtype(val);
-  }
-
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -156,21 +161,29 @@ const UpdateData = () => {
 
   return (
     <div>
-      <MapPageHeader />
+      <MapPageHeader user={user}/>
       <div className={isModalOpen || isLoading ? "page_blur" : "page"}>
         <SideBar />
         <main>
           {isLoading && <Loader />}
           <div className='tab' style={{ overflowX: "auto" }}>
-            <table>
+            <table style={{borderRadius:'16px'}}>
               <thead>
                 <tr>
                   <th>TYPE</th>
                   <th>NAME</th>
                   <th>QUANTITY</th>
-                  <th>UNITS</th>
                   <th>STATUS</th>
-                  <th></th>
+                  <th>
+                   
+                  
+                  <AddCircleOutlineIcon onClick={addData} style={{ fontSize: 30 }}/>
+                  
+
+                  {/* <button className='res' onClick={() => addData()}>
+                      Add
+                    </button> */}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -179,7 +192,7 @@ const UpdateData = () => {
                     <td>{resource.type}</td>
                     <td>{resource.name}</td>
                     <td>{resource.quantity}</td>
-                    <td>{resource.unit}</td>
+                    
                     <td>
                       <button
                         className='res'
@@ -198,18 +211,7 @@ const UpdateData = () => {
                     </td>
                   </tr>
                 ))}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <button className='res' onClick={() => addData()}>
-                      Add
-                    </button>
-                  </td>
-                </tr>
+               
               </tbody>
             </table>
           </div>
@@ -225,7 +227,7 @@ const UpdateData = () => {
 
             <select
               name='type'
-              onChange={handletypeSelect}
+              onChange={(e) => setSelectedResource(e.target.value)}
               value={selectedResource}
             >
               <option value='' disabled selected>Select Resource</option>
@@ -238,7 +240,7 @@ const UpdateData = () => {
             <div className='input-section'>
               <select
                 name='additionalSelect'
-                onChange={handlesubtypechange}
+                onChange={(e) => handlesubtype(e.target.value)}
                 value={subtype}
               >
                 <option value='' selected disabled>Select Additional Option</option>

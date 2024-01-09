@@ -201,7 +201,7 @@ const SignUp = () => {
       //         <div
       //           className="upLeft"
       //           style={{
-      //             backgroundImage: `url(${signupleft})`,
+      //             backgroundImage: url(${signupleft}),
       //             backgroundSize: "cover",
       //             backgroundPosition: "center",
       //             backgroundRepeat: "no-repeat",
@@ -211,7 +211,7 @@ const SignUp = () => {
       //         <div
       //           className="upRight"
       //           style={{
-      //             backgroundImage: `url(${signupright})`,
+      //             backgroundImage: url(${signupright}),
       //             backgroundSize: "cover",
       //             backgroundPosition: "center",
       //             backgroundRepeat: "no-repeat",
@@ -222,7 +222,7 @@ const SignUp = () => {
       //       <div
       //         className="down"
       //         style={{
-      //           backgroundImage: `url(${signup})`,
+      //           backgroundImage: url(${signup}),
       //           backgroundSize: "cover",
       //           backgroundPosition: "center",
       //           backgroundRepeat: "no-repeat",

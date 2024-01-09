@@ -34,7 +34,6 @@ const duserCustomIcon = new Icon({
 });
 
 function Map({ user }) {
-  console.log(user);
   const [agencies, setAgencies] = useState([]);
   const [type, setType] = useState(null);
   const [marker, setMarker] = useState(null);
@@ -44,11 +43,58 @@ function Map({ user }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [mapClass, setMapClass] = useState(true);
   const [location, setLocation] = useState(null);
-  const [subtypearray,setsubtypearray]=useState([])
+  const [subtypearray, setsubtypearray] = useState([]);
+  const [filteredAgencies, setFilteredAgencies] = useState([]);
 
   useEffect(() => {
     // console.log(user);
     if (user) socket.emit("join-room", user._id);
+  }, []);
+
+  useEffect(() => {
+    let x;
+    const getCurrentLocation = () => {
+      if (navigator.geolocation) {
+        if (user) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              const location = `${latitude},${longitude}`;
+              x = setInterval(() => {
+                socket.emit("update-location", user.id, location);
+              }, 3000);
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            }
+          );
+        }
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+      }
+    };
+
+    getCurrentLocation();
+  }, []);
+
+  useEffect(() => {
+    socket.on("receive-locations", (userId, newLocation) => {
+      setAgencies((prev) => {
+        const newAgencies = prev.map((x) => {
+          if (x._id === userId)
+            return {
+              ...x,
+              location: { type: "Point", coordinates: newLocation },
+            };
+          return x;
+        });
+        return newAgencies;
+      });
+    });
+
+    return () => {
+      socket.off("update-location");
+    };
   }, []);
 
   useEffect(() => {
@@ -71,36 +117,30 @@ function Map({ user }) {
         socket.off("receive-message");
       };
     }
-  },[]);
-
+  }, []);
 
   useEffect(() => {
     let location;
     // Check if the Geolocation API is available in the browser
     if ("geolocation" in navigator) {
       // Get the current location
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          console.log(latitude, longitude);
-          const resp = await axios.get(
-            `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=3000000`,
-            { withCredentials: true }
-          );
-          console.log(resp.data);
-          const d = resp.data;
-          console.log(d);
-          let myself = {
-            user: user,
-            location: location,
-          };
-          setAgencies(d);
-          setLocation({ latitude, longitude });
-        },
-        (error) => {
-          console.error("Error getting location:", error.message);
-        }
-      );
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const resp = await axios.get(
+          `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
+          { withCredentials: true }
+        );
+        const d = resp.data;
+        let myself = {
+          user: user,
+          location: location,
+        };
+        setAgencies(d);
+        setLocation({ latitude, longitude });
+      });
+      (error) => {
+        console.error("Error getting location:", error.message);
+      };
     } else {
       console.error("Geolocation is not supported in this browser.");
     }
@@ -138,10 +178,16 @@ function Map({ user }) {
 
   // console.log(agencies);
   // console.log(user);
-
   return (
     <div className='Map-section-columns'>
-      <MapRequestForm subtypearray={subtypearray} setsubtypearray={setsubtypearray}/>
+      <MapRequestForm
+        subtypearray={subtypearray}
+        setsubtypearray={setsubtypearray}
+        agencies={agencies}
+        userId={user ? user.id : null}
+        filteredAgencies={filteredAgencies}
+        setFilteredAgencies={setFilteredAgencies}
+      />
 
       <div className='Map-container'>
         {recieveRequest &&
@@ -194,8 +240,8 @@ function Map({ user }) {
             payload={requestBody}
             socket={socket}
             setPayLoad={setRequestBody}
-            setsubtypearray={subtypearray}
-
+            subtypearray={subtypearray}
+            setsubtypearray={setsubtypearray}
           />
         )}
         <ListSection
@@ -204,67 +250,69 @@ function Map({ user }) {
           handleMarker={handleMarker}
         />
         <div className={mapClass ? "active-section" : "disable-section"}>
-        
-        { location && 
-        <MapContainer center={[location.latitude,location.longitude]} zoom={7} onClick={(e)=>console.log(e)}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-            />
-  
-            {user && location && (
-              <Marker
-                position={[
-                  Number(location.latitude),
-                  Number(location.longitude),
-                ]}
-                key={112}
-                icon={duserCustomIcon}
-              >
-                <Popup>
-                  <h3>{user.email}</h3>
-                  {
-                    // <h5>{user.address}</h5>
-                    // <h5>{user.description}</h5>
-                    // <h5>{user.type}</h5>
-                  }
-                </Popup>
-              </Marker>
-            )}
-  
-            {
-              // currentUser &&
-            }
-  
-            {agencies &&
-              agencies.map((agency, idx) => (
+          {location && (
+            <MapContainer
+              center={[location.latitude, location.longitude]}
+              zoom={7}
+              onClick={(e) => console.log(e)}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+              />
+
+              {user && location && (
                 <Marker
                   position={[
-                    Number(agency.location.coordinates[1]),
-                    Number(agency.location.coordinates[0]),
+                    Number(location.latitude),
+                    Number(location.longitude),
                   ]}
-                  key={idx}
-                  icon={customIcon}
+                  key={112}
+                  icon={duserCustomIcon}
                 >
                   <Popup>
-                    <h3>{agency.name}</h3>
-                    <h3>{agency.email}</h3>
-                    <h5>{agency.address}</h5>
-                    <h6>{agency.description}</h6>
-                    <h6>{agency.type}</h6>
-                    <h4>{agency.distance / 1000} km</h4>
-                    <button
-                      className='marker-btn'
-                      onClick={() => handleMarker(agency)}
-                    >
-                      Collaborate
-                    </button>
+                    <h3>{user.email}</h3>
+                    {
+                      // <h5>{user.address}</h5>
+                      // <h5>{user.description}</h5>
+                      // <h5>{user.type}</h5>
+                    }
                   </Popup>
                 </Marker>
-              ))}
-          </MapContainer>
-                }
-          
+              )}
+
+              {
+                // currentUser &&
+              }
+
+              {agencies &&
+                agencies.map((agency, idx) => (
+                  <Marker
+                    position={[
+                      Number(agency.location.coordinates[1]),
+                      Number(agency.location.coordinates[0]),
+                    ]}
+                    key={idx}
+                    icon={customIcon}
+                  >
+                    <Popup>
+                      <h3>{agency.name}</h3>
+                      <h3>{agency.email}</h3>
+                      <h5>{agency.address}</h5>
+                      <h6>{agency.description}</h6>
+                      <h6>{agency.type}</h6>
+                      <h4>{agency.distance / 1000} km</h4>
+                      <button
+                        className='marker-btn'
+                        onClick={() => handleMarker(agency)}
+                      >
+                        Collaborate
+                      </button>
+                    </Popup>
+                  </Marker>
+                ))}
+            </MapContainer>
+          )}
         </div>
         {
           // <button onClick={() => handleRequest()} className='body-submit-btn'>

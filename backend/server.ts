@@ -72,7 +72,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'crisis.avengers.spit@gmail.com',
-    pass: 'lsqycualzbdtpxlv',
+    pass: 'ewbnaxxozlgkwyub ',
   },
 });
 
@@ -153,7 +153,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('update-location', (userId, newLocation) => {
-    console.log('hi');
     io.emit('receive-locations', userId, newLocation);
   });
 });

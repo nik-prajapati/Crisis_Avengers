@@ -13,7 +13,6 @@ const SOSDashboard = ({sosCount,setSOSCount}) => {
           withCredentials: true,
         });
         setSOSRequests(response.data);
-        setSOSCount(sosRequests.length);
         console.log(response);
       } catch (error) {
         console.error("Error fetching SOS requests:", error);
@@ -26,9 +25,6 @@ const SOSDashboard = ({sosCount,setSOSCount}) => {
   return (
     <div className='dashboard-container'>
       <div>SOS count : {sosRequests.length}</div>
-      {
-        
-      }
       <br />
 
       {

@@ -34,7 +34,8 @@ function App() {
   const [chat, setChat] = useState({});
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [sosCount,setSOSCount]=useState(0)
+  const [sosCount,setSOSCount]=useState([])
+  // const [sosCount,setSOSCount]=useState(0)
 
   useEffect(() => {
     if (user) socket.emit("join-room", user.id);
@@ -75,8 +76,6 @@ function App() {
   useEffect(() => {
     socket.on("update-location");
   });
-
-  console.log(user);
 
   return (
     <BrowserRouter>

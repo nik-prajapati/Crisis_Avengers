@@ -16,6 +16,8 @@ let MAPQUEST_API_KEY = "nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm";
 
 const Map = ({  showMap, setFormData, formData,selectedLocation,setSelectedLocation,setDefalutAdd,defaultAdd }) => {
   
+
+ 
   const [selectedAddress, setSelectedAddress] = useState("");
   const [geocodedAdd, setGeoCodeAdd] = useState("");
 
@@ -49,7 +51,7 @@ const Map = ({  showMap, setFormData, formData,selectedLocation,setSelectedLocat
     }
     handledefaultCoord()
   },[])
-  
+ 
 
 
   async function getAddress(latitude, longitude) {
@@ -111,12 +113,7 @@ const Map = ({  showMap, setFormData, formData,selectedLocation,setSelectedLocat
     return null;
   };
 
-
-
-  
-
-
-  
+ 
   return (
     <div style={{'position':'relative'}}>
     <MapContainer
@@ -143,5 +140,6 @@ const Map = ({  showMap, setFormData, formData,selectedLocation,setSelectedLocat
     </div>
   );
 };
+
 
 export default Map;

@@ -69,10 +69,10 @@
   width: 97%;
   /* background-color: var(--grey-transparent); */
   background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.3),
-      rgba(255, 255, 255, 0.05)
-    );
+    to right,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.05)
+  );
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -190,15 +190,6 @@
   color: black; /* Text color for received messages */
 }
 
-/* .msg:hover {
-  /* background-color: rgb(45, 45, 45); */
-  background: linear-gradient(
-    270deg,
-    rgba(83, 82, 82, 0.76),
-    rgba(52, 52, 52, 0.26),
-    rgba(62, 61, 61, 0.28)
-  );
-} */
 
 .msg:has(.sender) {
   margin-top: 1.2rem;
