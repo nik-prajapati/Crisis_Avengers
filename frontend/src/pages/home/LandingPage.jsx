@@ -22,7 +22,7 @@ import card6 from "../../image/card6.jpg";
 import { useCookies } from "react-cookie";
 import { ToastContainer,toast } from "react-toastify";
 
-export default function Landingpage({ user }) {
+export default function Landingpage({ user,sosCount,setSOSCount }) {
   console.log(user);
 
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -102,7 +102,7 @@ export default function Landingpage({ user }) {
                 typeOfDisaster: "Landslide",
                 latitude,
                 longitude,
-              });
+              },{withCredentials:true});
               if(res.status===200)
                 toast.success("SOS Sent Successfully")
               
@@ -214,8 +214,22 @@ export default function Landingpage({ user }) {
             </>
           )}
         </div>
+      
       </div>
+      {
+        user && sosCount && sosCount >1 && 
+        <div className="SOScount reached Limit" style=
+        {{
+          'backgroundColor':'red',
+          'fontSize':'14px'
+        }}
+        >
+        
+        PLEASE CHECK THE SOS DASHBOARD
+       </div>
 
+    }
+    
       <div className="heroContainer">
         <div
           className="hero"

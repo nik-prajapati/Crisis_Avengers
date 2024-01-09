@@ -14,7 +14,8 @@ import { ToastContainer, toast } from "react-toastify";
 const SignUp = () => {
   const navigate = useNavigate();
   const [sentOtp, setSentOtp] = useState(false);
-  const [loginError, setLoginError] = useState(null);
+  const [wrongOTP, setWrongOTP] = useState(false);
+  const [resendOTP, setResendOTP] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -26,9 +27,8 @@ const SignUp = () => {
   });
   const [error, setError] = useState(null);
   const [showMap, setShowmap] = useState(true);
-  // const [currentLocation, setShowmap] = useState(true);
-  // const []
- 
+  const [defaultAdd,setDefalutAdd]=useState({});
+  const [selectedLocation, setSelectedLocation] = useState(null);
   
 
   const handleInputChange = (event) => {
@@ -70,10 +70,14 @@ const SignUp = () => {
 
   const handleOTP = async (e) => {
     try {
+      toast.success('OTP SENT')
       e.preventDefault();
-      await axios.post("http://localhost:3000/signup/otp", {
+      const resp=await axios.post("http://localhost:3000/signup/otp", {
         email: formData.email,
       });
+
+      console.log(resp)
+
       setSentOtp(true);
     } catch (error) {
       console.log(error);
@@ -83,7 +87,7 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
     try {
       const response = await axios.post(
         "http://localhost:3000/signup",
@@ -91,14 +95,24 @@ const SignUp = () => {
       );
       console.log(response);
       if (response.data.error === false) {
-        // alert("SignUp successful");
+        setSentOtp(true)
         toast.success("Registered Successfully !!");
 
         console.log("Signup successful");
         navigate("/request");
-      } else {
-        toast.error(response.data.message);
-        setError(response.data.message);
+      } 
+      else {
+
+          if(response.data.message==='OTP expired' || response.data.message==='Incorrect OTP' ){
+            console.log("ERROR")
+            toast.error(response.data.message);
+            setSentOtp(false)  
+          }
+          else{
+            console.log("ERROR in ")
+            toast.error(response.data.message);
+            setError(response.data.message);
+          }
 
         setTimeout(() => {
           setError(null);
@@ -108,9 +122,10 @@ const SignUp = () => {
       if (error) {
         setSentOtp(false);
       }
-      window.alert("Login Error: " + error.message);
-      window.location.reload(true);
-      console.error("Error during signup:", error);
+      // window.alert("Login Error: " + error.message);
+      toast.error("Login Error: " + error.message)
+      // window.location.reload(false);
+      // console.error("Error during signup:", error);
     }
   };
 
@@ -140,11 +155,22 @@ const SignUp = () => {
     });
   };
 
-  // console.log(addressValue)
+  const resetToDefault= async (e)=>{
+    e.preventDefault()
+    console.log(defaultAdd)
+    const {lat,lng}=defaultAdd.location
+    const address=defaultAdd.address
+    setSelectedLocation({lat,lng})
+    setFormData({ ...formData, address: address,location:`${lat},${lng}`})
+  }
+ 
+  
   return (
     <div className="main-box">
       <ToastContainer />
-    <FillLocationOption showMap={showMap} setShowMap={setShowmap} formData={formData} setFormData={setFormData}/>
+    <FillLocationOption showMap={showMap} setShowMap={setShowmap} formData={formData} setFormData={setFormData} setDefalutAdd={setDefalutAdd} defaultAdd={defaultAdd}
+    selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation}
+    />
      {
       // <div className="left">
       
@@ -253,7 +279,7 @@ const SignUp = () => {
                 />
               </p>
 
-              <p> 
+              <div> 
               <label>Address </label>
               <div className="address-container">
               <input
@@ -264,9 +290,9 @@ const SignUp = () => {
                 placeholder="Enter your postal address"
                 className="Address-input"
               />
-              <div className="choose-from-map" onClick={e=>setShowmap(true)}>RESET</div>
+              <div className="choose-from-map" onClick={e=>resetToDefault(e)}>RESET</div>
               </div>
-              </p>
+              </div>
             </div>
 
             <div className="mid">
@@ -328,11 +354,13 @@ const SignUp = () => {
                 <button className="registerbtn" onClick={handleOTP}>
                   Receive OTP
                 </button>
-              ) : (
+              ) : 
+              (
                 <button className="registerbtn" onClick={handleSubmit}>
                   REGISTER
                 </button>
-              )}
+              )
+              }
             </p>
           </form>
         </div>

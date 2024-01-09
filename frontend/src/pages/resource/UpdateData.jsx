@@ -16,6 +16,7 @@ const UpdateData = () => {
     quantity: 0,
     unit: "",
   });
+
   const resourceOptions = {
     Food: ['Food packets', 'Bottled water', 'Ready-to-eat meals'],
     'Rescue tools': ['Rescue personnel', 'Ropes', 'Ladders', 'Cutting tools'],
@@ -227,7 +228,7 @@ const UpdateData = () => {
               onChange={handletypeSelect}
               value={selectedResource}
             >
-              <option value=''>Select Resource</option>
+              <option value='' disabled selected>Select Resource</option>
               <option>Food</option>
               <option>Rescue tools</option>
               <option>Shelter</option>
@@ -240,7 +241,7 @@ const UpdateData = () => {
                 onChange={handlesubtypechange}
                 value={subtype}
               >
-                <option value=''>Select Additional Option</option>
+                <option value='' selected disabled>Select Additional Option</option>
                 {selectedResource && Object.keys(resourceOptions).map((type) => {
                   console.log(selectedResource)
                   if (selectedResource === type) {
