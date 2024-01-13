@@ -33,6 +33,7 @@ function App() {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [sosCount,setSOSCount]=useState([])
+  // const [sosCount,setSOSCount]=useState(0)
 
   useEffect(() => {
     if (user) socket.emit("join-room", user.id);
@@ -88,12 +89,15 @@ function App() {
             <Route path="/rescue" element={<RescueLogin setUser={setUser} />} />
             <Route path="/dashboard" element={<Dashboard user={user} />} />
             <Route path="/" element={<Landingpage user={user} />} />
-            <Route path="/home" element={<Landingpage user={user} />} />
+            <Route path="/home" element={<Landingpage user={user} sosCount={sosCount}
+            setSOSCount={setSOSCount} />} />
             <Route path="/request" element={<MapPage user={user} />} />
             <Route path="/review" element={<ReviewRequest user={user} />} />
             <Route path="/resource" element={<UpdateData user={user} />} />
             <Route path="/alert" element={<SendAlert user={user} />} />
-            <Route path="/sosdash" element={<SOSDashboard user={user} />} />
+            <Route path="/sosdash" element={<SOSDashboard user={user} sosCount={sosCount}
+            setSOSCount={setSOSCount}
+          />} />
             <Route
               path="/chat-page"
               element={

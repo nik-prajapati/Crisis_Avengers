@@ -19,6 +19,7 @@ const UpdateData = ({ user }) => {
     quantity: 0,
     unit: "",
   });
+
   const resourceOptions = {
     Food: ["Food packets", "Bottled water", "Ready-to-eat meals"],
     "Rescue tools": ["Rescue personnel", "Ropes", "Ladders", "Cutting tools"],
@@ -234,7 +235,7 @@ const UpdateData = ({ user }) => {
               onChange={(e) => setSelectedResource(e.target.value)}
               value={selectedResource}
             >
-              <option value=''>Select Resource</option>
+              <option value='' disabled selected>Select Resource</option>
               <option>Food</option>
               <option>Rescue tools</option>
               <option>Shelter</option>
@@ -247,23 +248,22 @@ const UpdateData = ({ user }) => {
                 onChange={(e) => handlesubtype(e.target.value)}
                 value={subtype}
               >
-                <option value=''>Select Additional Option</option>
-                {selectedResource &&
-                  Object.keys(resourceOptions).map((type) => {
-                    console.log(selectedResource);
-                    if (selectedResource === type) {
-                      return (
-                        <optgroup key={type} label={type}>
-                          {resourceOptions[type].map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </optgroup>
-                      );
-                    }
-                    return null;
-                  })}
+                <option value='' selected disabled>Select Additional Option</option>
+                {selectedResource && Object.keys(resourceOptions).map((type) => {
+                  console.log(selectedResource)
+                  if (selectedResource === type) {
+                    return (
+                      <optgroup key={type} label={type}>
+                        {resourceOptions[type].map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </optgroup>
+                    );
+                  }
+                  return null;
+                })}
               </select>
 
               <input

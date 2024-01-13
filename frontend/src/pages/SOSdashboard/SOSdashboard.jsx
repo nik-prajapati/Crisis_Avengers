@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./SOSdashboard.css";
 
-const SOSDashboard = () => {
+const SOSDashboard = ({sosCount,setSOSCount}) => {
   const [sosRequests, setSOSRequests] = useState([]);
 
   useEffect(() => {

@@ -60,8 +60,9 @@ export default async function SignupController(req: Request, res: Response) {
     if (!correctOtp) {
       return res
         .status(401)
-        .json({ error: true, message: 'No OTP / OTP expired' });
-    } else if (otp !== correctOtp) {
+        .json({ error: true, message: ' OTP expired' });
+    } else if (otp !== correctOtp) 
+    {
       return res.status(401).json({ error: true, message: 'Incorrect OTP' });
     } else {
       const hash = await argon2.hash(password);
@@ -132,7 +133,7 @@ const sendOtp = async (req: Request, res: Response) => {
       otpStore.delete(email);
     }, otpExpirationTime);
 
-    return res.status(200).json({ error: false, message: 'OTP sent', otp });
+    return res.status(200).json({ error: false, message: 'OTP sent',otp });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: true, message: 'Server error' });

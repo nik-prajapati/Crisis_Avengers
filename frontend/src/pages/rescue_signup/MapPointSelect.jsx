@@ -1,4 +1,5 @@
 // Map.js
+// Map.js
 import React, { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -148,5 +149,6 @@ const Map = ({
     </div>
   );
 };
+
 
 export default Map;

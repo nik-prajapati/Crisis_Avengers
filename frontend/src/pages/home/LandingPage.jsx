@@ -308,7 +308,7 @@ export default function Landingpage({ user }) {
           {cards.map((card) => (
             <div key={card.id} className='card'>
               <div className='card-image'>
-                <img src={card.icon} alt={`Icon for ${card.title}`} />
+                <img src={card.icon} alt={` ${card.title}`} />
               </div>
               <div className='card-info'>
                 <h2 style={{ color: "#F04D1A" }}>{card.title}</h2>
