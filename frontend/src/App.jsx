@@ -23,8 +23,6 @@ import socket from "./helpers/socket";
 import SendAlert from "./pages/sendalert/SendAlert";
 import SOSDashboard from "./pages/SOSdashboard/SOSdashboard";
 
-
-
 function App() {
   const [user, setUser] = useState(null);
   // console.log(user);
@@ -41,6 +39,7 @@ function App() {
   }, [user]);
 
   useEffect(() => {
+    console.log(Cookies);
     if (Cookies) {
       setUser(Cookies["apadarelief"]);
     }

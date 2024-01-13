@@ -54,11 +54,11 @@ const RescueLogin = ({ setUser }) => {
         window.location.reload(true);
       } else {
         setUser(response.data.user);
-        console.log(response.data.user);
         setCookie("apadarelief", response.data.user, {
           maxAge: 24 * 60 * 60,
           sameSite: "none",
           secure: true,
+          httpOnly: false
         });
         navigate("/request");
         // alert('Logged in succesfully');

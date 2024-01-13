@@ -4,9 +4,10 @@ import "./UpdateData.css";
 import SideBar from "../request/SideBar";
 import MapPageHeader from "../request/MapPageHeader";
 import Loader from "../Loader";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RescueLogin from "../rescueLogin/RescueLogin";
 
-const UpdateData = ({user}) => {
+const UpdateData = ({ user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resources, setResources] = useState([]);
   const [selectedResource, setSelectedResource] = useState("");
@@ -43,7 +44,7 @@ const UpdateData = ({user}) => {
         name: subtype,
         type: selectedResource,
       };
-      console.log(formData);
+      console.log(updatedFormData);
       setIsLoading(true);
       const response = await axios.post(
         "http://localhost:3000/updateresources",
@@ -52,7 +53,10 @@ const UpdateData = ({user}) => {
           withCredentials: true,
         }
       );
-      console.log(response);
+      const resources = await axios.get(apiUrl, {
+        withCredentials: true,
+      });
+      setResources(resources.data.resources);
       closeModal();
       window.location.reload();
       setIsLoading(false);
@@ -87,11 +91,10 @@ const UpdateData = ({user}) => {
         const response = await axios.get(apiUrl, {
           withCredentials: true,
         });
-        console.log(response.data);
-        const allObjectIds = response.data.resources.map(
-          (resource) => resource._id
-        );
-        console.log("All Object IDs:", allObjectIds);
+        // const allObjectIds = response.data.resources.map(
+        //   (resource) => resource._id
+        // );
+        // console.log("All Object IDs:", allObjectIds);
 
         setResources(response.data.resources);
         setIsLoading(false);
@@ -104,9 +107,12 @@ const UpdateData = ({user}) => {
     fetchData();
   }, []);
 
-  const openModal = (objectId) => {
+  const openModal = (resource) => {
     setIsModalOpen(true);
-    setSelectedObjectId(objectId);
+    setSelectedResource(resource.type);
+    handlesubtype(resource.name);
+    setFormData({ ...formData, quantity: resource.quantity });
+    setSelectedObjectId(resource._id);
   };
 
   const delrec = async (objectId) => {
@@ -160,13 +166,13 @@ const UpdateData = ({user}) => {
 
   return (
     <div>
-      <MapPageHeader user={user}/>
+      <MapPageHeader user={user} />
       <div className={isModalOpen || isLoading ? "page_blur" : "page"}>
         <SideBar />
         <main>
           {isLoading && <Loader />}
           <div className='tab' style={{ overflowX: "auto" }}>
-            <table style={{borderRadius:'16px'}}>
+            <table style={{ borderRadius: "16px" }}>
               <thead>
                 <tr>
                   <th>TYPE</th>
@@ -174,12 +180,12 @@ const UpdateData = ({user}) => {
                   <th>QUANTITY</th>
                   <th>STATUS</th>
                   <th>
-                   
-                  
-                  <AddCircleOutlineIcon onClick={addData} style={{ fontSize: 30 }}/>
-                  
+                    <AddCircleOutlineIcon
+                      onClick={addData}
+                      style={{ fontSize: 30 }}
+                    />
 
-                  {/* <button className='res' onClick={() => addData()}>
+                    {/* <button className='res' onClick={() => addData()}>
                       Add
                     </button> */}
                   </th>
@@ -191,11 +197,11 @@ const UpdateData = ({user}) => {
                     <td>{resource.type}</td>
                     <td>{resource.name}</td>
                     <td>{resource.quantity}</td>
-                    
+
                     <td>
                       <button
                         className='res'
-                        onClick={() => openModal(resource._id)}
+                        onClick={() => openModal(resource)}
                       >
                         Update
                       </button>
@@ -210,7 +216,6 @@ const UpdateData = ({user}) => {
                     </td>
                   </tr>
                 ))}
-               
               </tbody>
             </table>
           </div>
@@ -270,7 +275,7 @@ const UpdateData = ({user}) => {
                 value={formData.quantity}
                 onChange={handleInputChange}
               />
-              <input
+              {/* <input
                 type='text'
                 className='modal_input'
                 id='unit'
@@ -278,7 +283,7 @@ const UpdateData = ({user}) => {
                 placeholder='Units'
                 value={formData.unit}
                 onChange={handleInputChange}
-              />
+              /> */}
               <button
                 className='submit_data'
                 onClick={() => commitChanges(selectedObjectId)}
@@ -294,4 +299,3 @@ const UpdateData = ({user}) => {
 };
 
 export default UpdateData;
-

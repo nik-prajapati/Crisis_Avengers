@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import "./Landingpage.css";
 import Footer from "../../components/footer/Footer";
-import { Link ,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import axios from "axios";
 // import images
@@ -24,8 +24,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function Landingpage({ user }) {
   console.log(user);
-  const navigate=useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const navigate = useNavigate();
+  // const [cookies, setCookie, removeCookie] = useCookies(["apadarelief"]);
 
   const cards = [
     {
@@ -181,7 +181,7 @@ export default function Landingpage({ user }) {
         </div> */}
 
         <div className='buttons'>
-          {cookies["apadarelief"] ? (
+          {user ? (
             <>
               <Link
                 to='/sosdash'
@@ -205,9 +205,7 @@ export default function Landingpage({ user }) {
                   Request
                 </Link>
               </p>
-              <h2 className='navopt agencyname'>
-                {cookies["apadarelief"].agencyDetails.name}
-              </h2>
+              <h2 className='navopt agencyname'>{user.agencyDetails.name}</h2>
 
               <div className='log-out-btn' onClick={handleLogOut}>
                 Logout

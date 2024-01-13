@@ -40,10 +40,10 @@ const SOSDashboard = () => {
         sosRequests.map((sos, idx) => {
           return (
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <p>{new Date(sos.sos_id.createdAt).toLocaleString()}</p>
-              <p>{sos.sos_id.typeOfDisaster}</p>
-              <p>{sos.sos_id.location.coordinates[1]}</p>
-              <p>{sos.sos_id.location.coordinates[0]}</p>
+              <p>{new Date(sos.createdAt).toLocaleString()}</p>
+              <p>{sos.typeOfDisaster}</p>
+              <p>{sos.location.coordinates[1]}</p>
+              <p>{sos.location.coordinates[0]}</p>
             </div>
           );
         })}

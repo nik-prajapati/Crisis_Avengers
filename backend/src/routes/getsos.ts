@@ -8,11 +8,11 @@ const router = Router();
 // get all agencies within a particular radius (in kilometers)
 router.get('/', isAuthenticated, isRescueAgency, async (req, res) => {
   if (req.user) {
-    const sos = await RescueSos.find({ rescue_id: req['user'].id }).populate(
+    const sos = (await RescueSos.find({ rescue_id: req['user'].id }).populate(
       'sos_id'
-    );
+    )).map(sos => sos.sos_id).filter(x => x !== null);
     console.log(sos);
-    res.send(sos);
+    res.json(sos);
   }
 });
 

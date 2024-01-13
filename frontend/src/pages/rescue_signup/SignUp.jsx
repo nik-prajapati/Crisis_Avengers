@@ -10,8 +10,9 @@ import signupleft from "../../image/signupLeft.png";
 import signupright from "../../image/signupright.png";
 import FillLocationOption from "./FillLocationOption";
 import { ToastContainer, toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 
-const SignUp = () => {
+const SignUp = ({ setUser }) => {
   const navigate = useNavigate();
   const [sentOtp, setSentOtp] = useState(false);
   const [wrongOTP, setWrongOTP] = useState(false);
@@ -29,6 +30,7 @@ const SignUp = () => {
   const [showMap, setShowmap] = useState(true);
   const [defaultAdd, setDefalutAdd] = useState({});
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(["apadarelief"]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -87,14 +89,25 @@ const SignUp = () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/signup",
-        formData
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log(response);
       if (response.data.error === false) {
         setSentOtp(true);
         toast.success("Registered Successfully !!");
-
-        console.log("Signup successful");
+        setUser(response.data.user);
+        setCookie("apadarelief", response.data.user, {
+          maxAge: 24 * 60 * 60,
+          sameSite: "none",
+          secure: true,
+          httpOnly: false
+        });
         navigate("/request");
       } else {
         if (
@@ -199,7 +212,7 @@ const SignUp = () => {
         //         <div
         //           className="upLeft"
         //           style={{
-        //             backgroundImage: `url(${signupleft})`,
+        //             backgroundImage: url(${signupleft}),
         //             backgroundSize: "cover",
         //             backgroundPosition: "center",
         //             backgroundRepeat: "no-repeat",
@@ -208,7 +221,7 @@ const SignUp = () => {
         //         <div
         //           className="upRight"
         //           style={{
-        //             backgroundImage: `url(${signupright})`,
+        //             backgroundImage: url(${signupright}),
         //             backgroundSize: "cover",
         //             backgroundPosition: "center",
         //             backgroundRepeat: "no-repeat",
@@ -218,7 +231,7 @@ const SignUp = () => {
         //       <div
         //         className="down"
         //         style={{
-        //           backgroundImage: `url(${signup})`,
+        //           backgroundImage: url(${signup}),
         //           backgroundSize: "cover",
         //           backgroundPosition: "center",
         //           backgroundRepeat: "no-repeat",

@@ -71,6 +71,22 @@ export default async function SignupController(req: Request, res: Response) {
         email: user.email,
         role: user.role,
       };
+      const [lat, long] = location.split(',');
+      const agencyDetails = await (
+        await RescueAgency.create({
+          _id: user._id,
+          name: name,
+          location: {
+            type: 'Point',
+            coordinates: [long, lat],
+          },
+          type: type,
+          address: address,
+          email: email,
+          phone: phonesNumbers,
+          ...(description ? { description: description } : {}),
+        })
+      ).save();
       const token = await new SignJWT(payload)
         .setProtectedHeader({ alg: jwsAlg })
         .setExpirationTime(tokenLifetime)
@@ -86,26 +102,10 @@ export default async function SignupController(req: Request, res: Response) {
         sameSite: 'none',
         secure: true,
       });
-      const [lat, long] = location.split(',');
-      await (
-        await RescueAgency.create({
-          _id: user._id,
-          name: name,
-          location: {
-            type: 'Point',
-            coordinates: [long, lat],
-          },
-          type: type,
-          address: address,
-          email: email,
-          phone: phonesNumbers,
-          ...(description ? { description: description } : {}),
-        })
-      ).save();
       return res.json({
         error: false,
         message: 'Signed up and logged in successfully',
-        user,
+        user: { ...payload, agencyDetails },
       });
     }
   }
