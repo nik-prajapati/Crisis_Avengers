@@ -2,6 +2,10 @@
 
 ### Main objective of this project is to enable efficient communication and collaboration between different rescue agencies and disaster relief NGOs during times of a calamity
 
+#### Deployed website - [https://apadarelief.onrender.com](https://apadarelief.onrender.com/) 
+
+### [**DEMO VIDEO**](https://youtu.be/lzg6qmesln8)
+
 #### Features:
  
 - Secure central database of all national, state and district level disaster relief agencies (NDRFs, SDRFs and DDRFs) and private NGOs, to store essential information such as location of the agency, contact information, teams and manpower, resources available (e.g. beds, tents, etc.)
@@ -22,8 +26,6 @@
 - Mapping and reverse geocoding: [React Leaflet](https://react-leaflet.js.org/) and [Geocoding API](https://geocode.maps.co/)
 - Backend: TypeScript, NodeJS and ExpressJS
 - Fast real time communication: [socket.io](https://socket.io/)
-
-### [**DEMO VIDEO**](https://youtu.be/lzg6qmesln8)
 
 #### Screenshots:
 
