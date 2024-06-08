@@ -48,7 +48,7 @@
     ![SOS](./screenshots/sos.png)
 
 
-### This project was built as a part of Smart India Hackathon 2023 and ***won the first prize*** for this problem statement among 7 finalist teams and 500 initial submissions. (PS Code: SIH1440)  
+### This project was built as a part of Smart India Hackathon 2023 and ***won the first prize*** for this problem statement among 7 finalist teams and 500 initial submissions from all over India. (PS Code: SIH1440)  
 
 ### Our team and primary responsibilities:
 - Bhushan Jadhav - Leader and Project Management
