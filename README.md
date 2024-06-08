@@ -1,5 +1,7 @@
 # ApadaRelief - A  collaboration platform for rescue agencies
 
+### Deployed website - [https://apadarelief.onrender.com](https://apadarelief.onrender.com/)
+
 ### Main objective of this project is to enable efficient communication and collaboration between different rescue agencies and disaster relief NGOs during times of a calamity
 
 #### Features:
