@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import morgran from 'morgan';
+// import morgran from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
@@ -11,6 +11,7 @@ import { instrument } from '@socket.io/admin-ui';
 import { addRequest, updateRequest } from './src/controllers/RequestController';
 import nodemailer from 'nodemailer';
 import User from './src/models/user';
+import path from 'path';
 
 dotenv.config();
 
@@ -28,6 +29,8 @@ connect();
 
 const app = express();
 
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
 const fallbackCookieSigningSecret =
   '4f5b8f67d973a914c695b47800fb22b887eda1a290829110e3aebc6383d65c6b';
 // middlewares
@@ -38,8 +41,9 @@ app.use(
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   })
 );
+
 app.use(function (req, res, next) {
-  res.header('Content-Type', 'application/json;charset=UTF-8');
+  // res.header('Content-Type', 'application/json;charset=UTF-8');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header(
     'Access-Control-Allow-Headers',
@@ -47,13 +51,19 @@ app.use(function (req, res, next) {
   );
   next();
 });
+// console.log(path.resolve(__dirname, '..', 'build'));
+// app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgran('dev'));
+// app.use(morgran('dev'));
 app.use(
   cookieParser(process.env.COOKIE_SIGNING_SECRET || fallbackCookieSigningSecret)
 );
-app.use(router);
+app.use('/api', router);
+app.use((req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -123,8 +133,10 @@ io.on('connection', (socket) => {
       sendMail(
         // email,
         'bhushansjadhav007@gmail.com',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         `Request from ${request_data.rescue_requester_id.name}`,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         `Rescue agency ${request_data.rescue_requester_id.name} has sent a request:\n\n\nRequested resources:\n${itemString}`
       );

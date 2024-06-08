@@ -1,6 +1,11 @@
 import { Request } from 'express';
 import { Date, Types } from 'mongoose';
 
+export type Coordinate = {
+  latitude: number;
+  longitude: number;
+};
+
 export type Location = {
   type: string;
   coordinates: number[];

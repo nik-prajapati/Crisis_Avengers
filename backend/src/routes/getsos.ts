@@ -11,7 +11,6 @@ router.get('/', isAuthenticated, isRescueAgency, async (req, res) => {
     const sos = (await RescueSos.find({ rescue_id: req['user'].id }).populate(
       'sos_id'
     )).map(sos => sos.sos_id).filter(x => x !== null);
-    console.log(sos);
     res.json(sos);
   }
 });

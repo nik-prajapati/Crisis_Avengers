@@ -11,7 +11,7 @@ const router = Router();
 // get all agencies within a particular radius (in meters)
 router.get('/', async (req, res) => {
   const { latitude, longitude, radius } = req.query;
-  console.log(req.query);
+  // console.log(req.query);
   if (
     typeof latitude !== 'string' ||
     typeof longitude !== 'string' ||
