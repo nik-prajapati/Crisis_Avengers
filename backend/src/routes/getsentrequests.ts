@@ -44,7 +44,6 @@ router.get('/', isAuthenticated, async (req, res) => {
   //     },
   //   ]);
   // }
-  // console.log(requests);
   res.json({ requests: requests });
 });
 

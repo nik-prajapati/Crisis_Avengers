@@ -11,7 +11,6 @@ const router = Router();
 // get all agencies within a particular radius (in meters)
 router.get('/', async (req, res) => {
   const { latitude, longitude, radius } = req.query;
-  // console.log(req.query);
   if (
     typeof latitude !== 'string' ||
     typeof longitude !== 'string' ||
@@ -22,7 +21,6 @@ router.get('/', async (req, res) => {
     const lat = Number(latitude);
     const long = Number(longitude);
     const rad = radius ? Number(radius) : 500000;
-    console.log(lat, long, rad);
     const agencies = await RescueAgency.aggregate([
       {
         $geoNear: {
@@ -44,7 +42,6 @@ router.get('/', async (req, res) => {
         },
       },
     ]);
-    // console.log(agencies);
     res.send(agencies);
   }
 });

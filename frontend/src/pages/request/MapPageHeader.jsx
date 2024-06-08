@@ -15,14 +15,11 @@ const MapPageHeader = ({ user }) => {
     const resp = await axios.get("/api/logout", {
       withCredentials: true,
     });
-    // console.log(Cookies)
 
     if (resp.status == 200) {
     }
     navigate("/");
   };
-
-  console.log(user)
   return (
     <div className='header-section' style={{'box-shadow': '0 0 10px 0 rgb(255, 255, 255,0.3)'}}>
       <div className='header-logo'>

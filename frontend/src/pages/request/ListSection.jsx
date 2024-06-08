@@ -7,7 +7,6 @@ const ListSection = ({agencies,mapClass,handleMarker}) => {
   const [inputValue, setInputValue]=useState('')
 
   const handleFilter=(e)=>{
-    console.log(e.target.value)
     const filterData=agencies.filter((agency)=>{
       return e.target.value==null ? agency : agency.name.toLowerCase().includes(e.target.value) || agency.address.toLowerCase().includes(e.target.value) 
     })

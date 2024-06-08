@@ -41,7 +41,6 @@ export default function ChatList({
   }, [name]);
 
   useEffect(() => {
-    console.log(chats);
   }, [chats]);
 
   const createNewChat = async (e) => {
@@ -107,7 +106,6 @@ export default function ChatList({
 
       setUserList(res.data);
 
-      console.log(res.data);
       setShowUserList(true);
     } catch (error) {
       console.log(error);

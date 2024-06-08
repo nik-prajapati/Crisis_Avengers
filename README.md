@@ -19,7 +19,7 @@
 #### Technology used:
 - Database: MongoDB Atlas with geospatial indexing
 - Frontend: ReactJS, CSS and SCSS
-- Mapping: [React Leaflet](https://react-leaflet.js.org/) and [Mapquest API](https://developer.mapquest.com/documentation/)
+- Mapping and reverse geocoding: [React Leaflet](https://react-leaflet.js.org/) and [Geocoding API](https://geocode.maps.co/)
 - Backend: TypeScript, NodeJS and ExpressJS
 - Fast real time communication: [socket.io](https://socket.io/)
 

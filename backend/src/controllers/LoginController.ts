@@ -26,7 +26,7 @@ export default async function LoginController(req: Request, res: Response) {
     password,
   }: { email: string; password: string; roleString: string } = req.body;
   const role = Number(req.body.role);
-  console.log(role);
+  // console.log(role);
   // change this line when schema changes
   const user = await User.findOne({ email: email }).exec();
   if (user === null) {

@@ -18,6 +18,7 @@ const chatList = async (req: Request, res: Response) => {
     if (user) {
       const chats = await Chat.aggregate([
         {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
           $match: { members: new Types.ObjectId(user.id) },
         },
@@ -54,7 +55,7 @@ const chatList = async (req: Request, res: Response) => {
     }
     return res.status(400).json({ message: 'no user id passed' });
   } catch (error) {
-    console.log('1st2');
+    // console.log('1st2');
     console.log(error);
     return res.status(500).json({ message: 'Server error' });
   }

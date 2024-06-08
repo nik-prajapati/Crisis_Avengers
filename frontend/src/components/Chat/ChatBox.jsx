@@ -15,7 +15,6 @@ export default function ChatBox({
 }) {
   const [isTyping, setIsTyping] = useState(false);
   const [typers, setTypers] = useState([]);
-  console.log(chat);
 
   useEffect(() => {
     socket.on("receive-message", (newMsg, msg_chatId) => {

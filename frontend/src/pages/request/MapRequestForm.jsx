@@ -30,10 +30,6 @@ const MapRequestForm = ({
     ],
   };
 
-  // useEffect(() => {
-  //   console.log("subtypearray:", subtypearray);
-  // }, [subtypearray]);
-
   return (
     <div className='req_form'>
       <h2>Your Request</h2>
@@ -109,35 +105,14 @@ const MapRequestForm = ({
                 qty: quantity,
               },
             ];
-            // const matchingAgencies = agencies.filter((agency) => {
-            //   return subtypearray.every((requiredResource) => {
-            //     return agency.resources.some((agencyResource) => {
-            //       return (
-            //         agencyResource.type === requiredResource.name &&
-            //         agencyResource.name === requiredResource.type &&
-            //         agencyResource.quantity >= requiredResource.qty
-            //       );
-            //     });
-            //   });
-            // });
-
-            // console.log(matchingAgencies);
-
-            // const bestAgencies = await axios.get(
-            //   "http://localhost:3000/getagencies/best",
-            //   subtypearray
-            // );
 
             setSelectedResource("");
             handlesubtype("");
             getquant("");
 
             // filtering agencies
-            console.log(agencies[0].resources)
             const temp2 = agencies.filter((agency, idx) => {
-              console.log("subtype array length", currentSubtypearray.length);
               const temp = { ...(agency.resources) };
-              console.log(agency);
               const tempKeys = new Set(Object.keys(temp));
               for (let i = 0; i < currentSubtypearray.length; i++) {
                 for (let j in currentSubtypearray[i]) {
@@ -156,8 +131,6 @@ const MapRequestForm = ({
             });
 
             setFilteredAgencies(temp2);
-            console.log("filtered agencies");
-            console.log(temp2);
           }}
         >
           Add Resource

@@ -84,7 +84,6 @@ function Map() {
         reqUser: user
       }
       setRequestBody(requestBody)
-    // console.log(requestBody)
     }
   }
 

@@ -29,15 +29,12 @@ const ReviewRequest = ({
   const [selectedRequestId, setSelectedRequestId] = useState(null);
 
   useEffect(() => {
-    console.log(sentRequests);
     socket.on("responded-to-request", (reqId, newStatus) => {
-      console.log("hello");
       setSentRequests((prev) => {
         const newarray = prev.map((item) => {
           if (item._id === reqId) return { ...item, status: newStatus };
           return item;
         });
-        console.log(newarray);
         return newarray;
       });
     });
@@ -57,10 +54,8 @@ const ReviewRequest = ({
           withCredentials: true,
         }),
       ]);
-      console.log(sentResp.data.requests);
       setSentRequests(sentResp.data.requests.reverse());
       setRcvdRequests(receivedResp.data.requests.reverse());
-      // console.log(sentResp.data.requests);
       setSentRequests(sentResp.data.requests);
       setRcvdRequests(receivedResp.data.requests);
     };
@@ -109,7 +104,6 @@ const ReviewRequest = ({
       setChats((prev) => [...prev, res.data.chat]);
     }
   };
-  console.log(user)
   return (
     <div>
       <MapPageHeader user={user}/>

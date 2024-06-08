@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ReqBlock = ({data}) => {
-  console.log(data)
   return (
     <div>
         <div className="card" style="width: 18rem;">

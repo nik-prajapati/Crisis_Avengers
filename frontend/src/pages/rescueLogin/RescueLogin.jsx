@@ -34,7 +34,6 @@ const RescueLogin = ({ setUser }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoginError(null);
-    console.log(formData);
     try {
       const response = await axios.post(
         "/api/login",
@@ -61,8 +60,6 @@ const RescueLogin = ({ setUser }) => {
           httpOnly: false
         });
         navigate("/request");
-        // alert('Logged in succesfully');
-        // console.log('Logged in succesfully');
       }
     } catch (error) {
       window.alert("Login Error: " + error.message);

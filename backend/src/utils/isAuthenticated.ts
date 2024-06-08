@@ -36,7 +36,6 @@ export default async function isAuthenticated(
       if (!signedToken.payload.token) {
         throw new Error();
       }
-      console.log(signedToken.payload.token);
       const { payload } = await jwtVerify(
         // @ts-ignore
         signedToken.payload.token,

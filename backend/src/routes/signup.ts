@@ -54,7 +54,6 @@ router.post(
       });
     } else {
       const { phonesNumbers } = req.body;
-      // console.log(req)
       if (!Array.isArray(phonesNumbers)) {
         res.json({ error: true, message: 'No phone number provided' });
       } else {

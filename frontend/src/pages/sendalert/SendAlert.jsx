@@ -23,8 +23,6 @@ const SendAlert = () => {
       setLocation('');
       setDisasterType('');
       setAlertMessage('');
-
-      console.log('Alert sent successfully');
     } catch (error) {
       console.error('Error sending alert:', error);
     }

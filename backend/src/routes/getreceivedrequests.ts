@@ -34,7 +34,6 @@ router.get('/', isAuthenticated, isRescueAgency, async (req, res) => {
   //   },
   // },
   // ]);
-  // console.log(requests);
   res.json({ requests: requests });
 });
 

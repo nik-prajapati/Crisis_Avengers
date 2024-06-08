@@ -23,7 +23,6 @@ import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function Landingpage({ user }) {
-  console.log(user);
   const navigate = useNavigate();
   // const [cookies, setCookie, removeCookie] = useCookies(["apadarelief"]);
 
@@ -80,7 +79,6 @@ export default function Landingpage({ user }) {
     const resp = await axios.get("/api/logout", {
       withCredentials: true,
     });
-    // console.log(Cookies)
 
     if (resp.status == 200) {
       window.location.reload(false);
@@ -89,7 +87,6 @@ export default function Landingpage({ user }) {
   };
 
   const handleSOS = async () => {
-    console.log("called");
     try {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -107,7 +104,6 @@ export default function Landingpage({ user }) {
                 withCredentials: true,
               }
             );
-            console.log(res);
             if (res.data["error"]) {
               toast.error("SOS already sent in the past 5 hours");
             } else {

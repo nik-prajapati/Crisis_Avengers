@@ -13,7 +13,6 @@ const SOSDashboard = ({sosCount,setSOSCount}) => {
           withCredentials: true,
         });
         setSOSRequests(response.data);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching SOS requests:", error);
       }

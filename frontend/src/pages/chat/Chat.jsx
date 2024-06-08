@@ -11,10 +11,6 @@ const Chat = ({
   messages,
   setMessages,
 }) => {
-  // const [chat, setChat] = useState({});
-  // const [chats, setChats] = useState([]);
-  // const [messages, setMessages] = useState([]);
-  console.log(name);
 
   return (
     name && (

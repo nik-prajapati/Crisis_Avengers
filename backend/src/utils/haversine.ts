@@ -15,16 +15,3 @@ export default function haversineDistance(a: Coordinate, b: Coordinate) {
   const y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
   return R * y;
 }
-
-console.log(
-  haversineDistance(
-    {
-      latitude: 19.075984,
-      longitude: 72.877656,
-    },
-    {
-      latitude: 18.516726,
-      longitude: 73.856255,
-    }
-  )
-);

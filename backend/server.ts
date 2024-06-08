@@ -51,8 +51,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-// console.log(path.resolve(__dirname, '..', 'build'));
-// app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -94,11 +92,9 @@ function sendMail(to: string, subject: string, text: string) {
       subject: subject,
       text: text,
     };
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
       if (error) {
         console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
       }
     });
   } catch (e) {
@@ -107,17 +103,16 @@ function sendMail(to: string, subject: string, text: string) {
 }
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  // console.log('a user connected');
 
   socket.on('join-room', (room) => {
-    console.log(console.log('joined room' + room));
+    // console.log('joined room' + room);
     socket.join(room);
   });
 
   socket.on('send-request', async (room, req_data) => {
     const request_data = await addRequest(req_data);
     socket.to(room).emit('receive-request', request_data);
-    // console.log(request_data);
     let itemString = '';
     for (let i = 0; i < request_data.requested_items.length; i++) {
       itemString += `${i + 1}. Type: ${
@@ -132,7 +127,7 @@ io.on('connection', (socket) => {
     if (email) {
       sendMail(
         // email,
-        'bhushansjadhav007@gmail.com',
+        'crisis.avengers.spit@gmail.com',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         `Request from ${request_data.rescue_requester_id.name}`,
@@ -153,7 +148,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    // console.log('user disconnected');
   });
 
   socket.on('typing', (username, chatId) => {
@@ -171,7 +166,7 @@ io.on('connection', (socket) => {
 
 instrument(io, {
   auth: false,
-  mode: 'development',
+  mode: 'production',
 });
 
 const port = process.env.PORT || 3000;

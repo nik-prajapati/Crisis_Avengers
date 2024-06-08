@@ -76,9 +76,6 @@ const SignUp = ({ setUser }) => {
       const resp=await axios.post("/api/signup/otp", {
         email: formData.email,
       });
-
-      console.log(resp)
-
       setSentOtp(true);
     } catch (error) {
       console.log(error);
@@ -88,7 +85,6 @@ const SignUp = ({ setUser }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log("Form Data:", formData);
     try {
       const response = await axios.post(
         "/api/signup",
@@ -100,7 +96,6 @@ const SignUp = ({ setUser }) => {
           },
         }
       );
-      console.log(response);
       if (response.data.error === false) {
         setSentOtp(true)
         toast.success("Registered Successfully !!");
@@ -116,12 +111,10 @@ const SignUp = ({ setUser }) => {
       else {
 
           if(response.data.message==='OTP expired' || response.data.message==='Incorrect OTP' ){
-            console.log("ERROR")
             toast.error(response.data.message);
             setSentOtp(false)  
           }
           else{
-            console.log("ERROR in ")
             toast.error(response.data.message);
             setError(response.data.message);
           }
@@ -169,7 +162,6 @@ const SignUp = ({ setUser }) => {
 
   const resetToDefault= async (e)=>{
     e.preventDefault()
-    console.log(defaultAdd)
     const {lat,lng}=defaultAdd.location
     const address=defaultAdd.address
     setSelectedLocation({lat,lng})

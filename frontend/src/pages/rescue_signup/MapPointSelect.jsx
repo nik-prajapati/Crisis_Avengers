@@ -13,7 +13,7 @@ import "../request/mapstyle.css";
 
 import axios from "axios";
 
-let MAPQUEST_API_KEY = "nuGdfaEudQgh4rlkNX49JgnTKbGnBBVm";
+let GEOCODE_API_KEY = "6664adaa189fa661001092swu6a36ee";
 
 const Map = ({
   showMap,
@@ -37,7 +37,6 @@ const Map = ({
             // const {lat,lng}={ latitude, longitude}
             let lat = latitude;
             let lng = longitude;
-            console.log({ lat, lng });
             setCurrentLocation({ lat, lng });
             setSelectedLocation({ lat, lng });
             let x = await getAddress(lat, lng);
@@ -47,53 +46,44 @@ const Map = ({
           },
           (error) => {
             console.error("Error getting location:", error);
-            // toast.error(Error getting location ${error})
+            toast.error("Error getting location ${error}");
           }
         );
       } else {
         console.error("Geolocation is not supported in this browser.");
-        // toast.error('Geolocation is not supported in this browser')
+        toast.error("Geolocation is not supported in this browser");
       }
     };
     handledefaultCoord();
   }, []);
 
   async function getAddress(latitude, longitude) {
-    const uri = `https://www.mapquestapi.com/geocoding/v1/reverse?key=${MAPQUEST_API_KEY}&location=${latitude},${longitude}`;
+    const uri = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${GEOCODE_API_KEY}`;
 
     try {
       const response = await axios.get(uri);
-      const {
-        street,
-        adminArea6,
-        adminArea5,
-        adminArea4,
-        adminArea3,
-        adminArea2,
-        adminArea1,
-        postalCode,
-      } = response.data.results[0].locations[0];
-      let address = [
-        street,
-        adminArea6,
-        adminArea5,
-        adminArea4,
-        adminArea3,
-        adminArea2,
-        adminArea1,
-      ]
-        .filter(
-          (x) =>
-            x !== undefined &&
-            x !== null &&
-            typeof x === "string" &&
-            x.length > 0
-        )
-        .filter((item, index, arr) => arr.indexOf(item) === index)
-        .join(", ");
-      address += `, PIN - ${postalCode}`;
-      return address;
-      console.log(address);
+      const { display_name } = response.data;
+      return display_name;
+      // let address = [
+      //   street,
+      //   adminArea6,
+      //   adminArea5,
+      //   adminArea4,
+      //   adminArea3,
+      //   adminArea2,
+      //   adminArea1,
+      // ]
+      //   .filter(
+      //     (x) =>
+      //       x !== undefined &&
+      //       x !== null &&
+      //       typeof x === "string" &&
+      //       x.length > 0
+      //   )
+      //   .filter((item, index, arr) => arr.indexOf(item) === index)
+      //   .join(", ");
+      // address += `, PIN - ${postalCode}`;
+      // return address;
     } catch (e) {
       console.error(e);
     }
@@ -132,7 +122,7 @@ const Map = ({
           <MapClickHandler />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
           {selectedLocation && (
@@ -149,6 +139,5 @@ const Map = ({
     </div>
   );
 };
-
 
 export default Map;

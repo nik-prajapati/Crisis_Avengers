@@ -37,17 +37,6 @@ const getChat = async (chatId, setChat, setMessages) => {
     let chat = await axios.get(ENDPOINT + `/chat/${chatId}`, {
       withCredentials: true,
     });
-
-    // if (!chat.data.isGroup) {
-    //   const chatName = chat.data.members.find(
-    //     (mem) => mem.username !== username
-    //   ).username;
-    //   chat = { chatName, ...chat.data };
-    // } else {
-    //   chat = chat.data;
-    // }
-    console.log(chatId);
-
     setChat(chat.data);
     socket.emit("join-room", chatId);
     setMessages(messages.data.messages);

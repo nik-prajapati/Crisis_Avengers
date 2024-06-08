@@ -38,14 +38,12 @@ const UpdateData = ({ user }) => {
 
   const commitChanges = async (id) => {
     try {
-      console.log("Identity", id);
       const updatedFormData = {
         ...formData,
         _id: id,
         name: subtype,
         type: selectedResource,
       };
-      console.log(updatedFormData);
       setIsLoading(true);
       const response = await axios.post(
         "/api/updateresources",
@@ -92,11 +90,6 @@ const UpdateData = ({ user }) => {
         const response = await axios.get(apiUrl, {
           withCredentials: true,
         });
-        // const allObjectIds = response.data.resources.map(
-        //   (resource) => resource._id
-        // );
-        // console.log("All Object IDs:", allObjectIds);
-
         setResources(response.data.resources);
         setIsLoading(false);
       } catch (error) {
@@ -117,7 +110,6 @@ const UpdateData = ({ user }) => {
   };
 
   const delrec = async (objectId) => {
-    console.log(objectId);
     try {
       setIsLoading(true);
       const response = await axios.post(
@@ -135,16 +127,13 @@ const UpdateData = ({ user }) => {
         }
       );
       const apiUrl = "/api/getresources";
-      // console.log(response);
       try {
         const response = await axios.get(apiUrl, {
           withCredentials: true,
         });
-        console.log(response.data);
         const allObjectIds = response.data.resources.map(
           (resource) => resource._id
         );
-        console.log("All Object IDs:", allObjectIds);
 
         setResources(response.data.resources);
         setIsLoading(false);
@@ -250,7 +239,6 @@ const UpdateData = ({ user }) => {
               >
                 <option value='' selected disabled>Select Additional Option</option>
                 {selectedResource && Object.keys(resourceOptions).map((type) => {
-                  console.log(selectedResource)
                   if (selectedResource === type) {
                     return (
                       <optgroup key={type} label={type}>

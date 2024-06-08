@@ -47,7 +47,6 @@ function Map({ user }) {
   const [filteredAgencies, setFilteredAgencies] = useState([]);
 
   useEffect(() => {
-    // console.log(user);
     if (user) socket.emit("join-room", user._id);
   }, []);
 
@@ -100,7 +99,6 @@ function Map({ user }) {
   useEffect(() => {
     if (user) {
       socket.on("receive-request", (req_data) => {
-        console.log(req_data);
         toast.success("New Request Received");
         setRecieveRequest([...recieveRequest, req_data]);
         setTimeout(() => {
@@ -109,7 +107,6 @@ function Map({ user }) {
       });
 
       socket.on("receive-message", (newMessage) => {
-        console.log(newMessage);
       });
 
       return () => {
@@ -161,23 +158,10 @@ function Map({ user }) {
       reqAgency: markerData,
       reqduser: user,
     };
-
-    console.log(requestBody);
     setMarker(markerData);
     setRequestBody(requestBody);
   };
 
-  const handleRequest = () => {
-    // if (user && marker) {
-    //   const requestBody = {
-    //     reqAgency: marker,
-    //     reqduser: user,
-    //   };
-    //   setRequestBody(requestBody);
-  };
-
-  // console.log(agencies);
-  // console.log(user);
   return (
     <div className='Map-section-columns'>
       <MapRequestForm

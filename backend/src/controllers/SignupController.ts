@@ -6,13 +6,8 @@ import RescueAgency from '../models/rescue_agency';
 import nodemailer from 'nodemailer';
 
 // JWT config
-const fallbackSigningSecret =
-  'd7b5dae336250ab03418ca0fdcd0019d695110b500de83df6e1272b1bf9de3b6';
-const fallbackEncryptionSecret =
-  '5c7eea01c3dece03ebe9b847259c88865981b30a6e73b9b4f8aeaed01b912491';
-const signingSecret = process.env.JWT_SIGNING_SECRET || fallbackSigningSecret;
-const encryptionSecret =
-  process.env.JWT_ENCRYPTION_SECRET || fallbackEncryptionSecret;
+const signingSecret = process.env.JWT_SIGNING_SECRET || '';
+const encryptionSecret = process.env.JWT_ENCRYPTION_SECRET || '';
 const signingKey = Buffer.from(signingSecret, 'hex');
 const encryptionKey = Buffer.from(encryptionSecret, 'hex');
 const jwsAlg = 'HS256';
@@ -58,11 +53,8 @@ export default async function SignupController(req: Request, res: Response) {
   } else {
     const correctOtp = otpStore.get(email);
     if (!correctOtp) {
-      return res
-        .status(401)
-        .json({ error: true, message: ' OTP expired' });
-    } else if (otp !== correctOtp) 
-    {
+      return res.status(401).json({ error: true, message: ' OTP expired' });
+    } else if (otp !== correctOtp) {
       return res.status(401).json({ error: true, message: 'Incorrect OTP' });
     } else {
       const hash = await argon2.hash(password);
@@ -133,7 +125,7 @@ const sendOtp = async (req: Request, res: Response) => {
       otpStore.delete(email);
     }, otpExpirationTime);
 
-    return res.status(200).json({ error: false, message: 'OTP sent',otp });
+    return res.status(200).json({ error: false, message: 'OTP sent', otp });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: true, message: 'Server error' });
@@ -156,11 +148,11 @@ function sendMail(to: string, subject: string, text: string) {
       subject: subject,
       text: text,
     };
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
       if (error) {
         console.error('Error sending email:', error);
       } else {
-        console.log('Email sent:', info.response);
+        // console.log('Email sent:', info.response);
       }
     });
   } catch (e) {

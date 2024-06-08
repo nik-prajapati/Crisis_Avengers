@@ -44,16 +44,13 @@ const GovtLogin = ({ setUser }) => {
         setLoginError(response.data.message);
         alert(response.data.message);
         window.location.reload(true);
-        console.log("Login error", response.data.message);
       } else {
         navigate("/home");
         alert("Logged in Successfully");
-        console.log("Logged in succesfully");
       }
     } catch (error) {
       if (error.response.status === 403) {
         alert("Wrong password");
-        // window.location.reload(true);
       } else {
         alert("Login error: check console");
         console.error("Error during login:", error);

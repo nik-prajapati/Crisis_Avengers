@@ -25,7 +25,6 @@ import SOSDashboard from "./pages/SOSdashboard/SOSdashboard";
 
 function App() {
   const [user, setUser] = useState(null);
-  // console.log(user);
   const [reviewData, setReviewData] = useState([1, 2]);
   const [Cookies, setCookies, removeCookies] = useCookies(["apadarelief"]);
 
@@ -33,14 +32,12 @@ function App() {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [sosCount,setSOSCount]=useState([])
-  // const [sosCount,setSOSCount]=useState(0)
 
   useEffect(() => {
     if (user) socket.emit("join-room", user.id);
   }, [user]);
 
   useEffect(() => {
-    console.log(Cookies);
     if (Cookies) {
       setUser(Cookies["apadarelief"]);
     }

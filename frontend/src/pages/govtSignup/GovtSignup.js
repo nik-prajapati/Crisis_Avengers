@@ -17,8 +17,7 @@ const GovtSignUp = () => {
 
 
     const handleSubmit = (event) => {
-        event.preventDefault(); 
-        console.log('Form Data:', formData);
+        event.preventDefault();
     };
 
     return (
