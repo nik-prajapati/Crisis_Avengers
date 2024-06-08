@@ -1,8 +1,10 @@
 # ApadaRelief - A  collaboration platform for rescue agencies
 
+### Main objective of this project is to enable efficient communication and collaboration between different rescue agencies and disaster relief NGOs during times of a calamity
+
 #### Deployed website - [https://apadarelief.onrender.com](https://apadarelief.onrender.com/) 
 
-### Main objective of this project is to enable efficient communication and collaboration between different rescue agencies and disaster relief NGOs during times of a calamity
+### [**DEMO VIDEO**](https://youtu.be/lzg6qmesln8)
 
 #### Features:
  
@@ -24,8 +26,6 @@
 - Mapping: [React Leaflet](https://react-leaflet.js.org/) and [Mapquest API](https://developer.mapquest.com/documentation/)
 - Backend: TypeScript, NodeJS and ExpressJS
 - Fast real time communication: [socket.io](https://socket.io/)
-
-### [**DEMO VIDEO**](https://youtu.be/lzg6qmesln8)
 
 #### Screenshots:
 
