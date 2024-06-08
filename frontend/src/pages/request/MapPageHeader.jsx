@@ -12,7 +12,7 @@ const MapPageHeader = ({ user }) => {
 
   const navigate = useNavigate();
   const handleLogOut = async () => {
-    const resp = await axios.get("http://localhost:3000/logout", {
+    const resp = await axios.get("/api/logout", {
       withCredentials: true,
     });
     // console.log(Cookies)

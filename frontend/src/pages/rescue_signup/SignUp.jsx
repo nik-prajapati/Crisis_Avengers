@@ -73,7 +73,7 @@ const SignUp = ({ setUser }) => {
     try {
       toast.success('OTP SENT')
       e.preventDefault();
-      const resp=await axios.post("http://localhost:3000/signup/otp", {
+      const resp=await axios.post("/api/signup/otp", {
         email: formData.email,
       });
 
@@ -91,7 +91,7 @@ const SignUp = ({ setUser }) => {
     // console.log("Form Data:", formData);
     try {
       const response = await axios.post(
-        "http://localhost:3000/signup",
+        "/api/signup",
         formData,
         {
           withCredentials: true,

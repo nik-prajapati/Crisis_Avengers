@@ -10,7 +10,7 @@ import socket from "../../helpers/socket.js";
 // import chatIcon from "../../image/chat.svg";
 import { Link } from "react-router-dom";
 
-const ENDPOINT = "http://localhost:3000";
+const ENDPOINT = "/api";
 
 const ReviewRequest = ({
   user,
@@ -50,10 +50,10 @@ const ReviewRequest = ({
   useEffect(() => {
     const fetchReviewRequest = async () => {
       const [sentResp, receivedResp] = await Promise.all([
-        axios.get("http://localhost:3000/getsentrequests", {
+        axios.get("/api/getsentrequests", {
           withCredentials: true,
         }),
-        axios.get("http://localhost:3000/getreceivedrequests", {
+        axios.get("/api/getreceivedrequests", {
           withCredentials: true,
         }),
       ]);

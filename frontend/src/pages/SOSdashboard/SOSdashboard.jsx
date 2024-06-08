@@ -9,7 +9,7 @@ const SOSDashboard = ({sosCount,setSOSCount}) => {
   useEffect(() => {
     const fetchSOSRequests = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/getsos", {
+        const response = await axios.get("/api/getsos", {
           withCredentials: true,
         });
         setSOSRequests(response.data);

@@ -28,7 +28,7 @@ const RescueLogin = ({ setUser }) => {
     console.log(formData);
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
+        "/api/login",
         formData,
         {
           withCredentials: true,

@@ -1,4 +1,4 @@
-const ENDPOINT = "http://localhost:3000";
+const ENDPOINT = "/api";
 import axios from "axios";
 import socket from "./socket";
  

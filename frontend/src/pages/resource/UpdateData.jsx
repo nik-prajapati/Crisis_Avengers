@@ -48,7 +48,7 @@ const UpdateData = ({ user }) => {
       console.log(updatedFormData);
       setIsLoading(true);
       const response = await axios.post(
-        "http://localhost:3000/updateresources",
+        "/api/updateresources",
         updatedFormData,
         {
           withCredentials: true,
@@ -84,7 +84,7 @@ const UpdateData = ({ user }) => {
     });
   };
 
-  const apiUrl = "http://localhost:3000/getresources";
+  const apiUrl = "/api/getresources";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,7 +121,7 @@ const UpdateData = ({ user }) => {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        "http://localhost:3000/updateresources",
+        "/api/updateresources",
         {
           _id: objectId,
           type: "a",
@@ -134,7 +134,7 @@ const UpdateData = ({ user }) => {
           withCredentials: true,
         }
       );
-      const apiUrl = "http://localhost:3000/getresources";
+      const apiUrl = "/api/getresources";
       // console.log(response);
       try {
         const response = await axios.get(apiUrl, {

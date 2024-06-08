@@ -127,7 +127,7 @@ function Map({ user }) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
         const resp = await axios.get(
-          `http://localhost:3000/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
+          `/api/getagencies?latitude=${latitude}&longitude=${longitude}&radius=30000000`,
           { withCredentials: true }
         );
         const d = resp.data;

@@ -6,7 +6,7 @@ import socket from "../../helpers/socket";
 import PropTypes from "prop-types";
 import "./chat.css";
 
-const ENDPOINT = "http://localhost:3000";
+const ENDPOINT = "/api";
 
 export default function SendMessage({ chatId, messages, setMessages, name }) {
   const [content, setContent] = useState("");

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import socket from "../../helpers/socket";
 
-const ENDPOINT = "http://localhost:3000";
+const ENDPOINT = "/api";
 
 export default function Msg({
   msgId,

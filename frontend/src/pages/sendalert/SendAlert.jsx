@@ -13,7 +13,7 @@ const SendAlert = () => {
 
     try {
       // Send the alert to the backend
-      await axios.post('http://localhost:3001/api/alerts', {
+      await axios.post('/api/alerts', {
         location,
         disasterType,
         alertMessage,

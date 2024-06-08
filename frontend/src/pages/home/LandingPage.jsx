@@ -77,7 +77,7 @@ export default function Landingpage({ user }) {
   ];
 
   const handleLogOut = async () => {
-    const resp = await axios.get("http://localhost:3000/logout", {
+    const resp = await axios.get("/api/logout", {
       withCredentials: true,
     });
     // console.log(Cookies)
@@ -97,7 +97,7 @@ export default function Landingpage({ user }) {
             const { latitude, longitude } = position.coords;
             const location = [longitude, latitude];
             const res = await axios.post(
-              "http://localhost:3000/sos",
+              "/api/sos",
               {
                 typeOfDisaster: "floods",
                 latitude,

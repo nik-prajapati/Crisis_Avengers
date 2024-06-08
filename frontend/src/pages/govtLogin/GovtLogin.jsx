@@ -31,7 +31,7 @@ const GovtLogin = ({ setUser }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
+        "/api/login",
         formData,
         {
           withCredentials: true,

@@ -8,7 +8,7 @@ import userSettingsIcon from "../../image/settings-filled.svg";
 // import closeIcon from "../assets/images/close.svg";
 import { getChatList, getChat } from "../../helpers/chat";
 
-const ENDPOINT = "http://localhost:3000";
+const ENDPOINT = "/api";
 
 export default function ChatList({
   name,
