@@ -53,7 +53,7 @@
 ### This project was built as a part of Smart India Hackathon 2023 and ***won the first prize*** for this problem statement among 7 finalist teams and 500 initial submissions from all over India. (PS Code: SIH1440)  
 
 ### Our team and primary responsibilities:
-- Bhushan Jadhav - Leader Project Management and Database Administration
+- Bhushan Jadhav - Leader Project Management, App design and frontend devlopment 
 - Mohammed Saad Belgi - Backend development
 - Sarthak Gharat - Backend development
 - Janhavi Deshmukh - UI Design and Frontend Development
